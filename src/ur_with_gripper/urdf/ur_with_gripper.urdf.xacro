@@ -1,0 +1,81 @@
+<?xml version="1.0"?>
+<robot name="ur" xmlns:xacro="http://ros.org/wiki/xacro">
+
+  <xacro:include filename="$(find ur_with_gripper)/urdf/ur_with_gripper_macro.xacro" />
+  <xacro:include filename="$(find ur_description)/urdf/ur.ros2_control.xacro" />
+
+  <xacro:arg name="sim_ignition" default="false" />
+
+  <xacro:arg name="ur_type" default="ur10e" />
+  <xacro:arg name="joint_limits_parameters_file"
+    default="$(find ur_description)/config/$(arg ur_type)/joint_limits.yaml" />
+  <xacro:arg name="kinematics_parameters_file"
+    default="$(find ur_description)/config/$(arg ur_type)/default_kinematics.yaml" />
+  <xacro:arg name="physical_parameters_file"
+    default="$(find ur_description)/config/$(arg ur_type)/physical_parameters.yaml" />
+  <xacro:arg name="visual_parameters_file"
+    default="$(find ur_description)/config/$(arg ur_type)/visual_parameters.yaml" />
+  <xacro:arg name="simulation_controllers" default="" />
+
+  <link name="world" />
+  
+  <!-- Minimale Boden-Definition nur für die Kinematik (ohne Visuals) -->
+  <link name="floor">
+    <!-- Keine visuellen oder Kollisionselemente - werden über add_objects_node hinzugefügt -->
+    <inertial>
+      <mass value="100"/>
+      <inertia ixx="10.0" ixy="0.0" ixz="0.0" iyy="10.0" iyz="0.0" izz="20.0"/>
+      <origin xyz="0 0 0.01" rpy="0 0 0"/>
+    </inertial>
+  </link>
+
+  <!-- Verbinde den Boden mit der Welt -->
+  <joint name="world_to_floor" type="fixed">
+    <parent link="world"/>
+    <child link="floor"/>
+    <origin xyz="0 0 0" rpy="0 0 0"/>
+  </joint>
+  
+  <!-- Minimale Montageblock-Definition nur für die Kinematik (ohne Visuals) -->
+  <link name="mounting_block">
+    <!-- Keine visuellen oder Kollisionselemente - werden über add_objects_node hinzugefügt -->
+    <inertial>
+      <mass value="50"/>
+      <inertia ixx="1.0" ixy="0.0" ixz="0.0" iyy="1.0" iyz="0.0" izz="1.0"/>
+      <origin xyz="0 0 0.2" rpy="0 0 0"/>
+    </inertial>
+  </link>
+
+  <!-- Verbinde den Montageblock mit dem Boden -->
+  <joint name="floor_to_block" type="fixed">
+    <parent link="floor"/>
+    <child link="mounting_block"/>
+    <origin xyz="0 0 0.02" rpy="0 0 0"/>
+  </joint>
+  
+  <!--This will create the scene where the robot is located in-->
+  <xacro:ur_with_gripper
+    parent="mounting_block"
+    ur_type="$(arg ur_type)"
+    joint_limits_parameters_file="$(arg joint_limits_parameters_file)"
+    kinematics_parameters_file="$(arg kinematics_parameters_file)"
+    physical_parameters_file="$(arg physical_parameters_file)"
+    visual_parameters_file="$(arg visual_parameters_file)"
+    simulated="$(arg sim_ignition)"
+  >
+    <origin xyz="0 0 0" rpy="0 0 0" />
+  </xacro:ur_with_gripper>
+
+
+  <xacro:if value="$(arg sim_ignition)">
+    <gazebo>
+      <plugin filename="ign_ros2_control-system" name="ign_ros2_control::IgnitionROS2ControlPlugin">
+        <robot_param>robot_description</robot_param>
+        <robot_param_node>robot_state_publisher</robot_param_node>
+        <parameters>$(arg simulation_controllers)</parameters>
+        <controller_manager_node_name>$(arg ur_type)_controller_manager</controller_manager_node_name>
+      </plugin>
+    </gazebo>
+  </xacro:if>
+
+</robot>

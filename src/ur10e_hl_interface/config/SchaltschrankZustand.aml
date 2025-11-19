@@ -1,0 +1,176 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CAEXFile SchemaVersion="3.0" FileName="SchaltschrankZustand.aml" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://www.dke.de/CAEX">
+    <SuperiorStandardVersion>AutomationML 2.1</SuperiorStandardVersion>
+    <InstanceHierarchy Name="Schaltschrank-Zustand" ID="cabinet-state">
+        <InternalElement Name="Zustandsinfo" ID="state-info">
+            <Attribute Name="Arbeitsplatz-Schiene" AttributeDataType="xs:int">
+                <Value>-1</Value>
+            </Attribute>
+        </InternalElement>
+        <InternalElement Name="Hutschienen" ID="rails-state">
+            <InternalElement Name="Schiene-1" ID="rail-1">
+                <Attribute Name="Location" AttributeDataType="xs:string">
+                    <Value>2</Value>
+                </Attribute>
+                <Attribute Name="Cabinet-Position" AttributeDataType="xs:int">
+                    <Value>1</Value>
+                </Attribute>
+                <Attribute Name="Füllstand" AttributeDataType="xs:double">
+                    <Value>0.107000</Value>
+                </Attribute>
+                <InternalElement Name="Komponenten" ID="rail-1-components">
+                    <InternalElement Name="Position-1" ID="rail-1-pos-1">
+                        <Attribute Name="Komponenten-Typ" AttributeDataType="xs:string">
+                            <Value>CLIPFIX_35</Value>
+                        </Attribute>
+                        <Attribute Name="Original-ID" AttributeDataType="xs:string">
+                            <Value>clipfix_35_1</Value>
+                        </Attribute>
+                        <Attribute Name="Instance-Number" AttributeDataType="xs:int">
+                            <Value>0</Value>
+                        </Attribute>
+                        <Attribute Name="Position-auf-Schiene" AttributeDataType="xs:double">
+                            <Value>0.004750</Value>
+                        </Attribute>
+                        <Attribute Name="Breite" AttributeDataType="xs:double">
+                            <Value>0.009500</Value>
+                        </Attribute>
+                    </InternalElement>
+                    <InternalElement Name="Position-2" ID="rail-1-pos-2">
+                        <Attribute Name="Komponenten-Typ" AttributeDataType="xs:string">
+                            <Value>CLIPFIX_35</Value>
+                        </Attribute>
+                        <Attribute Name="Original-ID" AttributeDataType="xs:string">
+                            <Value>clipfix_35_2</Value>
+                        </Attribute>
+                        <Attribute Name="Instance-Number" AttributeDataType="xs:int">
+                            <Value>1</Value>
+                        </Attribute>
+                        <Attribute Name="Position-auf-Schiene" AttributeDataType="xs:double">
+                            <Value>0.024250</Value>
+                        </Attribute>
+                        <Attribute Name="Breite" AttributeDataType="xs:double">
+                            <Value>0.009500</Value>
+                        </Attribute>
+                    </InternalElement>
+                    <InternalElement Name="Position-3" ID="rail-1-pos-3">
+                        <Attribute Name="Komponenten-Typ" AttributeDataType="xs:string">
+                            <Value>CLIPFIX_35</Value>
+                        </Attribute>
+                        <Attribute Name="Original-ID" AttributeDataType="xs:string">
+                            <Value>clipfix_35_3</Value>
+                        </Attribute>
+                        <Attribute Name="Instance-Number" AttributeDataType="xs:int">
+                            <Value>2</Value>
+                        </Attribute>
+                        <Attribute Name="Position-auf-Schiene" AttributeDataType="xs:double">
+                            <Value>0.043750</Value>
+                        </Attribute>
+                        <Attribute Name="Breite" AttributeDataType="xs:double">
+                            <Value>0.009500</Value>
+                        </Attribute>
+                    </InternalElement>
+                    <InternalElement Name="Position-4" ID="rail-1-pos-4">
+                        <Attribute Name="Komponenten-Typ" AttributeDataType="xs:string">
+                            <Value>CLIPFIX_35</Value>
+                        </Attribute>
+                        <Attribute Name="Original-ID" AttributeDataType="xs:string">
+                            <Value>clipfix_35_4</Value>
+                        </Attribute>
+                        <Attribute Name="Instance-Number" AttributeDataType="xs:int">
+                            <Value>3</Value>
+                        </Attribute>
+                        <Attribute Name="Position-auf-Schiene" AttributeDataType="xs:double">
+                            <Value>0.063250</Value>
+                        </Attribute>
+                        <Attribute Name="Breite" AttributeDataType="xs:double">
+                            <Value>0.009500</Value>
+                        </Attribute>
+                    </InternalElement>
+                    <InternalElement Name="Position-5" ID="rail-1-pos-5">
+                        <Attribute Name="Komponenten-Typ" AttributeDataType="xs:string">
+                            <Value>CLIPFIX_35</Value>
+                        </Attribute>
+                        <Attribute Name="Original-ID" AttributeDataType="xs:string">
+                            <Value>clipfix_35_5</Value>
+                        </Attribute>
+                        <Attribute Name="Instance-Number" AttributeDataType="xs:int">
+                            <Value>4</Value>
+                        </Attribute>
+                        <Attribute Name="Position-auf-Schiene" AttributeDataType="xs:double">
+                            <Value>0.082750</Value>
+                        </Attribute>
+                        <Attribute Name="Breite" AttributeDataType="xs:double">
+                            <Value>0.009500</Value>
+                        </Attribute>
+                    </InternalElement>
+                    <InternalElement Name="Position-6" ID="rail-1-pos-6">
+                        <Attribute Name="Komponenten-Typ" AttributeDataType="xs:string">
+                            <Value>CLIPFIX_35</Value>
+                        </Attribute>
+                        <Attribute Name="Original-ID" AttributeDataType="xs:string">
+                            <Value>clipfix_35_6</Value>
+                        </Attribute>
+                        <Attribute Name="Instance-Number" AttributeDataType="xs:int">
+                            <Value>5</Value>
+                        </Attribute>
+                        <Attribute Name="Position-auf-Schiene" AttributeDataType="xs:double">
+                            <Value>0.102250</Value>
+                        </Attribute>
+                        <Attribute Name="Breite" AttributeDataType="xs:double">
+                            <Value>0.009500</Value>
+                        </Attribute>
+                    </InternalElement>
+                </InternalElement>
+            </InternalElement>
+            <InternalElement Name="Schiene-2" ID="rail-2">
+                <Attribute Name="Location" AttributeDataType="xs:string">
+                    <Value>1</Value>
+                </Attribute>
+                <Attribute Name="Cabinet-Position" AttributeDataType="xs:int">
+                    <Value>-1</Value>
+                </Attribute>
+                <Attribute Name="Füllstand" AttributeDataType="xs:double">
+                    <Value>0.000000</Value>
+                </Attribute>
+                <InternalElement Name="Komponenten" ID="rail-2-components"/>
+            </InternalElement>
+            <InternalElement Name="Schiene-3" ID="rail-3">
+                <Attribute Name="Location" AttributeDataType="xs:string">
+                    <Value>1</Value>
+                </Attribute>
+                <Attribute Name="Cabinet-Position" AttributeDataType="xs:int">
+                    <Value>-1</Value>
+                </Attribute>
+                <Attribute Name="Füllstand" AttributeDataType="xs:double">
+                    <Value>0.000000</Value>
+                </Attribute>
+                <InternalElement Name="Komponenten" ID="rail-3-components"/>
+            </InternalElement>
+            <InternalElement Name="Schiene-4" ID="rail-4">
+                <Attribute Name="Location" AttributeDataType="xs:string">
+                    <Value>1</Value>
+                </Attribute>
+                <Attribute Name="Cabinet-Position" AttributeDataType="xs:int">
+                    <Value>-1</Value>
+                </Attribute>
+                <Attribute Name="Füllstand" AttributeDataType="xs:double">
+                    <Value>0.000000</Value>
+                </Attribute>
+                <InternalElement Name="Komponenten" ID="rail-4-components"/>
+            </InternalElement>
+            <InternalElement Name="Schiene-5" ID="rail-5">
+                <Attribute Name="Location" AttributeDataType="xs:string">
+                    <Value>1</Value>
+                </Attribute>
+                <Attribute Name="Cabinet-Position" AttributeDataType="xs:int">
+                    <Value>-1</Value>
+                </Attribute>
+                <Attribute Name="Füllstand" AttributeDataType="xs:double">
+                    <Value>0.000000</Value>
+                </Attribute>
+                <InternalElement Name="Komponenten" ID="rail-5-components"/>
+            </InternalElement>
+        </InternalElement>
+    </InstanceHierarchy>
+</CAEXFile>

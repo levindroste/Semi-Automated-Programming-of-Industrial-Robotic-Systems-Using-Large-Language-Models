@@ -1,0 +1,806 @@
+<?xml version="1.0" encoding="utf-8"?>
+<CAEXFile SchemaVersion="3.0" FileName="AML-Datei-V04-Updated.aml" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://www.dke.de/CAEX" xsi:schemaLocation="http://www.dke.de/CAEX CAEX_ClassModel_V.3.0.xsd">
+  <SuperiorStandardVersion>AutomationML 2.1</SuperiorStandardVersion>
+  <SourceDocumentInformation OriginName="AutomationML Editor" OriginID="916578CA-FE0D-474E-A4FC-9E1719892369" OriginVersion="6.4.0.22" LastWritingDateTime="2025-03-25T15:23:46.8854007+01:00" OriginProjectID="unspecified" OriginProjectTitle="unspecified" OriginRelease="6.4.0.22" OriginVendor="AutomationML e.V." OriginVendorURL="www.AutomationML.org" />
+  
+  <InstanceHierarchy Name="HL-Methoden" ID="ea89b9a5-d447-40b0-82d0-dcb94265e8b0">
+    <Version>1.0.0</Version>
+    <InternalElement Name="Positionieren/Bewegen" ID="9dd3e846-bd6b-4045-b49b-48dc40ba8876">
+      <Attribute Name="Zielpose" AttributeDataType="xs:string" />
+      <Attribute Name="Geschwindigkeit" AttributeDataType="xs:int" />
+      <Attribute Name="Bewegungstyp" AttributeDataType="xs:string" />
+    </InternalElement>
+    <InternalElement Name="Greifen/Loslassen" ID="d673638d-cfb8-412d-9722-16dd537dbcc8">
+      <Attribute Name="Zustand (offen/geschlossen)" AttributeDataType="xs:boolean">
+        <Value>false</Value>
+      </Attribute>
+    </InternalElement>
+  </InstanceHierarchy>
+  
+  <InstanceHierarchy Name="Roboter-Parameter" ID="robot-params">
+    <Version>1.0.0</Version>
+    <InternalElement Name="Greif-Parameter" ID="grasp-params">
+      <Attribute Name="Approach-Höhe" AttributeDataType="xs:double" Unit="mm">
+        <Value>100</Value>
+      </Attribute>
+      <Attribute Name="Place-Höhen-Offset" AttributeDataType="xs:double" Unit="mm">
+        <Value>0</Value>
+      </Attribute>
+      <!-- GLOBALER Abstand zwischen gleichen Komponenten im Lager -->
+      <Attribute Name="Objekt-X-Spacing" AttributeDataType="xs:double" Unit="mm">
+        <Value>150</Value>
+      </Attribute>
+      <Attribute Name="Objekt-Spacing-auf-Schiene" AttributeDataType="xs:double" Unit="mm">
+        <Value>10</Value>
+      </Attribute>
+      <!-- Globale Standard-Orientierungen für alle Klemmen -->
+      <Attribute Name="Standard-Pick-Orientierung" AttributeDataType="xs:string" Unit="quaternion">
+        <Value>1.0,0.0,0.0,0.0</Value>
+      </Attribute>
+      <Attribute Name="Standard-Place-Orientierung" AttributeDataType="xs:string" Unit="quaternion">
+        <Value>0.0,0.0,0.707,0.707</Value>
+      </Attribute>
+    </InternalElement>
+    <InternalElement Name="Schaltschrank-Parameter" ID="cabinet-params">
+      <Attribute Name="Basis-Position-X" AttributeDataType="xs:double" Unit="m">
+        <Value>-0.942</Value>
+      </Attribute>
+      <Attribute Name="Basis-Position-Y" AttributeDataType="xs:double" Unit="m">
+        <Value>-0.433</Value>
+      </Attribute>
+      <Attribute Name="Basis-Position-Z" AttributeDataType="xs:double" Unit="m">
+        <Value>0.3</Value>
+      </Attribute>
+      <Attribute Name="Schienen-Abstand" AttributeDataType="xs:double" Unit="m">
+        <Value>0.18</Value>
+      </Attribute>
+      <!-- GLOBALER Abstand zwischen Hutschienen im Lager -->
+      <Attribute Name="Hutschienen-Lager-Abstand" AttributeDataType="xs:double" Unit="m">
+        <Value>0.1</Value>
+      </Attribute>
+    </InternalElement>
+  </InstanceHierarchy>
+  
+  <InstanceHierarchy Name="Geometrie-Bibliothek" ID="874bf68c-070e-4df8-824a-c3c0a06b8bcb">
+    <Version>1.0.0</Version>
+    <InternalElement Name="Bauteile" ID="14d8c35b-f1cd-4df4-97df-28bb9f986393">
+      
+      <!-- Grundplatte -->
+      <InternalElement Name="Grundplatte" ID="grundplatte-id" RefBaseSystemUnitPath="Bauteile/Umgebung">
+        <Attribute Name="Basics" AttributeDataType="xs:string">
+          <Attribute Name="Name" AttributeDataType="xs:string">
+            <Value>Grundplatte</Value>
+          </Attribute>
+          <Attribute Name="Beschreibung" AttributeDataType="xs:string">
+            <Value>Bodenfläche für die Roboterzelle</Value>
+          </Attribute>
+          <Attribute Name="Farbe" AttributeDataType="xs:string">
+            <Value>Weiß</Value>
+          </Attribute>
+        </Attribute>
+        <Attribute Name="Spawn-Daten" AttributeDataType="xs:string">
+          <Attribute Name="Position" AttributeDataType="xs:string" Unit="m">
+            <Value>0.0,0.0,0.01</Value>
+          </Attribute>
+          <Attribute Name="Orientierung" AttributeDataType="xs:string" Unit="quaternion">
+            <Value>0.0,0.0,0.0,1.0</Value>
+          </Attribute>
+          <Attribute Name="Mesh-Datei" AttributeDataType="xs:string">
+            <Value></Value>
+          </Attribute>
+        </Attribute>
+      </InternalElement>
+      
+      <!-- Montageblock -->
+      <InternalElement Name="Montageblock" ID="montageblock-id" RefBaseSystemUnitPath="Bauteile/Umgebung">
+        <Attribute Name="Basics" AttributeDataType="xs:string">
+          <Attribute Name="Name" AttributeDataType="xs:string">
+            <Value>Montageblock</Value>
+          </Attribute>
+          <Attribute Name="Beschreibung" AttributeDataType="xs:string">
+            <Value>Erhöhter Block zur Montage des Roboters</Value>
+          </Attribute>
+          <Attribute Name="Farbe" AttributeDataType="xs:string">
+            <Value>Weiß</Value>
+          </Attribute>
+        </Attribute>
+        <Attribute Name="Spawn-Daten" AttributeDataType="xs:string">
+          <Attribute Name="Position" AttributeDataType="xs:string" Unit="m">
+            <Value>0.0,0.0,0.22</Value>
+          </Attribute>
+          <Attribute Name="Orientierung" AttributeDataType="xs:string" Unit="quaternion">
+            <Value>0.0,0.0,0.0,1.0</Value>
+          </Attribute>
+          <Attribute Name="Mesh-Datei" AttributeDataType="xs:string">
+            <Value></Value>
+          </Attribute>
+        </Attribute>
+      </InternalElement>
+      
+      <!-- CLIPFIX_35 -->
+      <InternalElement Name="CLIPFIX_35" ID="clipfix_35-id" RefBaseSystemUnitPath="Bauteile/ElektronischeKlemme">
+        <Attribute Name="Basics" AttributeDataType="xs:string">
+          <Attribute Name="Name" AttributeDataType="xs:string">
+            <Value>CLIPFIX_35</Value>
+          </Attribute>
+          <Attribute Name="Beschreibung" AttributeDataType="xs:string">
+            <Value>Kompakte Reihenklemme für Standardanwendungen</Value>
+          </Attribute>
+          <Attribute Name="Farbe" AttributeDataType="xs:string">
+            <Value>Grau</Value>
+          </Attribute>
+          <Attribute Name="Größenkategorie" AttributeDataType="xs:string">
+            <Value>klein</Value>
+          </Attribute>
+        </Attribute>
+        <Attribute Name="Geometrie" AttributeDataType="xs:string">
+          <Attribute Name="Breite" AttributeDataType="xs:double" Unit="mm">
+            <Value>9.5</Value>
+          </Attribute>
+          <Attribute Name="Dimensionen" AttributeDataType="xs:string" Unit="mm">
+            <Value>9.5x50x35</Value>
+          </Attribute>
+        </Attribute>
+        <Attribute Name="Roboter-Daten" AttributeDataType="xs:string">
+          <Attribute Name="Pick-Position" AttributeDataType="xs:string" Unit="m">
+            <Value>0.021,0.356,0.14</Value>
+          </Attribute>
+          <Attribute Name="Anzahl" AttributeDataType="xs:int">
+            <Value>6</Value>
+          </Attribute>
+        </Attribute>
+        <Attribute Name="Spawn-Daten" AttributeDataType="xs:string">
+          <Attribute Name="Basis-Position" AttributeDataType="xs:string" Unit="m">
+            <Value>0.05,0.35,0.03</Value>
+          </Attribute>
+          <Attribute Name="Spawn-Orientierung" AttributeDataType="xs:string" Unit="quaternion">
+            <Value>0.0,0.0,0.707,0.707</Value>
+          </Attribute>
+          <Attribute Name="Mesh-Datei" AttributeDataType="xs:string">
+            <Value>CLIPFIX-35.dae</Value>
+          </Attribute>
+        </Attribute>
+      </InternalElement>
+      
+      <!-- PT_6_TWIN_BU -->
+      <InternalElement Name="PT_6_TWIN_BU" ID="pt_6_twin_bu-id" RefBaseSystemUnitPath="Bauteile/ElektronischeKlemme">
+        <Attribute Name="Basics" AttributeDataType="xs:string">
+          <Attribute Name="Name" AttributeDataType="xs:string">
+            <Value>PT_6_TWIN_BU</Value>
+          </Attribute>
+          <Attribute Name="Beschreibung" AttributeDataType="xs:string">
+            <Value>Doppelstock-Durchgangsklemme</Value>
+          </Attribute>
+          <Attribute Name="Farbe" AttributeDataType="xs:string">
+            <Value>Blau</Value>
+          </Attribute>
+          <Attribute Name="Größenkategorie" AttributeDataType="xs:string">
+            <Value>klein</Value>
+          </Attribute>
+        </Attribute>
+        <Attribute Name="Geometrie" AttributeDataType="xs:string">
+          <Attribute Name="Breite" AttributeDataType="xs:double" Unit="mm">
+            <Value>8.15</Value>
+          </Attribute>
+          <Attribute Name="Dimensionen" AttributeDataType="xs:string" Unit="mm">
+            <Value>8.15x55x40</Value>
+          </Attribute>
+        </Attribute>
+        <Attribute Name="Roboter-Daten" AttributeDataType="xs:string">
+          <Attribute Name="Pick-Position" AttributeDataType="xs:string" Unit="m">
+            <Value>0.470,0.203,0.14</Value>
+          </Attribute>
+          <Attribute Name="Anzahl" AttributeDataType="xs:int">
+            <Value>6</Value>
+          </Attribute>
+        </Attribute>
+        <Attribute Name="Spawn-Daten" AttributeDataType="xs:string">
+          <Attribute Name="Basis-Position" AttributeDataType="xs:string" Unit="m">
+            <Value>0.5,0.2,0.03</Value>
+          </Attribute>
+          <Attribute Name="Spawn-Orientierung" AttributeDataType="xs:string" Unit="quaternion">
+            <Value>0.0,0.0,0.707,0.707</Value>
+          </Attribute>
+          <Attribute Name="Mesh-Datei" AttributeDataType="xs:string">
+            <Value>PT-6-TWIN-BU.dae</Value>
+          </Attribute>
+        </Attribute>
+      </InternalElement>
+      
+      <!-- UT_16_PE -->
+      <InternalElement Name="UT_16_PE" ID="ut_16_pe-id" RefBaseSystemUnitPath="Bauteile/ElektronischeKlemme">
+        <Attribute Name="Basics" AttributeDataType="xs:string">
+          <Attribute Name="Name" AttributeDataType="xs:string">
+            <Value>UT_16_PE</Value>
+          </Attribute>
+          <Attribute Name="Beschreibung" AttributeDataType="xs:string">
+            <Value>Schutzleiterklemme</Value>
+          </Attribute>
+          <Attribute Name="Farbe" AttributeDataType="xs:string">
+            <Value>Grün-Gelb</Value>
+          </Attribute>
+          <Attribute Name="Größenkategorie" AttributeDataType="xs:string">
+            <Value>mittel</Value>
+          </Attribute>
+        </Attribute>
+        <Attribute Name="Geometrie" AttributeDataType="xs:string">
+          <Attribute Name="Breite" AttributeDataType="xs:double" Unit="mm">
+            <Value>12.15</Value>
+          </Attribute>
+          <Attribute Name="Dimensionen" AttributeDataType="xs:string" Unit="mm">
+            <Value>12.15x60x45</Value>
+          </Attribute>
+        </Attribute>
+        <Attribute Name="Roboter-Daten" AttributeDataType="xs:string">
+          <Attribute Name="Pick-Position" AttributeDataType="xs:string" Unit="m">
+            <Value>0.470,0.057,0.14</Value>
+          </Attribute>
+          <Attribute Name="Anzahl" AttributeDataType="xs:int">
+            <Value>6</Value>
+          </Attribute>
+        </Attribute>
+        <Attribute Name="Spawn-Daten" AttributeDataType="xs:string">
+          <Attribute Name="Basis-Position" AttributeDataType="xs:string" Unit="m">
+            <Value>0.5,0.05,0.03</Value>
+          </Attribute>
+          <Attribute Name="Spawn-Orientierung" AttributeDataType="xs:string" Unit="quaternion">
+            <Value>0.0,0.0,0.707,0.707</Value>
+          </Attribute>
+          <Attribute Name="Mesh-Datei" AttributeDataType="xs:string">
+            <Value>UT-16-PE.stl</Value>
+          </Attribute>
+        </Attribute>
+      </InternalElement>
+      
+      <!-- VAL_MS_230 -->
+      <InternalElement Name="VAL_MS_230" ID="val_ms_230-id" RefBaseSystemUnitPath="Bauteile/ElektronischeKlemme">
+        <Attribute Name="Basics" AttributeDataType="xs:string">
+          <Attribute Name="Name" AttributeDataType="xs:string">
+            <Value>VAL_MS_230</Value>
+          </Attribute>
+          <Attribute Name="Beschreibung" AttributeDataType="xs:string">
+            <Value>Überspannungsableiter 230V</Value>
+          </Attribute>
+          <Attribute Name="Farbe" AttributeDataType="xs:string">
+            <Value>Rot</Value>
+          </Attribute>
+          <Attribute Name="Größenkategorie" AttributeDataType="xs:string">
+            <Value>groß</Value>
+          </Attribute>
+        </Attribute>
+        <Attribute Name="Geometrie" AttributeDataType="xs:string">
+          <Attribute Name="Breite" AttributeDataType="xs:double" Unit="mm">
+            <Value>70.9</Value>
+          </Attribute>
+          <Attribute Name="Dimensionen" AttributeDataType="xs:string" Unit="mm">
+            <Value>70.9x80x60</Value>
+          </Attribute>
+        </Attribute>
+        <Attribute Name="Roboter-Daten" AttributeDataType="xs:string">
+          <Attribute Name="Pick-Position" AttributeDataType="xs:string" Unit="m">
+            <Value>0.454,-0.065,0.14</Value>
+          </Attribute>
+          <Attribute Name="Anzahl" AttributeDataType="xs:int">
+            <Value>6</Value>
+          </Attribute>
+        </Attribute>
+        <Attribute Name="Spawn-Daten" AttributeDataType="xs:string">
+          <Attribute Name="Basis-Position" AttributeDataType="xs:string" Unit="m">
+            <Value>0.5,-0.1,0.03</Value>
+          </Attribute>
+          <Attribute Name="Spawn-Orientierung" AttributeDataType="xs:string" Unit="quaternion">
+            <Value>0.0,0.0,0.707,0.707</Value>
+          </Attribute>
+          <Attribute Name="Mesh-Datei" AttributeDataType="xs:string">
+            <Value>VAL-MS-230.stl</Value>
+          </Attribute>
+        </Attribute>
+      </InternalElement>
+      
+      <!-- VAL_MS_T1_T2 -->
+      <InternalElement Name="VAL_MS_T1_T2" ID="val_ms_t1_t2-id" RefBaseSystemUnitPath="Bauteile/ElektronischeKlemme">
+        <Attribute Name="Basics" AttributeDataType="xs:string">
+          <Attribute Name="Name" AttributeDataType="xs:string">
+            <Value>VAL_MS_T1_T2</Value>
+          </Attribute>
+          <Attribute Name="Beschreibung" AttributeDataType="xs:string">
+            <Value>Überspannungsableiter für Telekommunikation</Value>
+          </Attribute>
+          <Attribute Name="Farbe" AttributeDataType="xs:string">
+            <Value>Grau</Value>
+          </Attribute>
+          <Attribute Name="Größenkategorie" AttributeDataType="xs:string">
+            <Value>mittel</Value>
+          </Attribute>
+        </Attribute>
+        <Attribute Name="Geometrie" AttributeDataType="xs:string">
+          <Attribute Name="Breite" AttributeDataType="xs:double" Unit="mm">
+            <Value>35.3</Value>
+          </Attribute>
+          <Attribute Name="Dimensionen" AttributeDataType="xs:string" Unit="mm">
+            <Value>35.3x70x50</Value>
+          </Attribute>
+        </Attribute>
+        <Attribute Name="Roboter-Daten" AttributeDataType="xs:string">
+          <Attribute Name="Pick-Position" AttributeDataType="xs:string" Unit="m">
+            <Value>0.460,-0.232,0.14</Value>
+          </Attribute>
+          <Attribute Name="Anzahl" AttributeDataType="xs:int">
+            <Value>6</Value>
+          </Attribute>
+        </Attribute>
+        <Attribute Name="Spawn-Daten" AttributeDataType="xs:string">
+          <Attribute Name="Basis-Position" AttributeDataType="xs:string" Unit="m">
+            <Value>0.5,-0.25,0.03</Value>
+          </Attribute>
+          <Attribute Name="Spawn-Orientierung" AttributeDataType="xs:string" Unit="quaternion">
+            <Value>0.0,0.0,0.707,0.707</Value>
+          </Attribute>
+          <Attribute Name="Mesh-Datei" AttributeDataType="xs:string">
+            <Value>VAL-MS-T1-T2.stl</Value>
+          </Attribute>
+        </Attribute>
+      </InternalElement>
+      
+      <!-- PTU_2_5_TWIN_BU -->
+      <InternalElement Name="PTU_2_5_TWIN_BU" ID="ptu_2_5_twin_bu-id" RefBaseSystemUnitPath="Bauteile/ElektronischeKlemme">
+        <Attribute Name="Basics" AttributeDataType="xs:string">
+          <Attribute Name="Name" AttributeDataType="xs:string">
+            <Value>PTU_2_5_TWIN_BU</Value>
+          </Attribute>
+          <Attribute Name="Beschreibung" AttributeDataType="xs:string">
+            <Value>Push-in TWIN Hybridklemme</Value>
+          </Attribute>
+          <Attribute Name="Farbe" AttributeDataType="xs:string">
+            <Value>Blau</Value>
+          </Attribute>
+          <Attribute Name="Größenkategorie" AttributeDataType="xs:string">
+            <Value>klein</Value>
+          </Attribute>
+        </Attribute>
+        <Attribute Name="Geometrie" AttributeDataType="xs:string">
+          <Attribute Name="Breite" AttributeDataType="xs:double" Unit="mm">
+            <Value>8.15</Value>
+          </Attribute>
+          <Attribute Name="Dimensionen" AttributeDataType="xs:string" Unit="mm">
+            <Value>8.15x52x40</Value>
+          </Attribute>
+        </Attribute>
+        <Attribute Name="Roboter-Daten" AttributeDataType="xs:string">
+          <Attribute Name="Pick-Position" AttributeDataType="xs:string" Unit="m">
+            <Value>0.023,-0.397,0.14</Value>
+          </Attribute>
+          <Attribute Name="Anzahl" AttributeDataType="xs:int">
+            <Value>6</Value>
+          </Attribute>
+        </Attribute>
+        <Attribute Name="Spawn-Daten" AttributeDataType="xs:string">
+          <Attribute Name="Basis-Position" AttributeDataType="xs:string" Unit="m">
+            <Value>0.05,-0.4,0.03</Value>
+          </Attribute>
+          <Attribute Name="Spawn-Orientierung" AttributeDataType="xs:string" Unit="quaternion">
+            <Value>0.0,0.0,0.707,0.707</Value>
+          </Attribute>
+          <Attribute Name="Mesh-Datei" AttributeDataType="xs:string">
+            <Value>PTU_2,5-TWIN_BU.dae</Value>
+          </Attribute>
+        </Attribute>
+      </InternalElement>
+      
+      <!-- QTCU_2_5 -->
+      <InternalElement Name="QTCU_2_5" ID="qtcu_2_5-id" RefBaseSystemUnitPath="Bauteile/ElektronischeKlemme">
+        <Attribute Name="Basics" AttributeDataType="xs:string">
+          <Attribute Name="Name" AttributeDataType="xs:string">
+            <Value>QTCU_2_5</Value>
+          </Attribute>
+          <Attribute Name="Beschreibung" AttributeDataType="xs:string">
+            <Value>Quick-Connection Durchgangsklemme</Value>
+          </Attribute>
+          <Attribute Name="Farbe" AttributeDataType="xs:string">
+            <Value>Grau</Value>
+          </Attribute>
+          <Attribute Name="Größenkategorie" AttributeDataType="xs:string">
+            <Value>klein</Value>
+          </Attribute>
+        </Attribute>
+        <Attribute Name="Geometrie" AttributeDataType="xs:string">
+          <Attribute Name="Breite" AttributeDataType="xs:double" Unit="mm">
+            <Value>6.2</Value>
+          </Attribute>
+          <Attribute Name="Dimensionen" AttributeDataType="xs:string" Unit="mm">
+            <Value>6.2x50x40</Value>
+          </Attribute>
+        </Attribute>
+        <Attribute Name="Roboter-Daten" AttributeDataType="xs:string">
+          <Attribute Name="Pick-Position" AttributeDataType="xs:string" Unit="m">
+            <Value>0.021,-0.546,0.14</Value>
+          </Attribute>
+          <Attribute Name="Anzahl" AttributeDataType="xs:int">
+            <Value>6</Value>
+          </Attribute>
+        </Attribute>
+        <Attribute Name="Spawn-Daten" AttributeDataType="xs:string">
+          <Attribute Name="Basis-Position" AttributeDataType="xs:string" Unit="m">
+            <Value>0.05,-0.55,0.03</Value>
+          </Attribute>
+          <Attribute Name="Spawn-Orientierung" AttributeDataType="xs:string" Unit="quaternion">
+            <Value>0.0,0.0,0.707,0.707</Value>
+          </Attribute>
+          <Attribute Name="Mesh-Datei" AttributeDataType="xs:string">
+            <Value>QTCU_2,5.dae</Value>
+          </Attribute>
+        </Attribute>
+      </InternalElement>
+      
+      <!-- STU_35_4X10_YE -->
+      <InternalElement Name="STU_35_4X10_YE" ID="stu_35_4x10_ye-id" RefBaseSystemUnitPath="Bauteile/ElektronischeKlemme">
+        <Attribute Name="Basics" AttributeDataType="xs:string">
+          <Attribute Name="Name" AttributeDataType="xs:string">
+            <Value>STU_35_4X10_YE</Value>
+          </Attribute>
+          <Attribute Name="Beschreibung" AttributeDataType="xs:string">
+            <Value>Potentialverteiler-Klemme</Value>
+          </Attribute>
+          <Attribute Name="Farbe" AttributeDataType="xs:string">
+            <Value>Gelb</Value>
+          </Attribute>
+          <Attribute Name="Größenkategorie" AttributeDataType="xs:string">
+            <Value>mittel</Value>
+          </Attribute>
+        </Attribute>
+        <Attribute Name="Geometrie" AttributeDataType="xs:string">
+          <Attribute Name="Breite" AttributeDataType="xs:double" Unit="mm">
+            <Value>16.3</Value>
+          </Attribute>
+          <Attribute Name="Dimensionen" AttributeDataType="xs:string" Unit="mm">
+            <Value>16.3x86x45.3</Value>
+          </Attribute>
+        </Attribute>
+        <Attribute Name="Roboter-Daten" AttributeDataType="xs:string">
+          <Attribute Name="Pick-Position" AttributeDataType="xs:string" Unit="m">
+            <Value>0.016,0.509,0.14</Value>
+          </Attribute>
+          <Attribute Name="Anzahl" AttributeDataType="xs:int">
+            <Value>6</Value>
+          </Attribute>
+        </Attribute>
+        <Attribute Name="Spawn-Daten" AttributeDataType="xs:string">
+          <Attribute Name="Basis-Position" AttributeDataType="xs:string" Unit="m">
+            <Value>0.05,0.5,0.03</Value>
+          </Attribute>
+          <Attribute Name="Spawn-Orientierung" AttributeDataType="xs:string" Unit="quaternion">
+            <Value>0.0,0.0,0.707,0.707</Value>
+          </Attribute>
+          <Attribute Name="Mesh-Datei" AttributeDataType="xs:string">
+            <Value>STU_35_4X10_YE.dae</Value>
+          </Attribute>
+        </Attribute>
+      </InternalElement>
+      
+      <!-- UT_1_5_VT -->
+      <InternalElement Name="UT_1_5_VT" ID="ut_1_5_vt-id" RefBaseSystemUnitPath="Bauteile/ElektronischeKlemme">
+        <Attribute Name="Basics" AttributeDataType="xs:string">
+          <Attribute Name="Name" AttributeDataType="xs:string">
+            <Value>UT_1_5_VT</Value>
+          </Attribute>
+          <Attribute Name="Beschreibung" AttributeDataType="xs:string">
+            <Value>Durchgangsklemme 1,5mm²</Value>
+          </Attribute>
+          <Attribute Name="Farbe" AttributeDataType="xs:string">
+            <Value>Violett</Value>
+          </Attribute>
+          <Attribute Name="Größenkategorie" AttributeDataType="xs:string">
+            <Value>klein</Value>
+          </Attribute>
+        </Attribute>
+        <Attribute Name="Geometrie" AttributeDataType="xs:string">
+          <Attribute Name="Breite" AttributeDataType="xs:double" Unit="mm">
+            <Value>5.0</Value>
+          </Attribute>
+          <Attribute Name="Dimensionen" AttributeDataType="xs:string" Unit="mm">
+            <Value>5.0x50x35</Value>
+          </Attribute>
+        </Attribute>
+        <Attribute Name="Roboter-Daten" AttributeDataType="xs:string">
+          <Attribute Name="Pick-Position" AttributeDataType="xs:string" Unit="m">
+            <Value>0.025,0.655,0.14</Value>
+          </Attribute>
+          <Attribute Name="Anzahl" AttributeDataType="xs:int">
+            <Value>6</Value>
+          </Attribute>
+        </Attribute>
+        <Attribute Name="Spawn-Daten" AttributeDataType="xs:string">
+          <Attribute Name="Basis-Position" AttributeDataType="xs:string" Unit="m">
+            <Value>0.05,0.65,0.03</Value>
+          </Attribute>
+          <Attribute Name="Spawn-Orientierung" AttributeDataType="xs:string" Unit="quaternion">
+            <Value>0.0,0.0,0.707,0.707</Value>
+          </Attribute>
+          <Attribute Name="Mesh-Datei" AttributeDataType="xs:string">
+            <Value>UT_1,5_VT.dae</Value>
+          </Attribute>
+        </Attribute>
+      </InternalElement>
+      
+      <!-- UT_1_5_OG -->
+      <InternalElement Name="UT_1_5_OG" ID="ut_1_5_og-id" RefBaseSystemUnitPath="Bauteile/ElektronischeKlemme">
+        <Attribute Name="Basics" AttributeDataType="xs:string">
+          <Attribute Name="Name" AttributeDataType="xs:string">
+            <Value>UT_1_5_OG</Value>
+          </Attribute>
+          <Attribute Name="Beschreibung" AttributeDataType="xs:string">
+            <Value>Durchgangsklemme 1,5mm²</Value>
+          </Attribute>
+          <Attribute Name="Farbe" AttributeDataType="xs:string">
+            <Value>Orange</Value>
+          </Attribute>
+          <Attribute Name="Größenkategorie" AttributeDataType="xs:string">
+            <Value>klein</Value>
+          </Attribute>
+        </Attribute>
+        <Attribute Name="Geometrie" AttributeDataType="xs:string">
+          <Attribute Name="Breite" AttributeDataType="xs:double" Unit="mm">
+            <Value>5.0</Value>
+          </Attribute>
+          <Attribute Name="Dimensionen" AttributeDataType="xs:string" Unit="mm">
+            <Value>5.0x50x35</Value>
+          </Attribute>
+        </Attribute>
+        <Attribute Name="Roboter-Daten" AttributeDataType="xs:string">
+          <Attribute Name="Pick-Position" AttributeDataType="xs:string" Unit="m">
+            <Value>0.027,-0.697,0.14</Value>
+          </Attribute>
+          <Attribute Name="Anzahl" AttributeDataType="xs:int">
+            <Value>6</Value>
+          </Attribute>
+        </Attribute>
+        <Attribute Name="Spawn-Daten" AttributeDataType="xs:string">
+          <Attribute Name="Basis-Position" AttributeDataType="xs:string" Unit="m">
+            <Value>0.05,-0.7,0.03</Value>
+          </Attribute>
+          <Attribute Name="Spawn-Orientierung" AttributeDataType="xs:string" Unit="quaternion">
+            <Value>0.0,0.0,0.707,0.707</Value>
+          </Attribute>
+          <Attribute Name="Mesh-Datei" AttributeDataType="xs:string">
+            <Value>UT_1,5_OG.dae</Value>
+          </Attribute>
+        </Attribute>
+      </InternalElement>
+      
+      <!-- Hutschiene -->
+      <InternalElement Name="Hutschiene" ID="hutschiene-id" RefBaseSystemUnitPath="Bauteile/Hutschiene">
+        <Attribute Name="Basics" AttributeDataType="xs:string">
+          <Attribute Name="Name" AttributeDataType="xs:string">
+            <Value>Hutschiene</Value>
+          </Attribute>
+          <Attribute Name="Beschreibung" AttributeDataType="xs:string">
+            <Value>DIN-Schiene zur Befestigung der Klemmen</Value>
+          </Attribute>
+          <Attribute Name="Farbe" AttributeDataType="xs:string">
+            <Value>Metall</Value>
+          </Attribute>
+        </Attribute>
+        <Attribute Name="Geometrie" AttributeDataType="xs:string">
+          <Attribute Name="Länge" AttributeDataType="xs:double" Unit="mm">
+            <Value>683</Value>
+          </Attribute>
+          <Attribute Name="Dimensionen" AttributeDataType="xs:string" Unit="mm">
+            <Value>683x35x7.5</Value>
+          </Attribute>
+        </Attribute>
+        <Attribute Name="Roboter-Daten" AttributeDataType="xs:string">
+          <Attribute Name="Start-Position" AttributeDataType="xs:string" Unit="m">
+            <Value>0.342,0.821,0.152</Value>
+          </Attribute>
+          <Attribute Name="End-Position" AttributeDataType="xs:string" Unit="m">
+            <Value>-0.341,0.825,0.152</Value>
+          </Attribute>
+          <Attribute Name="Greif-Orientierung" AttributeDataType="xs:string" Unit="quaternion">
+            <Value>-0.7078,0.7064,0.0028284,0.0056568</Value>
+          </Attribute>
+          <Attribute Name="Anzahl" AttributeDataType="xs:int">
+            <Value>5</Value>
+          </Attribute>
+        </Attribute>
+        <Attribute Name="Spawn-Daten" AttributeDataType="xs:string">
+          <Attribute Name="Basis-Position" AttributeDataType="xs:string" Unit="m">
+            <Value>-0.375,0.807,0.037</Value>
+          </Attribute>
+          <Attribute Name="Spawn-Orientierung" AttributeDataType="xs:string" Unit="quaternion">
+            <Value>0.0,0.0,0.0,1.0</Value>
+          </Attribute>
+          <Attribute Name="Mesh-Datei" AttributeDataType="xs:string">
+            <Value>Hutschiene.stl</Value>
+          </Attribute>
+        </Attribute>
+      </InternalElement>
+      
+      <!-- Schaltschrank -->
+      <InternalElement Name="Schaltschrank" ID="schaltschrank-id" RefBaseSystemUnitPath="Bauteile/Schaltschrank">
+        <Attribute Name="Basics" AttributeDataType="xs:string">
+          <Attribute Name="Name" AttributeDataType="xs:string">
+            <Value>Schaltschrank ohne Tür</Value>
+          </Attribute>
+          <Attribute Name="Beschreibung" AttributeDataType="xs:string">
+            <Value>Elektrischer Schaltschrank zur Aufnahme der Hutschienen</Value>
+          </Attribute>
+          <Attribute Name="Farbe" AttributeDataType="xs:string">
+            <Value>Grau</Value>
+          </Attribute>
+        </Attribute>
+        <Attribute Name="Spawn-Daten" AttributeDataType="xs:string">
+          <Attribute Name="Position" AttributeDataType="xs:string" Unit="m">
+            <Value>-0.95,-1.0,0.02</Value>
+          </Attribute>
+          <Attribute Name="Orientierung" AttributeDataType="xs:string" Unit="quaternion">
+            <Value>0.7071068,0.0,0.0,-0.7071068</Value>
+          </Attribute>
+          <Attribute Name="Mesh-Datei" AttributeDataType="xs:string">
+            <Value>Schaltschrank_ohne_Tuer.stl</Value>
+          </Attribute>
+        </Attribute>
+      </InternalElement>
+      
+      <!-- Hutschienen-Halter -->
+      <InternalElement Name="Hutschienen-Halter" ID="hutschienen-halter-id" RefBaseSystemUnitPath="Bauteile/Halter">
+        <Attribute Name="Basics" AttributeDataType="xs:string">
+          <Attribute Name="Name" AttributeDataType="xs:string">
+            <Value>Hutschienen-Halter</Value>
+          </Attribute>
+          <Attribute Name="Beschreibung" AttributeDataType="xs:string">
+            <Value>Halterung für Hutschienen</Value>
+          </Attribute>
+          <Attribute Name="Farbe" AttributeDataType="xs:string">
+            <Value>Metall</Value>
+          </Attribute>
+        </Attribute>
+        <Attribute Name="Spawn-Daten" AttributeDataType="xs:string">
+          <Attribute Name="Position" AttributeDataType="xs:string" Unit="m">
+            <Value>-0.3,0.811,0.03</Value>
+          </Attribute>
+          <Attribute Name="Orientierung" AttributeDataType="xs:string" Unit="quaternion">
+            <Value>0.5,0.5,0.5,0.5</Value>
+          </Attribute>
+          <Attribute Name="Mesh-Datei" AttributeDataType="xs:string">
+            <Value>Hutschienen-Halter.stl</Value>
+          </Attribute>
+        </Attribute>
+      </InternalElement>
+      
+      <!-- LPS Logo -->
+      <InternalElement Name="LPS-Logo" ID="lps-logo-id" RefBaseSystemUnitPath="Bauteile/Logo">
+        <Attribute Name="Basics" AttributeDataType="xs:string">
+          <Attribute Name="Name" AttributeDataType="xs:string">
+            <Value>LPS Logo</Value>
+          </Attribute>
+          <Attribute Name="Beschreibung" AttributeDataType="xs:string">
+            <Value>Logo des Lehrstuhls für Produktionssysteme</Value>
+          </Attribute>
+          <Attribute Name="Farbe" AttributeDataType="xs:string">
+            <Value>Blau</Value>
+          </Attribute>
+        </Attribute>
+        <Attribute Name="Spawn-Daten" AttributeDataType="xs:string">
+          <Attribute Name="Position" AttributeDataType="xs:string" Unit="m">
+            <Value>1.1,1.0 ,0.05</Value>
+          </Attribute>
+          <Attribute Name="Orientierung" AttributeDataType="xs:string" Unit="quaternion">
+            <Value>0.0,0.0,0.707,0.707</Value>
+          </Attribute>
+          <Attribute Name="Mesh-Datei" AttributeDataType="xs:string">
+            <Value>lps-logo-text.stl</Value>
+          </Attribute>
+          <Attribute Name="Skalierungs-Faktor" AttributeDataType="xs:double">
+            <Value>12.0</Value>
+          </Attribute>
+        </Attribute>
+      </InternalElement>
+      
+    </InternalElement>
+    <InternalElement Name="Umgebung" ID="b80fa3c8-9d63-498a-8093-d0dff6a69eec" />
+  </InstanceHierarchy>
+  
+  <SystemUnitClassLib Name="Bauteile" ID="cf42687b-53e3-4891-9e8d-71196508befe">
+    <Version>1.0.0</Version>
+    <SystemUnitClass Name="ElektronischeKlemme" ID="electronic-terminal">
+      <Version>1.0.0</Version>
+      <Attribute Name="Basics" AttributeDataType="xs:string">
+        <Attribute Name="Name" AttributeDataType="xs:string" />
+        <Attribute Name="Beschreibung" AttributeDataType="xs:string" />
+        <Attribute Name="Farbe" AttributeDataType="xs:string" />
+        <Attribute Name="Größenkategorie" AttributeDataType="xs:string" />
+      </Attribute>
+      <Attribute Name="Geometrie" AttributeDataType="xs:string">
+        <Attribute Name="Breite" AttributeDataType="xs:double" Unit="mm" />
+        <Attribute Name="Dimensionen" AttributeDataType="xs:string" Unit="mm" />
+      </Attribute>
+      <Attribute Name="Roboter-Daten" AttributeDataType="xs:string">
+        <Attribute Name="Pick-Position" AttributeDataType="xs:string" Unit="m" />
+        <Attribute Name="Anzahl" AttributeDataType="xs:int" />
+      </Attribute>
+      <Attribute Name="Spawn-Daten" AttributeDataType="xs:string">
+        <Attribute Name="Basis-Position" AttributeDataType="xs:string" Unit="m" />
+        <Attribute Name="Spawn-Orientierung" AttributeDataType="xs:string" Unit="quaternion" />
+        <Attribute Name="Mesh-Datei" AttributeDataType="xs:string" />
+      </Attribute>
+    </SystemUnitClass>
+    <SystemUnitClass Name="Hutschiene" ID="din-rail">
+      <Version>1.0.0</Version>
+      <Attribute Name="Basics" AttributeDataType="xs:string">
+        <Attribute Name="Name" AttributeDataType="xs:string" />
+        <Attribute Name="Beschreibung" AttributeDataType="xs:string" />
+        <Attribute Name="Farbe" AttributeDataType="xs:string" />
+      </Attribute>
+      <Attribute Name="Geometrie" AttributeDataType="xs:string">
+        <Attribute Name="Länge" AttributeDataType="xs:double" Unit="mm" />
+        <Attribute Name="Dimensionen" AttributeDataType="xs:string" Unit="mm" />
+      </Attribute>
+      <Attribute Name="Roboter-Daten" AttributeDataType="xs:string">
+        <Attribute Name="Start-Position" AttributeDataType="xs:string" Unit="m" />
+        <Attribute Name="End-Position" AttributeDataType="xs:string" Unit="m" />
+        <Attribute Name="Greif-Orientierung" AttributeDataType="xs:string" Unit="quaternion" />
+        <Attribute Name="Anzahl" AttributeDataType="xs:int" />
+      </Attribute>
+      <Attribute Name="Spawn-Daten" AttributeDataType="xs:string">
+        <Attribute Name="Basis-Position" AttributeDataType="xs:string" Unit="m" />
+        <Attribute Name="Spawn-Orientierung" AttributeDataType="xs:string" Unit="quaternion" />
+        <Attribute Name="Mesh-Datei" AttributeDataType="xs:string" />
+      </Attribute>
+    </SystemUnitClass>
+    <SystemUnitClass Name="Schaltschrank" ID="cabinet">
+      <Version>1.0.0</Version>
+      <Attribute Name="Basics" AttributeDataType="xs:string">
+        <Attribute Name="Name" AttributeDataType="xs:string" />
+        <Attribute Name="Beschreibung" AttributeDataType="xs:string" />
+        <Attribute Name="Farbe" AttributeDataType="xs:string" />
+      </Attribute>
+      <Attribute Name="Spawn-Daten" AttributeDataType="xs:string">
+        <Attribute Name="Position" AttributeDataType="xs:string" Unit="m" />
+        <Attribute Name="Orientierung" AttributeDataType="xs:string" Unit="quaternion" />
+        <Attribute Name="Mesh-Datei" AttributeDataType="xs:string" />
+        <Attribute Name="Skalierungs-Faktor" AttributeDataType="xs:double" />
+      </Attribute>
+    </SystemUnitClass>
+    <SystemUnitClass Name="Halter" ID="holder">
+      <Version>1.0.0</Version>
+      <Attribute Name="Basics" AttributeDataType="xs:string">
+        <Attribute Name="Name" AttributeDataType="xs:string" />
+        <Attribute Name="Beschreibung" AttributeDataType="xs:string" />
+        <Attribute Name="Farbe" AttributeDataType="xs:string" />
+      </Attribute>
+      <Attribute Name="Spawn-Daten" AttributeDataType="xs:string">
+        <Attribute Name="Position" AttributeDataType="xs:string" Unit="m" />
+        <Attribute Name="Orientierung" AttributeDataType="xs:string" Unit="quaternion" />
+        <Attribute Name="Mesh-Datei" AttributeDataType="xs:string" />
+        <Attribute Name="Skalierungs-Faktor" AttributeDataType="xs:double" />
+      </Attribute>
+    </SystemUnitClass>
+    <SystemUnitClass Name="Logo" ID="logo">
+      <Version>1.0.0</Version>
+      <Attribute Name="Basics" AttributeDataType="xs:string">
+        <Attribute Name="Name" AttributeDataType="xs:string" />
+        <Attribute Name="Beschreibung" AttributeDataType="xs:string" />
+        <Attribute Name="Farbe" AttributeDataType="xs:string" />
+      </Attribute>
+      <Attribute Name="Spawn-Daten" AttributeDataType="xs:string">
+        <Attribute Name="Position" AttributeDataType="xs:string" Unit="m" />
+        <Attribute Name="Orientierung" AttributeDataType="xs:string" Unit="quaternion" />
+        <Attribute Name="Mesh-Datei" AttributeDataType="xs:string" />
+        <Attribute Name="Skalierungs-Faktor" AttributeDataType="xs:double" />
+      </Attribute>
+    </SystemUnitClass>
+    <SystemUnitClass Name="Umgebung" ID="environment">
+      <Version>1.0.0</Version>
+      <Attribute Name="Basics" AttributeDataType="xs:string">
+        <Attribute Name="Name" AttributeDataType="xs:string" />
+        <Attribute Name="Beschreibung" AttributeDataType="xs:string" />
+        <Attribute Name="Farbe" AttributeDataType="xs:string" />
+      </Attribute>
+      <Attribute Name="Spawn-Daten" AttributeDataType="xs:string">
+        <Attribute Name="Position" AttributeDataType="xs:string" Unit="m" />
+        <Attribute Name="Orientierung" AttributeDataType="xs:string" Unit="quaternion" />
+        <Attribute Name="Mesh-Datei" AttributeDataType="xs:string" />
+      </Attribute>
+    </SystemUnitClass>
+  </SystemUnitClassLib>
+</CAEXFile>

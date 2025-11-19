@@ -1,0 +1,25 @@
+<?xml version="1.0"?>
+<robot name="gripper" xmlns:xacro="http://ros.org/wiki/xacro">
+  <!-- parameters -->
+  <xacro:arg name="simulated" default="true" />
+
+  <xacro:include filename="$(find custom_gripper)/urdf/gripper_macro.xacro" />
+
+  <link name="world" />
+  <!-- This will create the gripper -->
+  <xacro:gripper parent="world" simulated="$(arg simulated)">
+    <origin xyz="0 0 0.5" rpy="0 0 0" />
+  </xacro:gripper>
+
+  <xacro:if value="$(arg simulated)">
+    <gazebo>
+      <plugin filename="ign_ros2_control-system" name="ign_ros2_control::IgnitionROS2ControlPlugin">
+        <robot_param>robot_description</robot_param>
+        <robot_param_node>robot_state_publisher</robot_param_node>
+        <parameters>$(find custom_gripper)/config/gripper_controllers.yaml</parameters>
+      </plugin>
+    </gazebo>
+  </xacro:if>
+
+</robot>
+
