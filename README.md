@@ -1,3 +1,10 @@
+## 🎬 Video Overview
+
+A visual walkthrough of the framework, including setup, GUI, and task execution, is available here:  
+[Watch on YouTube](https://youtu.be/bkZYkbvItmU)
+
+---
+
 ## 🔧 Installation (General Overview)
 
 This guide gives a high-level overview of what needs to be installed and configured, without prescribing exact commands. You can follow the official documentation of each component for the detailed installation steps.
