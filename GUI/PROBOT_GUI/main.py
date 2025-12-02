@@ -5,6 +5,17 @@ import os
 import subprocess
 from dataclasses import dataclass
 from typing import Dict, Optional, Tuple
+from pathlib import Path
+
+# Load environment variables from .env file
+try:
+    from dotenv import load_dotenv
+    # Look for .env file in the same directory as this script
+    env_path = Path(__file__).parent / '.env'
+    load_dotenv(dotenv_path=env_path)
+except ImportError:
+    print("⚠ python-dotenv not installed. Install with: pip install python-dotenv")
+    print("⚠ Falling back to system environment variables only")
 
 # PyQt6 Imports
 try:
