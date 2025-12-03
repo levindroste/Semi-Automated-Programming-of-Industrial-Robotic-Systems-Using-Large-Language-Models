@@ -11,6 +11,55 @@ A **two-level LLM processing pipeline** transforms natural language task descrip
 
 ---
 
+## ROS MCP Server Integration
+
+**IMPORTANT**: This project has a ROS MCP server configured via [.mcp.json](.mcp.json) that provides direct ROS interaction capabilities.
+
+### Before Making ROS-Related Changes
+
+When Claude Code needs to work with ROS topics, services, or robot state, **you MUST first ensure rosbridge is running**:
+
+1. **Check if rosbridge is running**:
+   ```bash
+   ps aux | grep rosbridge_websocket
+   ```
+
+2. **If not running, start rosbridge in the background**:
+   ```bash
+   source /opt/ros/humble/setup.bash && source ~/rosbridge_ws/install/setup.bash && ros2 launch rosbridge_server rosbridge_websocket_launch.xml &
+   ```
+
+   Or use the helper script:
+   ```bash
+   cd /home/levin/Semi-Automated-Programming-of-Industrial-Robotic-Systems-Using-Large-Language-Models && ./start_rosbridge.sh &
+   ```
+
+3. **The MCP server will automatically connect** once rosbridge is running
+
+### Available MCP Tools
+
+Once rosbridge is running, you can use MCP tools to:
+- Query ROS topics: "What topics are available?"
+- Inspect robot state: "Show me the current robot joint positions"
+- Monitor sensors: "What's the current camera feed?"
+- Send commands: "Publish a velocity command"
+- Call services: "Call the /get_planning_scene service"
+
+### When to Start Rosbridge
+
+Start rosbridge automatically (using Bash tool) when:
+- User asks to interact with ROS topics or services
+- You need to inspect the current robot state
+- Making changes that require testing with live ROS nodes
+- Debugging ROS communication issues
+
+### Rosbridge Location
+- **Built from source**: `~/rosbridge_ws`
+- **MCP server location**: `~/ros-mcp-server`
+- **Configuration**: See [MCP_SETUP.md](MCP_SETUP.md) for details
+
+---
+
 ## Repository Structure
 
 ```

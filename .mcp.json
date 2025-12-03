@@ -1,0 +1,11 @@
+{
+  "mcpServers": {
+    "ros-mcp-server": {
+      "command": "bash",
+      "args": [
+        "-c",
+        "cd /home/levin/ros-mcp-server && source /opt/ros/humble/setup.bash && source /home/levin/rosbridge_ws/install/setup.bash && uv run server.py --transport=stdio"
+      ]
+    }
+  }
+}
