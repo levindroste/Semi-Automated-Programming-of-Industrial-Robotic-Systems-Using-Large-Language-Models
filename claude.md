@@ -24,17 +24,16 @@ When Claude Code needs to work with ROS topics, services, or robot state, **you 
    ps aux | grep rosbridge_websocket
    ```
 
-2. **If not running, start rosbridge in the background**:
+2. **If not running, start rosbridge using the helper script**:
    ```bash
-   source /opt/ros/humble/setup.bash && source ~/rosbridge_ws/install/setup.bash && ros2 launch rosbridge_server rosbridge_websocket_launch.xml &
+   cd /home/levin/Semi-Automated-Programming-of-Industrial-Robotic-Systems-Using-Large-Language-Models && ./launch_rosbridge.sh
    ```
 
-   Or use the helper script:
-   ```bash
-   cd /home/levin/Semi-Automated-Programming-of-Industrial-Robotic-Systems-Using-Large-Language-Models && ./start_rosbridge.sh &
-   ```
+   This script starts both `rosbridge_websocket` AND `rosapi_node` (both are required for MCP).
 
-3. **The MCP server will automatically connect** once rosbridge is running
+   **Note**: Run this in a separate terminal - it needs to stay running.
+
+3. **The MCP server will automatically connect** once rosbridge and rosapi are running
 
 ### Available MCP Tools
 
@@ -47,16 +46,17 @@ Once rosbridge is running, you can use MCP tools to:
 
 ### When to Start Rosbridge
 
-Start rosbridge automatically (using Bash tool) when:
+Start rosbridge (ask user to run `./launch_rosbridge.sh` in a separate terminal) when:
 - User asks to interact with ROS topics or services
 - You need to inspect the current robot state
 - Making changes that require testing with live ROS nodes
 - Debugging ROS communication issues
 
 ### Rosbridge Location
-- **Built from source**: `~/rosbridge_ws`
-- **MCP server location**: `~/ros-mcp-server`
-- **Configuration**: See [MCP_SETUP.md](MCP_SETUP.md) for details
+- **Built from source**: `~/rosbridge_ws` (Humble-compatible branch)
+- **MCP server location**: `~/ros-mcp-server` (v2.2.1)
+- **Launch script**: `./launch_rosbridge.sh` (starts rosbridge + rosapi)
+- **Configuration**: See [ROS_MCP_SETUP.md](ROS_MCP_SETUP.md) for details
 
 ---
 
