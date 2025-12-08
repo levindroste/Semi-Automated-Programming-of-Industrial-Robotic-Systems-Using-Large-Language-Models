@@ -1,0 +1,31 @@
+[0.008s] Invoking command in '/home/levin/Semi-Automated-Programming-of-Industrial-Robotic-Systems-Using-Large-Language-Models/build/custom_gripper': CMAKE_PREFIX_PATH=/opt/ros/humble /usr/bin/cmake --build /home/levin/Semi-Automated-Programming-of-Industrial-Robotic-Systems-Using-Large-Language-Models/build/custom_gripper -- -j20 -l20
+[0.041s] Invoked command in '/home/levin/Semi-Automated-Programming-of-Industrial-Robotic-Systems-Using-Large-Language-Models/build/custom_gripper' returned '0': CMAKE_PREFIX_PATH=/opt/ros/humble /usr/bin/cmake --build /home/levin/Semi-Automated-Programming-of-Industrial-Robotic-Systems-Using-Large-Language-Models/build/custom_gripper -- -j20 -l20
+[0.051s] Invoking command in '/home/levin/Semi-Automated-Programming-of-Industrial-Robotic-Systems-Using-Large-Language-Models/build/custom_gripper': CMAKE_PREFIX_PATH=/opt/ros/humble /usr/bin/cmake --install /home/levin/Semi-Automated-Programming-of-Industrial-Robotic-Systems-Using-Large-Language-Models/build/custom_gripper
+[0.057s] -- Install configuration: ""
+[0.058s] -- Up-to-date: /home/levin/Semi-Automated-Programming-of-Industrial-Robotic-Systems-Using-Large-Language-Models/install/custom_gripper/share/custom_gripper/launch
+[0.058s] -- Up-to-date: /home/levin/Semi-Automated-Programming-of-Industrial-Robotic-Systems-Using-Large-Language-Models/install/custom_gripper/share/custom_gripper/launch/gripper_control.launch.py
+[0.058s] -- Up-to-date: /home/levin/Semi-Automated-Programming-of-Industrial-Robotic-Systems-Using-Large-Language-Models/install/custom_gripper/share/custom_gripper/launch/view_gripper.launch.py
+[0.058s] -- Up-to-date: /home/levin/Semi-Automated-Programming-of-Industrial-Robotic-Systems-Using-Large-Language-Models/install/custom_gripper/share/custom_gripper/urdf
+[0.058s] -- Up-to-date: /home/levin/Semi-Automated-Programming-of-Industrial-Robotic-Systems-Using-Large-Language-Models/install/custom_gripper/share/custom_gripper/urdf/gripper.urdf.xacro
+[0.058s] -- Up-to-date: /home/levin/Semi-Automated-Programming-of-Industrial-Robotic-Systems-Using-Large-Language-Models/install/custom_gripper/share/custom_gripper/urdf/gripper_macro.xacro
+[0.058s] -- Installing: /home/levin/Semi-Automated-Programming-of-Industrial-Robotic-Systems-Using-Large-Language-Models/install/custom_gripper/share/custom_gripper/urdf/gripper.ros2_control.xacro
+[0.058s] -- Up-to-date: /home/levin/Semi-Automated-Programming-of-Industrial-Robotic-Systems-Using-Large-Language-Models/install/custom_gripper/share/custom_gripper/rviz
+[0.058s] -- Up-to-date: /home/levin/Semi-Automated-Programming-of-Industrial-Robotic-Systems-Using-Large-Language-Models/install/custom_gripper/share/custom_gripper/rviz/urdf.rviz
+[0.058s] -- Up-to-date: /home/levin/Semi-Automated-Programming-of-Industrial-Robotic-Systems-Using-Large-Language-Models/install/custom_gripper/share/custom_gripper/config
+[0.058s] -- Up-to-date: /home/levin/Semi-Automated-Programming-of-Industrial-Robotic-Systems-Using-Large-Language-Models/install/custom_gripper/share/custom_gripper/config/gripper_controllers.yaml
+[0.058s] -- Up-to-date: /home/levin/Semi-Automated-Programming-of-Industrial-Robotic-Systems-Using-Large-Language-Models/install/custom_gripper/share/ament_index/resource_index/package_run_dependencies/custom_gripper
+[0.058s] -- Up-to-date: /home/levin/Semi-Automated-Programming-of-Industrial-Robotic-Systems-Using-Large-Language-Models/install/custom_gripper/share/ament_index/resource_index/parent_prefix_path/custom_gripper
+[0.058s] -- Up-to-date: /home/levin/Semi-Automated-Programming-of-Industrial-Robotic-Systems-Using-Large-Language-Models/install/custom_gripper/share/custom_gripper/environment/ament_prefix_path.sh
+[0.058s] -- Up-to-date: /home/levin/Semi-Automated-Programming-of-Industrial-Robotic-Systems-Using-Large-Language-Models/install/custom_gripper/share/custom_gripper/environment/ament_prefix_path.dsv
+[0.058s] -- Up-to-date: /home/levin/Semi-Automated-Programming-of-Industrial-Robotic-Systems-Using-Large-Language-Models/install/custom_gripper/share/custom_gripper/environment/path.sh
+[0.058s] -- Up-to-date: /home/levin/Semi-Automated-Programming-of-Industrial-Robotic-Systems-Using-Large-Language-Models/install/custom_gripper/share/custom_gripper/environment/path.dsv
+[0.059s] -- Up-to-date: /home/levin/Semi-Automated-Programming-of-Industrial-Robotic-Systems-Using-Large-Language-Models/install/custom_gripper/share/custom_gripper/local_setup.bash
+[0.059s] -- Up-to-date: /home/levin/Semi-Automated-Programming-of-Industrial-Robotic-Systems-Using-Large-Language-Models/install/custom_gripper/share/custom_gripper/local_setup.sh
+[0.059s] -- Up-to-date: /home/levin/Semi-Automated-Programming-of-Industrial-Robotic-Systems-Using-Large-Language-Models/install/custom_gripper/share/custom_gripper/local_setup.zsh
+[0.059s] -- Up-to-date: /home/levin/Semi-Automated-Programming-of-Industrial-Robotic-Systems-Using-Large-Language-Models/install/custom_gripper/share/custom_gripper/local_setup.dsv
+[0.059s] -- Installing: /home/levin/Semi-Automated-Programming-of-Industrial-Robotic-Systems-Using-Large-Language-Models/install/custom_gripper/share/custom_gripper/package.dsv
+[0.059s] -- Up-to-date: /home/levin/Semi-Automated-Programming-of-Industrial-Robotic-Systems-Using-Large-Language-Models/install/custom_gripper/share/ament_index/resource_index/packages/custom_gripper
+[0.059s] -- Up-to-date: /home/levin/Semi-Automated-Programming-of-Industrial-Robotic-Systems-Using-Large-Language-Models/install/custom_gripper/share/custom_gripper/cmake/custom_gripperConfig.cmake
+[0.059s] -- Up-to-date: /home/levin/Semi-Automated-Programming-of-Industrial-Robotic-Systems-Using-Large-Language-Models/install/custom_gripper/share/custom_gripper/cmake/custom_gripperConfig-version.cmake
+[0.059s] -- Up-to-date: /home/levin/Semi-Automated-Programming-of-Industrial-Robotic-Systems-Using-Large-Language-Models/install/custom_gripper/share/custom_gripper/package.xml
+[0.061s] Invoked command in '/home/levin/Semi-Automated-Programming-of-Industrial-Robotic-Systems-Using-Large-Language-Models/build/custom_gripper' returned '0': CMAKE_PREFIX_PATH=/opt/ros/humble /usr/bin/cmake --install /home/levin/Semi-Automated-Programming-of-Industrial-Robotic-Systems-Using-Large-Language-Models/build/custom_gripper

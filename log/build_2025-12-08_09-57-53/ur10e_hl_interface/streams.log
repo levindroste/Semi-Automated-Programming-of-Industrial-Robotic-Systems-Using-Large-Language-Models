@@ -1,0 +1,93 @@
+[0.009s] Invoking command in '/home/levin/Semi-Automated-Programming-of-Industrial-Robotic-Systems-Using-Large-Language-Models/build/ur10e_hl_interface': CMAKE_PREFIX_PATH=${CMAKE_PREFIX_PATH}:/opt/ros/humble /usr/bin/cmake --build /home/levin/Semi-Automated-Programming-of-Industrial-Robotic-Systems-Using-Large-Language-Models/build/ur10e_hl_interface -- -j20 -l20
+[0.072s] [ 33%] Built target ur10e_hl_interface
+[0.074s] [ 66%] Built target add_objects_node
+[0.090s] [35m[1mConsolidate compiler generated dependencies of target clipfix_bewegung[0m
+[0.113s] [100%] Built target clipfix_bewegung
+[0.126s] Invoked command in '/home/levin/Semi-Automated-Programming-of-Industrial-Robotic-Systems-Using-Large-Language-Models/build/ur10e_hl_interface' returned '0': CMAKE_PREFIX_PATH=${CMAKE_PREFIX_PATH}:/opt/ros/humble /usr/bin/cmake --build /home/levin/Semi-Automated-Programming-of-Industrial-Robotic-Systems-Using-Large-Language-Models/build/ur10e_hl_interface -- -j20 -l20
+[0.137s] Invoking command in '/home/levin/Semi-Automated-Programming-of-Industrial-Robotic-Systems-Using-Large-Language-Models/build/ur10e_hl_interface': CMAKE_PREFIX_PATH=${CMAKE_PREFIX_PATH}:/opt/ros/humble /usr/bin/cmake --install /home/levin/Semi-Automated-Programming-of-Industrial-Robotic-Systems-Using-Large-Language-Models/build/ur10e_hl_interface
+[0.146s] -- Install configuration: ""
+[0.146s] -- Up-to-date: /home/levin/Semi-Automated-Programming-of-Industrial-Robotic-Systems-Using-Large-Language-Models/install/ur10e_hl_interface/lib/libur10e_hl_interface.a
+[0.146s] -- Up-to-date: /home/levin/Semi-Automated-Programming-of-Industrial-Robotic-Systems-Using-Large-Language-Models/install/ur10e_hl_interface/lib/ur10e_hl_interface/clipfix_bewegung
+[0.146s] -- Up-to-date: /home/levin/Semi-Automated-Programming-of-Industrial-Robotic-Systems-Using-Large-Language-Models/install/ur10e_hl_interface/lib/ur10e_hl_interface/add_objects_node
+[0.147s] -- Up-to-date: /home/levin/Semi-Automated-Programming-of-Industrial-Robotic-Systems-Using-Large-Language-Models/install/ur10e_hl_interface/include
+[0.147s] -- Up-to-date: /home/levin/Semi-Automated-Programming-of-Industrial-Robotic-Systems-Using-Large-Language-Models/install/ur10e_hl_interface/include/ur10e_hl_interface
+[0.147s] -- Up-to-date: /home/levin/Semi-Automated-Programming-of-Industrial-Robotic-Systems-Using-Large-Language-Models/install/ur10e_hl_interface/include/ur10e_hl_interface/robot_hl_interface.hpp
+[0.147s] -- Up-to-date: /home/levin/Semi-Automated-Programming-of-Industrial-Robotic-Systems-Using-Large-Language-Models/install/ur10e_hl_interface/share/ur10e_hl_interface/config
+[0.147s] -- Up-to-date: /home/levin/Semi-Automated-Programming-of-Industrial-Robotic-Systems-Using-Large-Language-Models/install/ur10e_hl_interface/share/ur10e_hl_interface/config/AML-Datei-V04.aml
+[0.147s] -- Up-to-date: /home/levin/Semi-Automated-Programming-of-Industrial-Robotic-Systems-Using-Large-Language-Models/install/ur10e_hl_interface/share/ur10e_hl_interface/meshes
+[0.147s] -- Up-to-date: /home/levin/Semi-Automated-Programming-of-Industrial-Robotic-Systems-Using-Large-Language-Models/install/ur10e_hl_interface/share/ur10e_hl_interface/meshes/Alt-Ordner
+[0.147s] -- Up-to-date: /home/levin/Semi-Automated-Programming-of-Industrial-Robotic-Systems-Using-Large-Language-Models/install/ur10e_hl_interface/share/ur10e_hl_interface/meshes/Alt-Ordner/PERF-2000MM_3D.stl
+[0.147s] -- Up-to-date: /home/levin/Semi-Automated-Programming-of-Industrial-Robotic-Systems-Using-Large-Language-Models/install/ur10e_hl_interface/share/ur10e_hl_interface/meshes/Alt-Ordner/Unnamed-Schaltschrank.stl
+[0.147s] -- Up-to-date: /home/levin/Semi-Automated-Programming-of-Industrial-Robotic-Systems-Using-Large-Language-Models/install/ur10e_hl_interface/share/ur10e_hl_interface/meshes/Alt-Ordner/NS-35.dae
+[0.147s] -- Up-to-date: /home/levin/Semi-Automated-Programming-of-Industrial-Robotic-Systems-Using-Large-Language-Models/install/ur10e_hl_interface/share/ur10e_hl_interface/meshes/Alt-Ordner/Schaltschrank-1.stl
+[0.148s] -- Up-to-date: /home/levin/Semi-Automated-Programming-of-Industrial-Robotic-Systems-Using-Large-Language-Models/install/ur10e_hl_interface/share/ur10e_hl_interface/meshes/UT_1,5_VT.stl
+[0.148s] -- Up-to-date: /home/levin/Semi-Automated-Programming-of-Industrial-Robotic-Systems-Using-Large-Language-Models/install/ur10e_hl_interface/share/ur10e_hl_interface/meshes/PT-6-TWIN-BU.stl
+[0.148s] -- Up-to-date: /home/levin/Semi-Automated-Programming-of-Industrial-Robotic-Systems-Using-Large-Language-Models/install/ur10e_hl_interface/share/ur10e_hl_interface/meshes/Schaltschrank.dae
+[0.148s] -- Up-to-date: /home/levin/Semi-Automated-Programming-of-Industrial-Robotic-Systems-Using-Large-Language-Models/install/ur10e_hl_interface/share/ur10e_hl_interface/meshes/PT-6-TWIN.dae
+[0.148s] -- Up-to-date: /home/levin/Semi-Automated-Programming-of-Industrial-Robotic-Systems-Using-Large-Language-Models/install/ur10e_hl_interface/share/ur10e_hl_interface/meshes/Neue Klemmen
+[0.148s] -- Up-to-date: /home/levin/Semi-Automated-Programming-of-Industrial-Robotic-Systems-Using-Large-Language-Models/install/ur10e_hl_interface/share/ur10e_hl_interface/meshes/Neue Klemmen/PTU 2,5-TWIN BU.stl
+[0.148s] -- Up-to-date: /home/levin/Semi-Automated-Programming-of-Industrial-Robotic-Systems-Using-Large-Language-Models/install/ur10e_hl_interface/share/ur10e_hl_interface/meshes/Neue Klemmen/PTU 2,5-TWIN BU.stp
+[0.148s] -- Up-to-date: /home/levin/Semi-Automated-Programming-of-Industrial-Robotic-Systems-Using-Large-Language-Models/install/ur10e_hl_interface/share/ur10e_hl_interface/meshes/Neue Klemmen/UT 1,5 OG.stl
+[0.148s] -- Up-to-date: /home/levin/Semi-Automated-Programming-of-Industrial-Robotic-Systems-Using-Large-Language-Models/install/ur10e_hl_interface/share/ur10e_hl_interface/meshes/Neue Klemmen/UT 1,5 OG.dae
+[0.148s] -- Up-to-date: /home/levin/Semi-Automated-Programming-of-Industrial-Robotic-Systems-Using-Large-Language-Models/install/ur10e_hl_interface/share/ur10e_hl_interface/meshes/Neue Klemmen/UT 1,5 VT.dae
+[0.148s] -- Up-to-date: /home/levin/Semi-Automated-Programming-of-Industrial-Robotic-Systems-Using-Large-Language-Models/install/ur10e_hl_interface/share/ur10e_hl_interface/meshes/Neue Klemmen/QTCU 2,5.stl
+[0.148s] -- Up-to-date: /home/levin/Semi-Automated-Programming-of-Industrial-Robotic-Systems-Using-Large-Language-Models/install/ur10e_hl_interface/share/ur10e_hl_interface/meshes/Neue Klemmen/UT 1,5 VT.stl
+[0.149s] -- Up-to-date: /home/levin/Semi-Automated-Programming-of-Industrial-Robotic-Systems-Using-Large-Language-Models/install/ur10e_hl_interface/share/ur10e_hl_interface/meshes/Neue Klemmen/STU 35 4X10 YE.stp
+[0.149s] -- Up-to-date: /home/levin/Semi-Automated-Programming-of-Industrial-Robotic-Systems-Using-Large-Language-Models/install/ur10e_hl_interface/share/ur10e_hl_interface/meshes/Neue Klemmen/QTCU 2,5.dae
+[0.149s] -- Up-to-date: /home/levin/Semi-Automated-Programming-of-Industrial-Robotic-Systems-Using-Large-Language-Models/install/ur10e_hl_interface/share/ur10e_hl_interface/meshes/Neue Klemmen/STU 35 4X10 YE.dae
+[0.149s] -- Up-to-date: /home/levin/Semi-Automated-Programming-of-Industrial-Robotic-Systems-Using-Large-Language-Models/install/ur10e_hl_interface/share/ur10e_hl_interface/meshes/Neue Klemmen/STU 35 4X10 YE.stl
+[0.149s] -- Up-to-date: /home/levin/Semi-Automated-Programming-of-Industrial-Robotic-Systems-Using-Large-Language-Models/install/ur10e_hl_interface/share/ur10e_hl_interface/meshes/Neue Klemmen/QTCU 2,5.stp
+[0.149s] -- Up-to-date: /home/levin/Semi-Automated-Programming-of-Industrial-Robotic-Systems-Using-Large-Language-Models/install/ur10e_hl_interface/share/ur10e_hl_interface/meshes/Neue Klemmen/PTU 2,5-TWIN BU.dae
+[0.149s] -- Up-to-date: /home/levin/Semi-Automated-Programming-of-Industrial-Robotic-Systems-Using-Large-Language-Models/install/ur10e_hl_interface/share/ur10e_hl_interface/meshes/Neue Klemmen/UT 1,5 VT.stp
+[0.149s] -- Up-to-date: /home/levin/Semi-Automated-Programming-of-Industrial-Robotic-Systems-Using-Large-Language-Models/install/ur10e_hl_interface/share/ur10e_hl_interface/meshes/Neue Klemmen/UT 1,5 OG.stp
+[0.149s] -- Up-to-date: /home/levin/Semi-Automated-Programming-of-Industrial-Robotic-Systems-Using-Large-Language-Models/install/ur10e_hl_interface/share/ur10e_hl_interface/meshes/UT-16-PE.dae
+[0.149s] -- Up-to-date: /home/levin/Semi-Automated-Programming-of-Industrial-Robotic-Systems-Using-Large-Language-Models/install/ur10e_hl_interface/share/ur10e_hl_interface/meshes/Hutschienen-Halter.stl
+[0.149s] -- Up-to-date: /home/levin/Semi-Automated-Programming-of-Industrial-Robotic-Systems-Using-Large-Language-Models/install/ur10e_hl_interface/share/ur10e_hl_interface/meshes/CLIPFIX-35.stl
+[0.150s] -- Up-to-date: /home/levin/Semi-Automated-Programming-of-Industrial-Robotic-Systems-Using-Large-Language-Models/install/ur10e_hl_interface/share/ur10e_hl_interface/meshes/UT_1,5_VT.dae
+[0.150s] -- Up-to-date: /home/levin/Semi-Automated-Programming-of-Industrial-Robotic-Systems-Using-Large-Language-Models/install/ur10e_hl_interface/share/ur10e_hl_interface/meshes/Schaltschrank_ohne_Tuer.dae
+[0.150s] -- Up-to-date: /home/levin/Semi-Automated-Programming-of-Industrial-Robotic-Systems-Using-Large-Language-Models/install/ur10e_hl_interface/share/ur10e_hl_interface/meshes/VAL-MS-230.stl
+[0.150s] -- Up-to-date: /home/levin/Semi-Automated-Programming-of-Industrial-Robotic-Systems-Using-Large-Language-Models/install/ur10e_hl_interface/share/ur10e_hl_interface/meshes/CLIPFIX-35-5.stl
+[0.150s] -- Up-to-date: /home/levin/Semi-Automated-Programming-of-Industrial-Robotic-Systems-Using-Large-Language-Models/install/ur10e_hl_interface/share/ur10e_hl_interface/meshes/Schaltschrank.stl
+[0.150s] -- Up-to-date: /home/levin/Semi-Automated-Programming-of-Industrial-Robotic-Systems-Using-Large-Language-Models/install/ur10e_hl_interface/share/ur10e_hl_interface/meshes/STU_35_4X10_YE.dae
+[0.150s] -- Up-to-date: /home/levin/Semi-Automated-Programming-of-Industrial-Robotic-Systems-Using-Large-Language-Models/install/ur10e_hl_interface/share/ur10e_hl_interface/meshes/Hutschienen-Halter Kollisionsmodell.stl
+[0.150s] -- Up-to-date: /home/levin/Semi-Automated-Programming-of-Industrial-Robotic-Systems-Using-Large-Language-Models/install/ur10e_hl_interface/share/ur10e_hl_interface/meshes/PT-6-TWIN-BU.dae
+[0.150s] -- Up-to-date: /home/levin/Semi-Automated-Programming-of-Industrial-Robotic-Systems-Using-Large-Language-Models/install/ur10e_hl_interface/share/ur10e_hl_interface/meshes/PTU_2,5-TWIN_BU.dae
+[0.150s] -- Up-to-date: /home/levin/Semi-Automated-Programming-of-Industrial-Robotic-Systems-Using-Large-Language-Models/install/ur10e_hl_interface/share/ur10e_hl_interface/meshes/Schaltschrank_ohne_Tuer.stl
+[0.150s] -- Up-to-date: /home/levin/Semi-Automated-Programming-of-Industrial-Robotic-Systems-Using-Large-Language-Models/install/ur10e_hl_interface/share/ur10e_hl_interface/meshes/VAL-MS-T1-T2.stl
+[0.150s] -- Up-to-date: /home/levin/Semi-Automated-Programming-of-Industrial-Robotic-Systems-Using-Large-Language-Models/install/ur10e_hl_interface/share/ur10e_hl_interface/meshes/UT_1,5_OG.dae
+[0.150s] -- Up-to-date: /home/levin/Semi-Automated-Programming-of-Industrial-Robotic-Systems-Using-Large-Language-Models/install/ur10e_hl_interface/share/ur10e_hl_interface/meshes/STU_35_4X10_YE.stl
+[0.150s] -- Up-to-date: /home/levin/Semi-Automated-Programming-of-Industrial-Robotic-Systems-Using-Large-Language-Models/install/ur10e_hl_interface/share/ur10e_hl_interface/meshes/VAL-MS-230.dae
+[0.150s] -- Up-to-date: /home/levin/Semi-Automated-Programming-of-Industrial-Robotic-Systems-Using-Large-Language-Models/install/ur10e_hl_interface/share/ur10e_hl_interface/meshes/PT-6-TWIN.stl
+[0.151s] -- Up-to-date: /home/levin/Semi-Automated-Programming-of-Industrial-Robotic-Systems-Using-Large-Language-Models/install/ur10e_hl_interface/share/ur10e_hl_interface/meshes/UT_1,5_OG.stl
+[0.151s] -- Up-to-date: /home/levin/Semi-Automated-Programming-of-Industrial-Robotic-Systems-Using-Large-Language-Models/install/ur10e_hl_interface/share/ur10e_hl_interface/meshes/QTCU_2,5.stl
+[0.151s] -- Up-to-date: /home/levin/Semi-Automated-Programming-of-Industrial-Robotic-Systems-Using-Large-Language-Models/install/ur10e_hl_interface/share/ur10e_hl_interface/meshes/Hutschiene.stl
+[0.151s] -- Up-to-date: /home/levin/Semi-Automated-Programming-of-Industrial-Robotic-Systems-Using-Large-Language-Models/install/ur10e_hl_interface/share/ur10e_hl_interface/meshes/CLIPFIX-35-5.dae
+[0.151s] -- Up-to-date: /home/levin/Semi-Automated-Programming-of-Industrial-Robotic-Systems-Using-Large-Language-Models/install/ur10e_hl_interface/share/ur10e_hl_interface/meshes/QTCU_2,5.dae
+[0.151s] -- Up-to-date: /home/levin/Semi-Automated-Programming-of-Industrial-Robotic-Systems-Using-Large-Language-Models/install/ur10e_hl_interface/share/ur10e_hl_interface/meshes/VAL-MS-T1-T2.dae
+[0.151s] -- Up-to-date: /home/levin/Semi-Automated-Programming-of-Industrial-Robotic-Systems-Using-Large-Language-Models/install/ur10e_hl_interface/share/ur10e_hl_interface/meshes/lps-logo-text.stl
+[0.151s] -- Up-to-date: /home/levin/Semi-Automated-Programming-of-Industrial-Robotic-Systems-Using-Large-Language-Models/install/ur10e_hl_interface/share/ur10e_hl_interface/meshes/CLIPFIX-35.dae
+[0.151s] -- Up-to-date: /home/levin/Semi-Automated-Programming-of-Industrial-Robotic-Systems-Using-Large-Language-Models/install/ur10e_hl_interface/share/ur10e_hl_interface/meshes/PTU_2,5-TWIN_BU.stl
+[0.152s] -- Up-to-date: /home/levin/Semi-Automated-Programming-of-Industrial-Robotic-Systems-Using-Large-Language-Models/install/ur10e_hl_interface/share/ur10e_hl_interface/meshes/UT-16-PE.stl
+[0.152s] -- Up-to-date: /home/levin/Semi-Automated-Programming-of-Industrial-Robotic-Systems-Using-Large-Language-Models/install/ur10e_hl_interface/share/ur10e_hl_interface/meshes/Hutschienen-Halter.dae
+[0.152s] -- Up-to-date: /home/levin/Semi-Automated-Programming-of-Industrial-Robotic-Systems-Using-Large-Language-Models/install/ur10e_hl_interface/share/ur10e_hl_interface/environment/library_path.sh
+[0.152s] -- Up-to-date: /home/levin/Semi-Automated-Programming-of-Industrial-Robotic-Systems-Using-Large-Language-Models/install/ur10e_hl_interface/share/ur10e_hl_interface/environment/library_path.dsv
+[0.152s] -- Up-to-date: /home/levin/Semi-Automated-Programming-of-Industrial-Robotic-Systems-Using-Large-Language-Models/install/ur10e_hl_interface/share/ament_index/resource_index/package_run_dependencies/ur10e_hl_interface
+[0.152s] -- Up-to-date: /home/levin/Semi-Automated-Programming-of-Industrial-Robotic-Systems-Using-Large-Language-Models/install/ur10e_hl_interface/share/ament_index/resource_index/parent_prefix_path/ur10e_hl_interface
+[0.152s] -- Up-to-date: /home/levin/Semi-Automated-Programming-of-Industrial-Robotic-Systems-Using-Large-Language-Models/install/ur10e_hl_interface/share/ur10e_hl_interface/environment/ament_prefix_path.sh
+[0.152s] -- Up-to-date: /home/levin/Semi-Automated-Programming-of-Industrial-Robotic-Systems-Using-Large-Language-Models/install/ur10e_hl_interface/share/ur10e_hl_interface/environment/ament_prefix_path.dsv
+[0.152s] -- Up-to-date: /home/levin/Semi-Automated-Programming-of-Industrial-Robotic-Systems-Using-Large-Language-Models/install/ur10e_hl_interface/share/ur10e_hl_interface/environment/path.sh
+[0.152s] -- Up-to-date: /home/levin/Semi-Automated-Programming-of-Industrial-Robotic-Systems-Using-Large-Language-Models/install/ur10e_hl_interface/share/ur10e_hl_interface/environment/path.dsv
+[0.152s] -- Up-to-date: /home/levin/Semi-Automated-Programming-of-Industrial-Robotic-Systems-Using-Large-Language-Models/install/ur10e_hl_interface/share/ur10e_hl_interface/local_setup.bash
+[0.152s] -- Up-to-date: /home/levin/Semi-Automated-Programming-of-Industrial-Robotic-Systems-Using-Large-Language-Models/install/ur10e_hl_interface/share/ur10e_hl_interface/local_setup.sh
+[0.152s] -- Up-to-date: /home/levin/Semi-Automated-Programming-of-Industrial-Robotic-Systems-Using-Large-Language-Models/install/ur10e_hl_interface/share/ur10e_hl_interface/local_setup.zsh
+[0.152s] -- Up-to-date: /home/levin/Semi-Automated-Programming-of-Industrial-Robotic-Systems-Using-Large-Language-Models/install/ur10e_hl_interface/share/ur10e_hl_interface/local_setup.dsv
+[0.152s] -- Installing: /home/levin/Semi-Automated-Programming-of-Industrial-Robotic-Systems-Using-Large-Language-Models/install/ur10e_hl_interface/share/ur10e_hl_interface/package.dsv
+[0.152s] -- Up-to-date: /home/levin/Semi-Automated-Programming-of-Industrial-Robotic-Systems-Using-Large-Language-Models/install/ur10e_hl_interface/share/ament_index/resource_index/packages/ur10e_hl_interface
+[0.153s] -- Up-to-date: /home/levin/Semi-Automated-Programming-of-Industrial-Robotic-Systems-Using-Large-Language-Models/install/ur10e_hl_interface/share/ur10e_hl_interface/cmake/export_ur10e_hl_interfaceExport.cmake
+[0.153s] -- Up-to-date: /home/levin/Semi-Automated-Programming-of-Industrial-Robotic-Systems-Using-Large-Language-Models/install/ur10e_hl_interface/share/ur10e_hl_interface/cmake/export_ur10e_hl_interfaceExport-noconfig.cmake
+[0.153s] -- Up-to-date: /home/levin/Semi-Automated-Programming-of-Industrial-Robotic-Systems-Using-Large-Language-Models/install/ur10e_hl_interface/share/ur10e_hl_interface/cmake/ament_cmake_export_targets-extras.cmake
+[0.153s] -- Up-to-date: /home/levin/Semi-Automated-Programming-of-Industrial-Robotic-Systems-Using-Large-Language-Models/install/ur10e_hl_interface/share/ur10e_hl_interface/cmake/ament_cmake_export_dependencies-extras.cmake
+[0.153s] -- Up-to-date: /home/levin/Semi-Automated-Programming-of-Industrial-Robotic-Systems-Using-Large-Language-Models/install/ur10e_hl_interface/share/ur10e_hl_interface/cmake/ur10e_hl_interfaceConfig.cmake
+[0.153s] -- Up-to-date: /home/levin/Semi-Automated-Programming-of-Industrial-Robotic-Systems-Using-Large-Language-Models/install/ur10e_hl_interface/share/ur10e_hl_interface/cmake/ur10e_hl_interfaceConfig-version.cmake
+[0.153s] -- Up-to-date: /home/levin/Semi-Automated-Programming-of-Industrial-Robotic-Systems-Using-Large-Language-Models/install/ur10e_hl_interface/share/ur10e_hl_interface/package.xml
+[0.153s] Invoked command in '/home/levin/Semi-Automated-Programming-of-Industrial-Robotic-Systems-Using-Large-Language-Models/build/ur10e_hl_interface' returned '0': CMAKE_PREFIX_PATH=${CMAKE_PREFIX_PATH}:/opt/ros/humble /usr/bin/cmake --install /home/levin/Semi-Automated-Programming-of-Industrial-Robotic-Systems-Using-Large-Language-Models/build/ur10e_hl_interface

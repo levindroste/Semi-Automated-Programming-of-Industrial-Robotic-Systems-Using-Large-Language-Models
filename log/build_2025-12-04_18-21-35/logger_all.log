@@ -1,0 +1,303 @@
+[0.092s] DEBUG:colcon:Command line arguments: ['/usr/bin/colcon', 'build', '--packages-select', 'ur_with_gripper_moveit_config', 'ur_with_gripper']
+[0.092s] DEBUG:colcon:Parsed command line arguments: Namespace(log_base=None, log_level=None, verb_name='build', build_base='build', install_base='install', merge_install=False, symlink_install=False, test_result_base=None, continue_on_error=False, executor='parallel', parallel_workers=20, event_handlers=None, ignore_user_meta=False, metas=['./colcon.meta'], base_paths=['.'], packages_ignore=None, packages_ignore_regex=None, paths=None, packages_up_to=None, packages_up_to_regex=None, packages_above=None, packages_above_and_dependencies=None, packages_above_depth=None, packages_select_by_dep=None, packages_skip_by_dep=None, packages_skip_up_to=None, packages_select_build_failed=False, packages_skip_build_finished=False, packages_select_test_failures=False, packages_skip_test_passed=False, packages_select=['ur_with_gripper_moveit_config', 'ur_with_gripper'], packages_skip=None, packages_select_regex=None, packages_skip_regex=None, packages_start=None, packages_end=None, allow_overriding=[], cmake_args=None, cmake_target=None, cmake_target_skip_unavailable=False, cmake_clean_cache=False, cmake_clean_first=False, cmake_force_configure=False, ament_cmake_args=None, catkin_cmake_args=None, catkin_skip_building_tests=False, verb_parser=<colcon_defaults.argument_parser.defaults.DefaultArgumentsDecorator object at 0x73a92ac563e0>, verb_extension=<colcon_core.verb.build.BuildVerb object at 0x73a92ad677c0>, main=<bound method BuildVerb.main of <colcon_core.verb.build.BuildVerb object at 0x73a92ad677c0>>)
+[0.237s] Level 1:colcon.colcon_core.package_discovery:discover_packages(colcon_meta) check parameters
+[0.238s] Level 1:colcon.colcon_core.package_discovery:discover_packages(recursive) check parameters
+[0.238s] Level 1:colcon.colcon_core.package_discovery:discover_packages(ignore) check parameters
+[0.238s] Level 1:colcon.colcon_core.package_discovery:discover_packages(path) check parameters
+[0.238s] Level 1:colcon.colcon_core.package_discovery:discover_packages(colcon_meta) discover
+[0.238s] Level 1:colcon.colcon_core.package_discovery:discover_packages(recursive) discover
+[0.238s] INFO:colcon.colcon_core.package_discovery:Crawling recursively for packages in '/home/levin/Semi-Automated-Programming-of-Industrial-Robotic-Systems-Using-Large-Language-Models'
+[0.238s] Level 1:colcon.colcon_core.package_identification:_identify(.) by extensions ['ignore', 'ignore_ament_install']
+[0.238s] Level 1:colcon.colcon_core.package_identification:_identify(.) by extension 'ignore'
+[0.238s] Level 1:colcon.colcon_core.package_identification:_identify(.) by extension 'ignore_ament_install'
+[0.238s] Level 1:colcon.colcon_core.package_identification:_identify(.) by extensions ['colcon_pkg']
+[0.238s] Level 1:colcon.colcon_core.package_identification:_identify(.) by extension 'colcon_pkg'
+[0.238s] Level 1:colcon.colcon_core.package_identification:_identify(.) by extensions ['colcon_meta']
+[0.238s] Level 1:colcon.colcon_core.package_identification:_identify(.) by extension 'colcon_meta'
+[0.238s] Level 1:colcon.colcon_core.package_identification:_identify(.) by extensions ['ros']
+[0.238s] Level 1:colcon.colcon_core.package_identification:_identify(.) by extension 'ros'
+[0.249s] Level 1:colcon.colcon_core.package_identification:_identify(.) by extensions ['cmake', 'python']
+[0.249s] Level 1:colcon.colcon_core.package_identification:_identify(.) by extension 'cmake'
+[0.249s] Level 1:colcon.colcon_core.package_identification:_identify(.) by extension 'python'
+[0.249s] Level 1:colcon.colcon_core.package_identification:_identify(.) by extensions ['python_setup_py']
+[0.249s] Level 1:colcon.colcon_core.package_identification:_identify(.) by extension 'python_setup_py'
+[0.249s] Level 1:colcon.colcon_core.package_identification:_identify(GUI) by extensions ['ignore', 'ignore_ament_install']
+[0.249s] Level 1:colcon.colcon_core.package_identification:_identify(GUI) by extension 'ignore'
+[0.249s] Level 1:colcon.colcon_core.package_identification:_identify(GUI) by extension 'ignore_ament_install'
+[0.249s] Level 1:colcon.colcon_core.package_identification:_identify(GUI) by extensions ['colcon_pkg']
+[0.249s] Level 1:colcon.colcon_core.package_identification:_identify(GUI) by extension 'colcon_pkg'
+[0.249s] Level 1:colcon.colcon_core.package_identification:_identify(GUI) by extensions ['colcon_meta']
+[0.249s] Level 1:colcon.colcon_core.package_identification:_identify(GUI) by extension 'colcon_meta'
+[0.249s] Level 1:colcon.colcon_core.package_identification:_identify(GUI) by extensions ['ros']
+[0.249s] Level 1:colcon.colcon_core.package_identification:_identify(GUI) by extension 'ros'
+[0.249s] Level 1:colcon.colcon_core.package_identification:_identify(GUI) by extensions ['cmake', 'python']
+[0.249s] Level 1:colcon.colcon_core.package_identification:_identify(GUI) by extension 'cmake'
+[0.249s] Level 1:colcon.colcon_core.package_identification:_identify(GUI) by extension 'python'
+[0.250s] Level 1:colcon.colcon_core.package_identification:_identify(GUI) by extensions ['python_setup_py']
+[0.250s] Level 1:colcon.colcon_core.package_identification:_identify(GUI) by extension 'python_setup_py'
+[0.250s] Level 1:colcon.colcon_core.package_identification:_identify(GUI/PROBOT_GUI) by extensions ['ignore', 'ignore_ament_install']
+[0.250s] Level 1:colcon.colcon_core.package_identification:_identify(GUI/PROBOT_GUI) by extension 'ignore'
+[0.250s] Level 1:colcon.colcon_core.package_identification:_identify(GUI/PROBOT_GUI) by extension 'ignore_ament_install'
+[0.250s] Level 1:colcon.colcon_core.package_identification:_identify(GUI/PROBOT_GUI) by extensions ['colcon_pkg']
+[0.250s] Level 1:colcon.colcon_core.package_identification:_identify(GUI/PROBOT_GUI) by extension 'colcon_pkg'
+[0.250s] Level 1:colcon.colcon_core.package_identification:_identify(GUI/PROBOT_GUI) by extensions ['colcon_meta']
+[0.250s] Level 1:colcon.colcon_core.package_identification:_identify(GUI/PROBOT_GUI) by extension 'colcon_meta'
+[0.250s] Level 1:colcon.colcon_core.package_identification:_identify(GUI/PROBOT_GUI) by extensions ['ros']
+[0.250s] Level 1:colcon.colcon_core.package_identification:_identify(GUI/PROBOT_GUI) by extension 'ros'
+[0.250s] Level 1:colcon.colcon_core.package_identification:_identify(GUI/PROBOT_GUI) by extensions ['cmake', 'python']
+[0.250s] Level 1:colcon.colcon_core.package_identification:_identify(GUI/PROBOT_GUI) by extension 'cmake'
+[0.250s] Level 1:colcon.colcon_core.package_identification:_identify(GUI/PROBOT_GUI) by extension 'python'
+[0.250s] Level 1:colcon.colcon_core.package_identification:_identify(GUI/PROBOT_GUI) by extensions ['python_setup_py']
+[0.250s] Level 1:colcon.colcon_core.package_identification:_identify(GUI/PROBOT_GUI) by extension 'python_setup_py'
+[0.250s] Level 1:colcon.colcon_core.package_identification:_identify(GUI/PROBOT_GUI/Alt) by extensions ['ignore', 'ignore_ament_install']
+[0.250s] Level 1:colcon.colcon_core.package_identification:_identify(GUI/PROBOT_GUI/Alt) by extension 'ignore'
+[0.250s] Level 1:colcon.colcon_core.package_identification:_identify(GUI/PROBOT_GUI/Alt) by extension 'ignore_ament_install'
+[0.250s] Level 1:colcon.colcon_core.package_identification:_identify(GUI/PROBOT_GUI/Alt) by extensions ['colcon_pkg']
+[0.250s] Level 1:colcon.colcon_core.package_identification:_identify(GUI/PROBOT_GUI/Alt) by extension 'colcon_pkg'
+[0.250s] Level 1:colcon.colcon_core.package_identification:_identify(GUI/PROBOT_GUI/Alt) by extensions ['colcon_meta']
+[0.250s] Level 1:colcon.colcon_core.package_identification:_identify(GUI/PROBOT_GUI/Alt) by extension 'colcon_meta'
+[0.250s] Level 1:colcon.colcon_core.package_identification:_identify(GUI/PROBOT_GUI/Alt) by extensions ['ros']
+[0.250s] Level 1:colcon.colcon_core.package_identification:_identify(GUI/PROBOT_GUI/Alt) by extension 'ros'
+[0.250s] Level 1:colcon.colcon_core.package_identification:_identify(GUI/PROBOT_GUI/Alt) by extensions ['cmake', 'python']
+[0.250s] Level 1:colcon.colcon_core.package_identification:_identify(GUI/PROBOT_GUI/Alt) by extension 'cmake'
+[0.250s] Level 1:colcon.colcon_core.package_identification:_identify(GUI/PROBOT_GUI/Alt) by extension 'python'
+[0.250s] Level 1:colcon.colcon_core.package_identification:_identify(GUI/PROBOT_GUI/Alt) by extensions ['python_setup_py']
+[0.250s] Level 1:colcon.colcon_core.package_identification:_identify(GUI/PROBOT_GUI/Alt) by extension 'python_setup_py'
+[0.250s] Level 1:colcon.colcon_core.package_identification:_identify(GUI/PROBOT_GUI/Resources) by extensions ['ignore', 'ignore_ament_install']
+[0.250s] Level 1:colcon.colcon_core.package_identification:_identify(GUI/PROBOT_GUI/Resources) by extension 'ignore'
+[0.250s] Level 1:colcon.colcon_core.package_identification:_identify(GUI/PROBOT_GUI/Resources) by extension 'ignore_ament_install'
+[0.250s] Level 1:colcon.colcon_core.package_identification:_identify(GUI/PROBOT_GUI/Resources) by extensions ['colcon_pkg']
+[0.251s] Level 1:colcon.colcon_core.package_identification:_identify(GUI/PROBOT_GUI/Resources) by extension 'colcon_pkg'
+[0.251s] Level 1:colcon.colcon_core.package_identification:_identify(GUI/PROBOT_GUI/Resources) by extensions ['colcon_meta']
+[0.251s] Level 1:colcon.colcon_core.package_identification:_identify(GUI/PROBOT_GUI/Resources) by extension 'colcon_meta'
+[0.251s] Level 1:colcon.colcon_core.package_identification:_identify(GUI/PROBOT_GUI/Resources) by extensions ['ros']
+[0.251s] Level 1:colcon.colcon_core.package_identification:_identify(GUI/PROBOT_GUI/Resources) by extension 'ros'
+[0.251s] Level 1:colcon.colcon_core.package_identification:_identify(GUI/PROBOT_GUI/Resources) by extensions ['cmake', 'python']
+[0.251s] Level 1:colcon.colcon_core.package_identification:_identify(GUI/PROBOT_GUI/Resources) by extension 'cmake'
+[0.251s] Level 1:colcon.colcon_core.package_identification:_identify(GUI/PROBOT_GUI/Resources) by extension 'python'
+[0.251s] Level 1:colcon.colcon_core.package_identification:_identify(GUI/PROBOT_GUI/Resources) by extensions ['python_setup_py']
+[0.251s] Level 1:colcon.colcon_core.package_identification:_identify(GUI/PROBOT_GUI/Resources) by extension 'python_setup_py'
+[0.251s] Level 1:colcon.colcon_core.package_identification:_identify(build) by extensions ['ignore', 'ignore_ament_install']
+[0.251s] Level 1:colcon.colcon_core.package_identification:_identify(build) by extension 'ignore'
+[0.251s] Level 1:colcon.colcon_core.package_identification:_identify(build) ignored
+[0.251s] Level 1:colcon.colcon_core.package_identification:_identify(install) by extensions ['ignore', 'ignore_ament_install']
+[0.251s] Level 1:colcon.colcon_core.package_identification:_identify(install) by extension 'ignore'
+[0.251s] Level 1:colcon.colcon_core.package_identification:_identify(install) ignored
+[0.251s] Level 1:colcon.colcon_core.package_identification:_identify(log) by extensions ['ignore', 'ignore_ament_install']
+[0.251s] Level 1:colcon.colcon_core.package_identification:_identify(log) by extension 'ignore'
+[0.251s] Level 1:colcon.colcon_core.package_identification:_identify(log) ignored
+[0.251s] Level 1:colcon.colcon_core.package_identification:_identify(src) by extensions ['ignore', 'ignore_ament_install']
+[0.251s] Level 1:colcon.colcon_core.package_identification:_identify(src) by extension 'ignore'
+[0.251s] Level 1:colcon.colcon_core.package_identification:_identify(src) by extension 'ignore_ament_install'
+[0.251s] Level 1:colcon.colcon_core.package_identification:_identify(src) by extensions ['colcon_pkg']
+[0.251s] Level 1:colcon.colcon_core.package_identification:_identify(src) by extension 'colcon_pkg'
+[0.251s] Level 1:colcon.colcon_core.package_identification:_identify(src) by extensions ['colcon_meta']
+[0.251s] Level 1:colcon.colcon_core.package_identification:_identify(src) by extension 'colcon_meta'
+[0.251s] Level 1:colcon.colcon_core.package_identification:_identify(src) by extensions ['ros']
+[0.251s] Level 1:colcon.colcon_core.package_identification:_identify(src) by extension 'ros'
+[0.251s] Level 1:colcon.colcon_core.package_identification:_identify(src) by extensions ['cmake', 'python']
+[0.251s] Level 1:colcon.colcon_core.package_identification:_identify(src) by extension 'cmake'
+[0.252s] Level 1:colcon.colcon_core.package_identification:_identify(src) by extension 'python'
+[0.252s] Level 1:colcon.colcon_core.package_identification:_identify(src) by extensions ['python_setup_py']
+[0.252s] Level 1:colcon.colcon_core.package_identification:_identify(src) by extension 'python_setup_py'
+[0.252s] Level 1:colcon.colcon_core.package_identification:_identify(src/custom_gripper) by extensions ['ignore', 'ignore_ament_install']
+[0.252s] Level 1:colcon.colcon_core.package_identification:_identify(src/custom_gripper) by extension 'ignore'
+[0.252s] Level 1:colcon.colcon_core.package_identification:_identify(src/custom_gripper) by extension 'ignore_ament_install'
+[0.252s] Level 1:colcon.colcon_core.package_identification:_identify(src/custom_gripper) by extensions ['colcon_pkg']
+[0.252s] Level 1:colcon.colcon_core.package_identification:_identify(src/custom_gripper) by extension 'colcon_pkg'
+[0.252s] Level 1:colcon.colcon_core.package_identification:_identify(src/custom_gripper) by extensions ['colcon_meta']
+[0.252s] Level 1:colcon.colcon_core.package_identification:_identify(src/custom_gripper) by extension 'colcon_meta'
+[0.252s] Level 1:colcon.colcon_core.package_identification:_identify(src/custom_gripper) by extensions ['ros']
+[0.252s] Level 1:colcon.colcon_core.package_identification:_identify(src/custom_gripper) by extension 'ros'
+[0.257s] DEBUG:colcon.colcon_core.package_identification:Package 'src/custom_gripper' with type 'ros.ament_cmake' and name 'custom_gripper'
+[0.257s] Level 1:colcon.colcon_core.package_identification:_identify(src/pymoveit2) by extensions ['ignore', 'ignore_ament_install']
+[0.257s] Level 1:colcon.colcon_core.package_identification:_identify(src/pymoveit2) by extension 'ignore'
+[0.257s] Level 1:colcon.colcon_core.package_identification:_identify(src/pymoveit2) by extension 'ignore_ament_install'
+[0.257s] Level 1:colcon.colcon_core.package_identification:_identify(src/pymoveit2) by extensions ['colcon_pkg']
+[0.257s] Level 1:colcon.colcon_core.package_identification:_identify(src/pymoveit2) by extension 'colcon_pkg'
+[0.257s] Level 1:colcon.colcon_core.package_identification:_identify(src/pymoveit2) by extensions ['colcon_meta']
+[0.257s] Level 1:colcon.colcon_core.package_identification:_identify(src/pymoveit2) by extension 'colcon_meta'
+[0.257s] Level 1:colcon.colcon_core.package_identification:_identify(src/pymoveit2) by extensions ['ros']
+[0.257s] Level 1:colcon.colcon_core.package_identification:_identify(src/pymoveit2) by extension 'ros'
+[0.257s] Level 1:colcon.colcon_core.package_identification:_identify(src/pymoveit2) by extensions ['cmake', 'python']
+[0.257s] Level 1:colcon.colcon_core.package_identification:_identify(src/pymoveit2) by extension 'cmake'
+[0.257s] Level 1:colcon.colcon_core.package_identification:_identify(src/pymoveit2) by extension 'python'
+[0.257s] Level 1:colcon.colcon_core.package_identification:_identify(src/pymoveit2) by extensions ['python_setup_py']
+[0.257s] Level 1:colcon.colcon_core.package_identification:_identify(src/pymoveit2) by extension 'python_setup_py'
+[0.257s] Level 1:colcon.colcon_core.package_identification:_identify(src/ur10e_control) by extensions ['ignore', 'ignore_ament_install']
+[0.257s] Level 1:colcon.colcon_core.package_identification:_identify(src/ur10e_control) by extension 'ignore'
+[0.257s] Level 1:colcon.colcon_core.package_identification:_identify(src/ur10e_control) by extension 'ignore_ament_install'
+[0.257s] Level 1:colcon.colcon_core.package_identification:_identify(src/ur10e_control) by extensions ['colcon_pkg']
+[0.257s] Level 1:colcon.colcon_core.package_identification:_identify(src/ur10e_control) by extension 'colcon_pkg'
+[0.257s] Level 1:colcon.colcon_core.package_identification:_identify(src/ur10e_control) by extensions ['colcon_meta']
+[0.257s] Level 1:colcon.colcon_core.package_identification:_identify(src/ur10e_control) by extension 'colcon_meta'
+[0.257s] Level 1:colcon.colcon_core.package_identification:_identify(src/ur10e_control) by extensions ['ros']
+[0.257s] Level 1:colcon.colcon_core.package_identification:_identify(src/ur10e_control) by extension 'ros'
+[0.258s] DEBUG:colcon.colcon_core.package_identification:Package 'src/ur10e_control' with type 'ros.ament_cmake' and name 'ur10e_control'
+[0.258s] Level 1:colcon.colcon_core.package_identification:_identify(src/ur10e_hl_interface) by extensions ['ignore', 'ignore_ament_install']
+[0.258s] Level 1:colcon.colcon_core.package_identification:_identify(src/ur10e_hl_interface) by extension 'ignore'
+[0.258s] Level 1:colcon.colcon_core.package_identification:_identify(src/ur10e_hl_interface) by extension 'ignore_ament_install'
+[0.258s] Level 1:colcon.colcon_core.package_identification:_identify(src/ur10e_hl_interface) by extensions ['colcon_pkg']
+[0.258s] Level 1:colcon.colcon_core.package_identification:_identify(src/ur10e_hl_interface) by extension 'colcon_pkg'
+[0.258s] Level 1:colcon.colcon_core.package_identification:_identify(src/ur10e_hl_interface) by extensions ['colcon_meta']
+[0.258s] Level 1:colcon.colcon_core.package_identification:_identify(src/ur10e_hl_interface) by extension 'colcon_meta'
+[0.258s] Level 1:colcon.colcon_core.package_identification:_identify(src/ur10e_hl_interface) by extensions ['ros']
+[0.258s] Level 1:colcon.colcon_core.package_identification:_identify(src/ur10e_hl_interface) by extension 'ros'
+[0.278s] DEBUG:colcon.colcon_core.package_identification:Package 'src/ur10e_hl_interface' with type 'ros.ament_cmake' and name 'ur10e_hl_interface'
+[0.278s] Level 1:colcon.colcon_core.package_identification:_identify(src/ur_with_gripper) by extensions ['ignore', 'ignore_ament_install']
+[0.278s] Level 1:colcon.colcon_core.package_identification:_identify(src/ur_with_gripper) by extension 'ignore'
+[0.278s] Level 1:colcon.colcon_core.package_identification:_identify(src/ur_with_gripper) by extension 'ignore_ament_install'
+[0.278s] Level 1:colcon.colcon_core.package_identification:_identify(src/ur_with_gripper) by extensions ['colcon_pkg']
+[0.278s] Level 1:colcon.colcon_core.package_identification:_identify(src/ur_with_gripper) by extension 'colcon_pkg'
+[0.278s] Level 1:colcon.colcon_core.package_identification:_identify(src/ur_with_gripper) by extensions ['colcon_meta']
+[0.278s] Level 1:colcon.colcon_core.package_identification:_identify(src/ur_with_gripper) by extension 'colcon_meta'
+[0.278s] Level 1:colcon.colcon_core.package_identification:_identify(src/ur_with_gripper) by extensions ['ros']
+[0.278s] Level 1:colcon.colcon_core.package_identification:_identify(src/ur_with_gripper) by extension 'ros'
+[0.279s] DEBUG:colcon.colcon_core.package_identification:Package 'src/ur_with_gripper' with type 'ros.ament_cmake' and name 'ur_with_gripper'
+[0.279s] Level 1:colcon.colcon_core.package_identification:_identify(src/ur_with_gripper_moveit_config) by extensions ['ignore', 'ignore_ament_install']
+[0.279s] Level 1:colcon.colcon_core.package_identification:_identify(src/ur_with_gripper_moveit_config) by extension 'ignore'
+[0.279s] Level 1:colcon.colcon_core.package_identification:_identify(src/ur_with_gripper_moveit_config) by extension 'ignore_ament_install'
+[0.279s] Level 1:colcon.colcon_core.package_identification:_identify(src/ur_with_gripper_moveit_config) by extensions ['colcon_pkg']
+[0.279s] Level 1:colcon.colcon_core.package_identification:_identify(src/ur_with_gripper_moveit_config) by extension 'colcon_pkg'
+[0.279s] Level 1:colcon.colcon_core.package_identification:_identify(src/ur_with_gripper_moveit_config) by extensions ['colcon_meta']
+[0.279s] Level 1:colcon.colcon_core.package_identification:_identify(src/ur_with_gripper_moveit_config) by extension 'colcon_meta'
+[0.279s] Level 1:colcon.colcon_core.package_identification:_identify(src/ur_with_gripper_moveit_config) by extensions ['ros']
+[0.279s] Level 1:colcon.colcon_core.package_identification:_identify(src/ur_with_gripper_moveit_config) by extension 'ros'
+[0.280s] DEBUG:colcon.colcon_core.package_identification:Package 'src/ur_with_gripper_moveit_config' with type 'ros.ament_cmake' and name 'ur_with_gripper_moveit_config'
+[0.280s] Level 1:colcon.colcon_core.package_discovery:discover_packages(recursive) using defaults
+[0.280s] Level 1:colcon.colcon_core.package_discovery:discover_packages(ignore) discover
+[0.280s] Level 1:colcon.colcon_core.package_discovery:discover_packages(ignore) using defaults
+[0.280s] Level 1:colcon.colcon_core.package_discovery:discover_packages(path) discover
+[0.280s] Level 1:colcon.colcon_core.package_discovery:discover_packages(path) using defaults
+[0.298s] INFO:colcon.colcon_core.package_selection:Skipping not selected package 'custom_gripper' in 'src/custom_gripper'
+[0.298s] INFO:colcon.colcon_core.package_selection:Skipping not selected package 'ur10e_control' in 'src/ur10e_control'
+[0.298s] INFO:colcon.colcon_core.package_selection:Skipping not selected package 'ur10e_hl_interface' in 'src/ur10e_hl_interface'
+[0.298s] Level 1:colcon.colcon_core.package_discovery:discover_packages(prefix_path) check parameters
+[0.298s] Level 1:colcon.colcon_core.package_discovery:discover_packages(prefix_path) discover
+[0.300s] DEBUG:colcon.colcon_installed_package_information.package_discovery:Found 443 installed packages in /opt/ros/humble
+[0.303s] Level 1:colcon.colcon_core.package_discovery:discover_packages(prefix_path) using defaults
+[0.338s] Level 5:colcon.colcon_core.verb:set package 'ur_with_gripper' build argument 'cmake_args' from command line to 'None'
+[0.338s] Level 5:colcon.colcon_core.verb:set package 'ur_with_gripper' build argument 'cmake_target' from command line to 'None'
+[0.338s] Level 5:colcon.colcon_core.verb:set package 'ur_with_gripper' build argument 'cmake_target_skip_unavailable' from command line to 'False'
+[0.338s] Level 5:colcon.colcon_core.verb:set package 'ur_with_gripper' build argument 'cmake_clean_cache' from command line to 'False'
+[0.338s] Level 5:colcon.colcon_core.verb:set package 'ur_with_gripper' build argument 'cmake_clean_first' from command line to 'False'
+[0.338s] Level 5:colcon.colcon_core.verb:set package 'ur_with_gripper' build argument 'cmake_force_configure' from command line to 'False'
+[0.338s] Level 5:colcon.colcon_core.verb:set package 'ur_with_gripper' build argument 'ament_cmake_args' from command line to 'None'
+[0.338s] Level 5:colcon.colcon_core.verb:set package 'ur_with_gripper' build argument 'catkin_cmake_args' from command line to 'None'
+[0.338s] Level 5:colcon.colcon_core.verb:set package 'ur_with_gripper' build argument 'catkin_skip_building_tests' from command line to 'False'
+[0.338s] DEBUG:colcon.colcon_core.verb:Building package 'ur_with_gripper' with the following arguments: {'ament_cmake_args': None, 'build_base': '/home/levin/Semi-Automated-Programming-of-Industrial-Robotic-Systems-Using-Large-Language-Models/build/ur_with_gripper', 'catkin_cmake_args': None, 'catkin_skip_building_tests': False, 'cmake_args': None, 'cmake_clean_cache': False, 'cmake_clean_first': False, 'cmake_force_configure': False, 'cmake_target': None, 'cmake_target_skip_unavailable': False, 'install_base': '/home/levin/Semi-Automated-Programming-of-Industrial-Robotic-Systems-Using-Large-Language-Models/install/ur_with_gripper', 'merge_install': False, 'path': '/home/levin/Semi-Automated-Programming-of-Industrial-Robotic-Systems-Using-Large-Language-Models/src/ur_with_gripper', 'symlink_install': False, 'test_result_base': None}
+[0.339s] Level 5:colcon.colcon_core.verb:set package 'ur_with_gripper_moveit_config' build argument 'cmake_args' from command line to 'None'
+[0.339s] Level 5:colcon.colcon_core.verb:set package 'ur_with_gripper_moveit_config' build argument 'cmake_target' from command line to 'None'
+[0.339s] Level 5:colcon.colcon_core.verb:set package 'ur_with_gripper_moveit_config' build argument 'cmake_target_skip_unavailable' from command line to 'False'
+[0.339s] Level 5:colcon.colcon_core.verb:set package 'ur_with_gripper_moveit_config' build argument 'cmake_clean_cache' from command line to 'False'
+[0.339s] Level 5:colcon.colcon_core.verb:set package 'ur_with_gripper_moveit_config' build argument 'cmake_clean_first' from command line to 'False'
+[0.339s] Level 5:colcon.colcon_core.verb:set package 'ur_with_gripper_moveit_config' build argument 'cmake_force_configure' from command line to 'False'
+[0.339s] Level 5:colcon.colcon_core.verb:set package 'ur_with_gripper_moveit_config' build argument 'ament_cmake_args' from command line to 'None'
+[0.339s] Level 5:colcon.colcon_core.verb:set package 'ur_with_gripper_moveit_config' build argument 'catkin_cmake_args' from command line to 'None'
+[0.339s] Level 5:colcon.colcon_core.verb:set package 'ur_with_gripper_moveit_config' build argument 'catkin_skip_building_tests' from command line to 'False'
+[0.339s] DEBUG:colcon.colcon_core.verb:Building package 'ur_with_gripper_moveit_config' with the following arguments: {'ament_cmake_args': None, 'build_base': '/home/levin/Semi-Automated-Programming-of-Industrial-Robotic-Systems-Using-Large-Language-Models/build/ur_with_gripper_moveit_config', 'catkin_cmake_args': None, 'catkin_skip_building_tests': False, 'cmake_args': None, 'cmake_clean_cache': False, 'cmake_clean_first': False, 'cmake_force_configure': False, 'cmake_target': None, 'cmake_target_skip_unavailable': False, 'install_base': '/home/levin/Semi-Automated-Programming-of-Industrial-Robotic-Systems-Using-Large-Language-Models/install/ur_with_gripper_moveit_config', 'merge_install': False, 'path': '/home/levin/Semi-Automated-Programming-of-Industrial-Robotic-Systems-Using-Large-Language-Models/src/ur_with_gripper_moveit_config', 'symlink_install': False, 'test_result_base': None}
+[0.339s] INFO:colcon.colcon_core.executor:Executing jobs using 'parallel' executor
+[0.340s] DEBUG:colcon.colcon_parallel_executor.executor.parallel:run_until_complete
+[0.340s] INFO:colcon.colcon_ros.task.ament_cmake.build:Building ROS package in '/home/levin/Semi-Automated-Programming-of-Industrial-Robotic-Systems-Using-Large-Language-Models/src/ur_with_gripper' with build type 'ament_cmake'
+[0.340s] INFO:colcon.colcon_cmake.task.cmake.build:Building CMake package in '/home/levin/Semi-Automated-Programming-of-Industrial-Robotic-Systems-Using-Large-Language-Models/src/ur_with_gripper'
+[0.343s] INFO:colcon.colcon_core.plugin_system:Skipping extension 'colcon_core.shell.bat': Not used on non-Windows systems
+[0.343s] INFO:colcon.colcon_core.shell:Skip shell extension 'powershell' for command environment: Not usable outside of PowerShell
+[0.343s] DEBUG:colcon.colcon_core.shell:Skip shell extension 'dsv' for command environment
+[0.354s] DEBUG:colcon.colcon_core.event_handler.log_command:Invoking command in '/home/levin/Semi-Automated-Programming-of-Industrial-Robotic-Systems-Using-Large-Language-Models/build/ur_with_gripper': AMENT_PREFIX_PATH=/home/levin/Semi-Automated-Programming-of-Industrial-Robotic-Systems-Using-Large-Language-Models/install/custom_gripper:${AMENT_PREFIX_PATH} CMAKE_PREFIX_PATH=/home/levin/Semi-Automated-Programming-of-Industrial-Robotic-Systems-Using-Large-Language-Models/install/custom_gripper:/opt/ros/humble /usr/bin/cmake --build /home/levin/Semi-Automated-Programming-of-Industrial-Robotic-Systems-Using-Large-Language-Models/build/ur_with_gripper -- -j20 -l20
+[0.395s] DEBUG:colcon.colcon_core.event_handler.log_command:Invoked command in '/home/levin/Semi-Automated-Programming-of-Industrial-Robotic-Systems-Using-Large-Language-Models/build/ur_with_gripper' returned '0': AMENT_PREFIX_PATH=/home/levin/Semi-Automated-Programming-of-Industrial-Robotic-Systems-Using-Large-Language-Models/install/custom_gripper:${AMENT_PREFIX_PATH} CMAKE_PREFIX_PATH=/home/levin/Semi-Automated-Programming-of-Industrial-Robotic-Systems-Using-Large-Language-Models/install/custom_gripper:/opt/ros/humble /usr/bin/cmake --build /home/levin/Semi-Automated-Programming-of-Industrial-Robotic-Systems-Using-Large-Language-Models/build/ur_with_gripper -- -j20 -l20
+[0.406s] DEBUG:colcon.colcon_core.event_handler.log_command:Invoking command in '/home/levin/Semi-Automated-Programming-of-Industrial-Robotic-Systems-Using-Large-Language-Models/build/ur_with_gripper': AMENT_PREFIX_PATH=/home/levin/Semi-Automated-Programming-of-Industrial-Robotic-Systems-Using-Large-Language-Models/install/custom_gripper:${AMENT_PREFIX_PATH} CMAKE_PREFIX_PATH=/home/levin/Semi-Automated-Programming-of-Industrial-Robotic-Systems-Using-Large-Language-Models/install/custom_gripper:/opt/ros/humble /usr/bin/cmake --install /home/levin/Semi-Automated-Programming-of-Industrial-Robotic-Systems-Using-Large-Language-Models/build/ur_with_gripper
+[0.417s] Level 1:colcon.colcon_core.environment:create_environment_scripts_only(ur_with_gripper)
+[0.418s] DEBUG:colcon.colcon_core.event_handler.log_command:Invoked command in '/home/levin/Semi-Automated-Programming-of-Industrial-Robotic-Systems-Using-Large-Language-Models/build/ur_with_gripper' returned '0': AMENT_PREFIX_PATH=/home/levin/Semi-Automated-Programming-of-Industrial-Robotic-Systems-Using-Large-Language-Models/install/custom_gripper:${AMENT_PREFIX_PATH} CMAKE_PREFIX_PATH=/home/levin/Semi-Automated-Programming-of-Industrial-Robotic-Systems-Using-Large-Language-Models/install/custom_gripper:/opt/ros/humble /usr/bin/cmake --install /home/levin/Semi-Automated-Programming-of-Industrial-Robotic-Systems-Using-Large-Language-Models/build/ur_with_gripper
+[0.420s] Level 1:colcon.colcon_core.environment:checking '/home/levin/Semi-Automated-Programming-of-Industrial-Robotic-Systems-Using-Large-Language-Models/install/ur_with_gripper' for CMake module files
+[0.420s] Level 1:colcon.colcon_core.environment:checking '/home/levin/Semi-Automated-Programming-of-Industrial-Robotic-Systems-Using-Large-Language-Models/install/ur_with_gripper' for CMake config files
+[0.420s] Level 1:colcon.colcon_core.shell:create_environment_hook('ur_with_gripper', 'cmake_prefix_path')
+[0.421s] INFO:colcon.colcon_core.shell:Creating environment hook '/home/levin/Semi-Automated-Programming-of-Industrial-Robotic-Systems-Using-Large-Language-Models/install/ur_with_gripper/share/ur_with_gripper/hook/cmake_prefix_path.ps1'
+[0.421s] INFO:colcon.colcon_core.shell:Creating environment descriptor '/home/levin/Semi-Automated-Programming-of-Industrial-Robotic-Systems-Using-Large-Language-Models/install/ur_with_gripper/share/ur_with_gripper/hook/cmake_prefix_path.dsv'
+[0.422s] INFO:colcon.colcon_core.shell:Creating environment hook '/home/levin/Semi-Automated-Programming-of-Industrial-Robotic-Systems-Using-Large-Language-Models/install/ur_with_gripper/share/ur_with_gripper/hook/cmake_prefix_path.sh'
+[0.423s] Level 1:colcon.colcon_core.environment:checking '/home/levin/Semi-Automated-Programming-of-Industrial-Robotic-Systems-Using-Large-Language-Models/install/ur_with_gripper/bin'
+[0.423s] Level 1:colcon.colcon_core.environment:checking '/home/levin/Semi-Automated-Programming-of-Industrial-Robotic-Systems-Using-Large-Language-Models/install/ur_with_gripper/lib/pkgconfig/ur_with_gripper.pc'
+[0.423s] Level 1:colcon.colcon_core.environment:checking '/home/levin/Semi-Automated-Programming-of-Industrial-Robotic-Systems-Using-Large-Language-Models/install/ur_with_gripper/lib/python3.10/site-packages'
+[0.423s] Level 1:colcon.colcon_core.environment:checking '/home/levin/Semi-Automated-Programming-of-Industrial-Robotic-Systems-Using-Large-Language-Models/install/ur_with_gripper/bin'
+[0.423s] INFO:colcon.colcon_core.shell:Creating package script '/home/levin/Semi-Automated-Programming-of-Industrial-Robotic-Systems-Using-Large-Language-Models/install/ur_with_gripper/share/ur_with_gripper/package.ps1'
+[0.424s] INFO:colcon.colcon_core.shell:Creating package descriptor '/home/levin/Semi-Automated-Programming-of-Industrial-Robotic-Systems-Using-Large-Language-Models/install/ur_with_gripper/share/ur_with_gripper/package.dsv'
+[0.424s] INFO:colcon.colcon_core.shell:Creating package script '/home/levin/Semi-Automated-Programming-of-Industrial-Robotic-Systems-Using-Large-Language-Models/install/ur_with_gripper/share/ur_with_gripper/package.sh'
+[0.425s] INFO:colcon.colcon_core.shell:Creating package script '/home/levin/Semi-Automated-Programming-of-Industrial-Robotic-Systems-Using-Large-Language-Models/install/ur_with_gripper/share/ur_with_gripper/package.bash'
+[0.425s] INFO:colcon.colcon_core.shell:Creating package script '/home/levin/Semi-Automated-Programming-of-Industrial-Robotic-Systems-Using-Large-Language-Models/install/ur_with_gripper/share/ur_with_gripper/package.zsh'
+[0.426s] Level 1:colcon.colcon_core.environment:create_file_with_runtime_dependencies(/home/levin/Semi-Automated-Programming-of-Industrial-Robotic-Systems-Using-Large-Language-Models/install/ur_with_gripper/share/colcon-core/packages/ur_with_gripper)
+[0.427s] Level 1:colcon.colcon_core.environment:create_environment_scripts_only(ur_with_gripper)
+[0.427s] Level 1:colcon.colcon_core.environment:checking '/home/levin/Semi-Automated-Programming-of-Industrial-Robotic-Systems-Using-Large-Language-Models/install/ur_with_gripper' for CMake module files
+[0.427s] Level 1:colcon.colcon_core.environment:checking '/home/levin/Semi-Automated-Programming-of-Industrial-Robotic-Systems-Using-Large-Language-Models/install/ur_with_gripper' for CMake config files
+[0.427s] Level 1:colcon.colcon_core.shell:create_environment_hook('ur_with_gripper', 'cmake_prefix_path')
+[0.428s] INFO:colcon.colcon_core.shell:Creating environment hook '/home/levin/Semi-Automated-Programming-of-Industrial-Robotic-Systems-Using-Large-Language-Models/install/ur_with_gripper/share/ur_with_gripper/hook/cmake_prefix_path.ps1'
+[0.428s] INFO:colcon.colcon_core.shell:Creating environment descriptor '/home/levin/Semi-Automated-Programming-of-Industrial-Robotic-Systems-Using-Large-Language-Models/install/ur_with_gripper/share/ur_with_gripper/hook/cmake_prefix_path.dsv'
+[0.428s] INFO:colcon.colcon_core.shell:Creating environment hook '/home/levin/Semi-Automated-Programming-of-Industrial-Robotic-Systems-Using-Large-Language-Models/install/ur_with_gripper/share/ur_with_gripper/hook/cmake_prefix_path.sh'
+[0.429s] Level 1:colcon.colcon_core.environment:checking '/home/levin/Semi-Automated-Programming-of-Industrial-Robotic-Systems-Using-Large-Language-Models/install/ur_with_gripper/bin'
+[0.429s] Level 1:colcon.colcon_core.environment:checking '/home/levin/Semi-Automated-Programming-of-Industrial-Robotic-Systems-Using-Large-Language-Models/install/ur_with_gripper/lib/pkgconfig/ur_with_gripper.pc'
+[0.429s] Level 1:colcon.colcon_core.environment:checking '/home/levin/Semi-Automated-Programming-of-Industrial-Robotic-Systems-Using-Large-Language-Models/install/ur_with_gripper/lib/python3.10/site-packages'
+[0.429s] Level 1:colcon.colcon_core.environment:checking '/home/levin/Semi-Automated-Programming-of-Industrial-Robotic-Systems-Using-Large-Language-Models/install/ur_with_gripper/bin'
+[0.429s] INFO:colcon.colcon_core.shell:Creating package script '/home/levin/Semi-Automated-Programming-of-Industrial-Robotic-Systems-Using-Large-Language-Models/install/ur_with_gripper/share/ur_with_gripper/package.ps1'
+[0.430s] INFO:colcon.colcon_core.shell:Creating package descriptor '/home/levin/Semi-Automated-Programming-of-Industrial-Robotic-Systems-Using-Large-Language-Models/install/ur_with_gripper/share/ur_with_gripper/package.dsv'
+[0.430s] INFO:colcon.colcon_core.shell:Creating package script '/home/levin/Semi-Automated-Programming-of-Industrial-Robotic-Systems-Using-Large-Language-Models/install/ur_with_gripper/share/ur_with_gripper/package.sh'
+[0.430s] INFO:colcon.colcon_core.shell:Creating package script '/home/levin/Semi-Automated-Programming-of-Industrial-Robotic-Systems-Using-Large-Language-Models/install/ur_with_gripper/share/ur_with_gripper/package.bash'
+[0.430s] INFO:colcon.colcon_core.shell:Creating package script '/home/levin/Semi-Automated-Programming-of-Industrial-Robotic-Systems-Using-Large-Language-Models/install/ur_with_gripper/share/ur_with_gripper/package.zsh'
+[0.431s] Level 1:colcon.colcon_core.environment:create_file_with_runtime_dependencies(/home/levin/Semi-Automated-Programming-of-Industrial-Robotic-Systems-Using-Large-Language-Models/install/ur_with_gripper/share/colcon-core/packages/ur_with_gripper)
+[0.431s] INFO:colcon.colcon_ros.task.ament_cmake.build:Building ROS package in '/home/levin/Semi-Automated-Programming-of-Industrial-Robotic-Systems-Using-Large-Language-Models/src/ur_with_gripper_moveit_config' with build type 'ament_cmake'
+[0.431s] INFO:colcon.colcon_cmake.task.cmake.build:Building CMake package in '/home/levin/Semi-Automated-Programming-of-Industrial-Robotic-Systems-Using-Large-Language-Models/src/ur_with_gripper_moveit_config'
+[0.431s] INFO:colcon.colcon_core.shell:Skip shell extension 'powershell' for command environment: Not usable outside of PowerShell
+[0.431s] DEBUG:colcon.colcon_core.shell:Skip shell extension 'dsv' for command environment
+[0.440s] DEBUG:colcon.colcon_core.event_handler.log_command:Invoking command in '/home/levin/Semi-Automated-Programming-of-Industrial-Robotic-Systems-Using-Large-Language-Models/build/ur_with_gripper_moveit_config': AMENT_PREFIX_PATH=/home/levin/Semi-Automated-Programming-of-Industrial-Robotic-Systems-Using-Large-Language-Models/install/ur_with_gripper:/home/levin/Semi-Automated-Programming-of-Industrial-Robotic-Systems-Using-Large-Language-Models/install/custom_gripper:${AMENT_PREFIX_PATH} CMAKE_PREFIX_PATH=/home/levin/Semi-Automated-Programming-of-Industrial-Robotic-Systems-Using-Large-Language-Models/install/ur_with_gripper:/home/levin/Semi-Automated-Programming-of-Industrial-Robotic-Systems-Using-Large-Language-Models/install/custom_gripper:/opt/ros/humble /usr/bin/cmake --build /home/levin/Semi-Automated-Programming-of-Industrial-Robotic-Systems-Using-Large-Language-Models/build/ur_with_gripper_moveit_config -- -j20 -l20
+[0.483s] DEBUG:colcon.colcon_core.event_handler.log_command:Invoked command in '/home/levin/Semi-Automated-Programming-of-Industrial-Robotic-Systems-Using-Large-Language-Models/build/ur_with_gripper_moveit_config' returned '0': AMENT_PREFIX_PATH=/home/levin/Semi-Automated-Programming-of-Industrial-Robotic-Systems-Using-Large-Language-Models/install/ur_with_gripper:/home/levin/Semi-Automated-Programming-of-Industrial-Robotic-Systems-Using-Large-Language-Models/install/custom_gripper:${AMENT_PREFIX_PATH} CMAKE_PREFIX_PATH=/home/levin/Semi-Automated-Programming-of-Industrial-Robotic-Systems-Using-Large-Language-Models/install/ur_with_gripper:/home/levin/Semi-Automated-Programming-of-Industrial-Robotic-Systems-Using-Large-Language-Models/install/custom_gripper:/opt/ros/humble /usr/bin/cmake --build /home/levin/Semi-Automated-Programming-of-Industrial-Robotic-Systems-Using-Large-Language-Models/build/ur_with_gripper_moveit_config -- -j20 -l20
+[0.484s] DEBUG:colcon.colcon_core.event_handler.log_command:Invoking command in '/home/levin/Semi-Automated-Programming-of-Industrial-Robotic-Systems-Using-Large-Language-Models/build/ur_with_gripper_moveit_config': AMENT_PREFIX_PATH=/home/levin/Semi-Automated-Programming-of-Industrial-Robotic-Systems-Using-Large-Language-Models/install/ur_with_gripper:/home/levin/Semi-Automated-Programming-of-Industrial-Robotic-Systems-Using-Large-Language-Models/install/custom_gripper:${AMENT_PREFIX_PATH} CMAKE_PREFIX_PATH=/home/levin/Semi-Automated-Programming-of-Industrial-Robotic-Systems-Using-Large-Language-Models/install/ur_with_gripper:/home/levin/Semi-Automated-Programming-of-Industrial-Robotic-Systems-Using-Large-Language-Models/install/custom_gripper:/opt/ros/humble /usr/bin/cmake --install /home/levin/Semi-Automated-Programming-of-Industrial-Robotic-Systems-Using-Large-Language-Models/build/ur_with_gripper_moveit_config
+[0.497s] Level 1:colcon.colcon_core.environment:create_environment_scripts_only(ur_with_gripper_moveit_config)
+[0.497s] DEBUG:colcon.colcon_core.event_handler.log_command:Invoked command in '/home/levin/Semi-Automated-Programming-of-Industrial-Robotic-Systems-Using-Large-Language-Models/build/ur_with_gripper_moveit_config' returned '0': AMENT_PREFIX_PATH=/home/levin/Semi-Automated-Programming-of-Industrial-Robotic-Systems-Using-Large-Language-Models/install/ur_with_gripper:/home/levin/Semi-Automated-Programming-of-Industrial-Robotic-Systems-Using-Large-Language-Models/install/custom_gripper:${AMENT_PREFIX_PATH} CMAKE_PREFIX_PATH=/home/levin/Semi-Automated-Programming-of-Industrial-Robotic-Systems-Using-Large-Language-Models/install/ur_with_gripper:/home/levin/Semi-Automated-Programming-of-Industrial-Robotic-Systems-Using-Large-Language-Models/install/custom_gripper:/opt/ros/humble /usr/bin/cmake --install /home/levin/Semi-Automated-Programming-of-Industrial-Robotic-Systems-Using-Large-Language-Models/build/ur_with_gripper_moveit_config
+[0.497s] Level 1:colcon.colcon_core.environment:checking '/home/levin/Semi-Automated-Programming-of-Industrial-Robotic-Systems-Using-Large-Language-Models/install/ur_with_gripper_moveit_config' for CMake module files
+[0.498s] Level 1:colcon.colcon_core.environment:checking '/home/levin/Semi-Automated-Programming-of-Industrial-Robotic-Systems-Using-Large-Language-Models/install/ur_with_gripper_moveit_config' for CMake config files
+[0.498s] Level 1:colcon.colcon_core.shell:create_environment_hook('ur_with_gripper_moveit_config', 'cmake_prefix_path')
+[0.498s] INFO:colcon.colcon_core.shell:Creating environment hook '/home/levin/Semi-Automated-Programming-of-Industrial-Robotic-Systems-Using-Large-Language-Models/install/ur_with_gripper_moveit_config/share/ur_with_gripper_moveit_config/hook/cmake_prefix_path.ps1'
+[0.499s] INFO:colcon.colcon_core.shell:Creating environment descriptor '/home/levin/Semi-Automated-Programming-of-Industrial-Robotic-Systems-Using-Large-Language-Models/install/ur_with_gripper_moveit_config/share/ur_with_gripper_moveit_config/hook/cmake_prefix_path.dsv'
+[0.499s] INFO:colcon.colcon_core.shell:Creating environment hook '/home/levin/Semi-Automated-Programming-of-Industrial-Robotic-Systems-Using-Large-Language-Models/install/ur_with_gripper_moveit_config/share/ur_with_gripper_moveit_config/hook/cmake_prefix_path.sh'
+[0.499s] Level 1:colcon.colcon_core.environment:checking '/home/levin/Semi-Automated-Programming-of-Industrial-Robotic-Systems-Using-Large-Language-Models/install/ur_with_gripper_moveit_config/bin'
+[0.500s] Level 1:colcon.colcon_core.environment:checking '/home/levin/Semi-Automated-Programming-of-Industrial-Robotic-Systems-Using-Large-Language-Models/install/ur_with_gripper_moveit_config/lib/pkgconfig/ur_with_gripper_moveit_config.pc'
+[0.500s] Level 1:colcon.colcon_core.environment:checking '/home/levin/Semi-Automated-Programming-of-Industrial-Robotic-Systems-Using-Large-Language-Models/install/ur_with_gripper_moveit_config/lib/python3.10/site-packages'
+[0.500s] Level 1:colcon.colcon_core.environment:checking '/home/levin/Semi-Automated-Programming-of-Industrial-Robotic-Systems-Using-Large-Language-Models/install/ur_with_gripper_moveit_config/bin'
+[0.500s] INFO:colcon.colcon_core.shell:Creating package script '/home/levin/Semi-Automated-Programming-of-Industrial-Robotic-Systems-Using-Large-Language-Models/install/ur_with_gripper_moveit_config/share/ur_with_gripper_moveit_config/package.ps1'
+[0.500s] INFO:colcon.colcon_core.shell:Creating package descriptor '/home/levin/Semi-Automated-Programming-of-Industrial-Robotic-Systems-Using-Large-Language-Models/install/ur_with_gripper_moveit_config/share/ur_with_gripper_moveit_config/package.dsv'
+[0.501s] INFO:colcon.colcon_core.shell:Creating package script '/home/levin/Semi-Automated-Programming-of-Industrial-Robotic-Systems-Using-Large-Language-Models/install/ur_with_gripper_moveit_config/share/ur_with_gripper_moveit_config/package.sh'
+[0.501s] INFO:colcon.colcon_core.shell:Creating package script '/home/levin/Semi-Automated-Programming-of-Industrial-Robotic-Systems-Using-Large-Language-Models/install/ur_with_gripper_moveit_config/share/ur_with_gripper_moveit_config/package.bash'
+[0.501s] INFO:colcon.colcon_core.shell:Creating package script '/home/levin/Semi-Automated-Programming-of-Industrial-Robotic-Systems-Using-Large-Language-Models/install/ur_with_gripper_moveit_config/share/ur_with_gripper_moveit_config/package.zsh'
+[0.501s] Level 1:colcon.colcon_core.environment:create_file_with_runtime_dependencies(/home/levin/Semi-Automated-Programming-of-Industrial-Robotic-Systems-Using-Large-Language-Models/install/ur_with_gripper_moveit_config/share/colcon-core/packages/ur_with_gripper_moveit_config)
+[0.502s] Level 1:colcon.colcon_core.environment:create_environment_scripts_only(ur_with_gripper_moveit_config)
+[0.502s] Level 1:colcon.colcon_core.environment:checking '/home/levin/Semi-Automated-Programming-of-Industrial-Robotic-Systems-Using-Large-Language-Models/install/ur_with_gripper_moveit_config' for CMake module files
+[0.502s] Level 1:colcon.colcon_core.environment:checking '/home/levin/Semi-Automated-Programming-of-Industrial-Robotic-Systems-Using-Large-Language-Models/install/ur_with_gripper_moveit_config' for CMake config files
+[0.503s] Level 1:colcon.colcon_core.shell:create_environment_hook('ur_with_gripper_moveit_config', 'cmake_prefix_path')
+[0.503s] INFO:colcon.colcon_core.shell:Creating environment hook '/home/levin/Semi-Automated-Programming-of-Industrial-Robotic-Systems-Using-Large-Language-Models/install/ur_with_gripper_moveit_config/share/ur_with_gripper_moveit_config/hook/cmake_prefix_path.ps1'
+[0.503s] INFO:colcon.colcon_core.shell:Creating environment descriptor '/home/levin/Semi-Automated-Programming-of-Industrial-Robotic-Systems-Using-Large-Language-Models/install/ur_with_gripper_moveit_config/share/ur_with_gripper_moveit_config/hook/cmake_prefix_path.dsv'
+[0.504s] INFO:colcon.colcon_core.shell:Creating environment hook '/home/levin/Semi-Automated-Programming-of-Industrial-Robotic-Systems-Using-Large-Language-Models/install/ur_with_gripper_moveit_config/share/ur_with_gripper_moveit_config/hook/cmake_prefix_path.sh'
+[0.504s] Level 1:colcon.colcon_core.environment:checking '/home/levin/Semi-Automated-Programming-of-Industrial-Robotic-Systems-Using-Large-Language-Models/install/ur_with_gripper_moveit_config/bin'
+[0.504s] Level 1:colcon.colcon_core.environment:checking '/home/levin/Semi-Automated-Programming-of-Industrial-Robotic-Systems-Using-Large-Language-Models/install/ur_with_gripper_moveit_config/lib/pkgconfig/ur_with_gripper_moveit_config.pc'
+[0.504s] Level 1:colcon.colcon_core.environment:checking '/home/levin/Semi-Automated-Programming-of-Industrial-Robotic-Systems-Using-Large-Language-Models/install/ur_with_gripper_moveit_config/lib/python3.10/site-packages'
+[0.504s] Level 1:colcon.colcon_core.environment:checking '/home/levin/Semi-Automated-Programming-of-Industrial-Robotic-Systems-Using-Large-Language-Models/install/ur_with_gripper_moveit_config/bin'
+[0.505s] INFO:colcon.colcon_core.shell:Creating package script '/home/levin/Semi-Automated-Programming-of-Industrial-Robotic-Systems-Using-Large-Language-Models/install/ur_with_gripper_moveit_config/share/ur_with_gripper_moveit_config/package.ps1'
+[0.505s] INFO:colcon.colcon_core.shell:Creating package descriptor '/home/levin/Semi-Automated-Programming-of-Industrial-Robotic-Systems-Using-Large-Language-Models/install/ur_with_gripper_moveit_config/share/ur_with_gripper_moveit_config/package.dsv'
+[0.505s] INFO:colcon.colcon_core.shell:Creating package script '/home/levin/Semi-Automated-Programming-of-Industrial-Robotic-Systems-Using-Large-Language-Models/install/ur_with_gripper_moveit_config/share/ur_with_gripper_moveit_config/package.sh'
+[0.506s] INFO:colcon.colcon_core.shell:Creating package script '/home/levin/Semi-Automated-Programming-of-Industrial-Robotic-Systems-Using-Large-Language-Models/install/ur_with_gripper_moveit_config/share/ur_with_gripper_moveit_config/package.bash'
+[0.506s] INFO:colcon.colcon_core.shell:Creating package script '/home/levin/Semi-Automated-Programming-of-Industrial-Robotic-Systems-Using-Large-Language-Models/install/ur_with_gripper_moveit_config/share/ur_with_gripper_moveit_config/package.zsh'
+[0.507s] Level 1:colcon.colcon_core.environment:create_file_with_runtime_dependencies(/home/levin/Semi-Automated-Programming-of-Industrial-Robotic-Systems-Using-Large-Language-Models/install/ur_with_gripper_moveit_config/share/colcon-core/packages/ur_with_gripper_moveit_config)
+[0.507s] DEBUG:colcon.colcon_parallel_executor.executor.parallel:closing loop
+[0.507s] DEBUG:colcon.colcon_parallel_executor.executor.parallel:loop closed
+[0.507s] DEBUG:colcon.colcon_parallel_executor.executor.parallel:run_until_complete finished with '0'
+[0.507s] DEBUG:colcon.colcon_core.event_reactor:joining thread
+[0.513s] INFO:colcon.colcon_core.plugin_system:Skipping extension 'colcon_notification.desktop_notification.terminal_notifier': Not used on non-Darwin systems
+[0.513s] INFO:colcon.colcon_core.plugin_system:Skipping extension 'colcon_notification.desktop_notification.win32': Not used on non-Windows systems
+[0.514s] INFO:colcon.colcon_notification.desktop_notification:Sending desktop notification using 'notify2'
+[0.530s] DEBUG:colcon.colcon_core.event_reactor:joined thread
+[0.531s] INFO:colcon.colcon_core.shell:Creating prefix script '/home/levin/Semi-Automated-Programming-of-Industrial-Robotic-Systems-Using-Large-Language-Models/install/local_setup.ps1'
+[0.532s] INFO:colcon.colcon_core.shell:Creating prefix util module '/home/levin/Semi-Automated-Programming-of-Industrial-Robotic-Systems-Using-Large-Language-Models/install/_local_setup_util_ps1.py'
+[0.533s] INFO:colcon.colcon_core.shell:Creating prefix chain script '/home/levin/Semi-Automated-Programming-of-Industrial-Robotic-Systems-Using-Large-Language-Models/install/setup.ps1'
+[0.534s] INFO:colcon.colcon_core.shell:Creating prefix script '/home/levin/Semi-Automated-Programming-of-Industrial-Robotic-Systems-Using-Large-Language-Models/install/local_setup.sh'
+[0.534s] INFO:colcon.colcon_core.shell:Creating prefix util module '/home/levin/Semi-Automated-Programming-of-Industrial-Robotic-Systems-Using-Large-Language-Models/install/_local_setup_util_sh.py'
+[0.535s] INFO:colcon.colcon_core.shell:Creating prefix chain script '/home/levin/Semi-Automated-Programming-of-Industrial-Robotic-Systems-Using-Large-Language-Models/install/setup.sh'
+[0.535s] INFO:colcon.colcon_core.shell:Creating prefix script '/home/levin/Semi-Automated-Programming-of-Industrial-Robotic-Systems-Using-Large-Language-Models/install/local_setup.bash'
+[0.535s] INFO:colcon.colcon_core.shell:Creating prefix chain script '/home/levin/Semi-Automated-Programming-of-Industrial-Robotic-Systems-Using-Large-Language-Models/install/setup.bash'
+[0.536s] INFO:colcon.colcon_core.shell:Creating prefix script '/home/levin/Semi-Automated-Programming-of-Industrial-Robotic-Systems-Using-Large-Language-Models/install/local_setup.zsh'
+[0.536s] INFO:colcon.colcon_core.shell:Creating prefix chain script '/home/levin/Semi-Automated-Programming-of-Industrial-Robotic-Systems-Using-Large-Language-Models/install/setup.zsh'

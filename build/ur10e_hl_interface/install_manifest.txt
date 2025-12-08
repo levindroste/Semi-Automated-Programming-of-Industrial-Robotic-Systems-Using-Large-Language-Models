@@ -1,0 +1,78 @@
+/home/levin/Semi-Automated-Programming-of-Industrial-Robotic-Systems-Using-Large-Language-Models/install/ur10e_hl_interface/lib/libur10e_hl_interface.a
+/home/levin/Semi-Automated-Programming-of-Industrial-Robotic-Systems-Using-Large-Language-Models/install/ur10e_hl_interface/lib/ur10e_hl_interface/clipfix_bewegung
+/home/levin/Semi-Automated-Programming-of-Industrial-Robotic-Systems-Using-Large-Language-Models/install/ur10e_hl_interface/lib/ur10e_hl_interface/add_objects_node
+/home/levin/Semi-Automated-Programming-of-Industrial-Robotic-Systems-Using-Large-Language-Models/install/ur10e_hl_interface/include/ur10e_hl_interface/robot_hl_interface.hpp
+/home/levin/Semi-Automated-Programming-of-Industrial-Robotic-Systems-Using-Large-Language-Models/install/ur10e_hl_interface/share/ur10e_hl_interface/config/AML-Datei-V04.aml
+/home/levin/Semi-Automated-Programming-of-Industrial-Robotic-Systems-Using-Large-Language-Models/install/ur10e_hl_interface/share/ur10e_hl_interface/meshes/Alt-Ordner/PERF-2000MM_3D.stl
+/home/levin/Semi-Automated-Programming-of-Industrial-Robotic-Systems-Using-Large-Language-Models/install/ur10e_hl_interface/share/ur10e_hl_interface/meshes/Alt-Ordner/Unnamed-Schaltschrank.stl
+/home/levin/Semi-Automated-Programming-of-Industrial-Robotic-Systems-Using-Large-Language-Models/install/ur10e_hl_interface/share/ur10e_hl_interface/meshes/Alt-Ordner/NS-35.dae
+/home/levin/Semi-Automated-Programming-of-Industrial-Robotic-Systems-Using-Large-Language-Models/install/ur10e_hl_interface/share/ur10e_hl_interface/meshes/Alt-Ordner/Schaltschrank-1.stl
+/home/levin/Semi-Automated-Programming-of-Industrial-Robotic-Systems-Using-Large-Language-Models/install/ur10e_hl_interface/share/ur10e_hl_interface/meshes/UT_1,5_VT.stl
+/home/levin/Semi-Automated-Programming-of-Industrial-Robotic-Systems-Using-Large-Language-Models/install/ur10e_hl_interface/share/ur10e_hl_interface/meshes/PT-6-TWIN-BU.stl
+/home/levin/Semi-Automated-Programming-of-Industrial-Robotic-Systems-Using-Large-Language-Models/install/ur10e_hl_interface/share/ur10e_hl_interface/meshes/Schaltschrank.dae
+/home/levin/Semi-Automated-Programming-of-Industrial-Robotic-Systems-Using-Large-Language-Models/install/ur10e_hl_interface/share/ur10e_hl_interface/meshes/PT-6-TWIN.dae
+/home/levin/Semi-Automated-Programming-of-Industrial-Robotic-Systems-Using-Large-Language-Models/install/ur10e_hl_interface/share/ur10e_hl_interface/meshes/Neue Klemmen/PTU 2,5-TWIN BU.stl
+/home/levin/Semi-Automated-Programming-of-Industrial-Robotic-Systems-Using-Large-Language-Models/install/ur10e_hl_interface/share/ur10e_hl_interface/meshes/Neue Klemmen/PTU 2,5-TWIN BU.stp
+/home/levin/Semi-Automated-Programming-of-Industrial-Robotic-Systems-Using-Large-Language-Models/install/ur10e_hl_interface/share/ur10e_hl_interface/meshes/Neue Klemmen/UT 1,5 OG.stl
+/home/levin/Semi-Automated-Programming-of-Industrial-Robotic-Systems-Using-Large-Language-Models/install/ur10e_hl_interface/share/ur10e_hl_interface/meshes/Neue Klemmen/UT 1,5 OG.dae
+/home/levin/Semi-Automated-Programming-of-Industrial-Robotic-Systems-Using-Large-Language-Models/install/ur10e_hl_interface/share/ur10e_hl_interface/meshes/Neue Klemmen/UT 1,5 VT.dae
+/home/levin/Semi-Automated-Programming-of-Industrial-Robotic-Systems-Using-Large-Language-Models/install/ur10e_hl_interface/share/ur10e_hl_interface/meshes/Neue Klemmen/QTCU 2,5.stl
+/home/levin/Semi-Automated-Programming-of-Industrial-Robotic-Systems-Using-Large-Language-Models/install/ur10e_hl_interface/share/ur10e_hl_interface/meshes/Neue Klemmen/UT 1,5 VT.stl
+/home/levin/Semi-Automated-Programming-of-Industrial-Robotic-Systems-Using-Large-Language-Models/install/ur10e_hl_interface/share/ur10e_hl_interface/meshes/Neue Klemmen/STU 35 4X10 YE.stp
+/home/levin/Semi-Automated-Programming-of-Industrial-Robotic-Systems-Using-Large-Language-Models/install/ur10e_hl_interface/share/ur10e_hl_interface/meshes/Neue Klemmen/QTCU 2,5.dae
+/home/levin/Semi-Automated-Programming-of-Industrial-Robotic-Systems-Using-Large-Language-Models/install/ur10e_hl_interface/share/ur10e_hl_interface/meshes/Neue Klemmen/STU 35 4X10 YE.dae
+/home/levin/Semi-Automated-Programming-of-Industrial-Robotic-Systems-Using-Large-Language-Models/install/ur10e_hl_interface/share/ur10e_hl_interface/meshes/Neue Klemmen/STU 35 4X10 YE.stl
+/home/levin/Semi-Automated-Programming-of-Industrial-Robotic-Systems-Using-Large-Language-Models/install/ur10e_hl_interface/share/ur10e_hl_interface/meshes/Neue Klemmen/QTCU 2,5.stp
+/home/levin/Semi-Automated-Programming-of-Industrial-Robotic-Systems-Using-Large-Language-Models/install/ur10e_hl_interface/share/ur10e_hl_interface/meshes/Neue Klemmen/PTU 2,5-TWIN BU.dae
+/home/levin/Semi-Automated-Programming-of-Industrial-Robotic-Systems-Using-Large-Language-Models/install/ur10e_hl_interface/share/ur10e_hl_interface/meshes/Neue Klemmen/UT 1,5 VT.stp
+/home/levin/Semi-Automated-Programming-of-Industrial-Robotic-Systems-Using-Large-Language-Models/install/ur10e_hl_interface/share/ur10e_hl_interface/meshes/Neue Klemmen/UT 1,5 OG.stp
+/home/levin/Semi-Automated-Programming-of-Industrial-Robotic-Systems-Using-Large-Language-Models/install/ur10e_hl_interface/share/ur10e_hl_interface/meshes/UT-16-PE.dae
+/home/levin/Semi-Automated-Programming-of-Industrial-Robotic-Systems-Using-Large-Language-Models/install/ur10e_hl_interface/share/ur10e_hl_interface/meshes/Hutschienen-Halter.stl
+/home/levin/Semi-Automated-Programming-of-Industrial-Robotic-Systems-Using-Large-Language-Models/install/ur10e_hl_interface/share/ur10e_hl_interface/meshes/CLIPFIX-35.stl
+/home/levin/Semi-Automated-Programming-of-Industrial-Robotic-Systems-Using-Large-Language-Models/install/ur10e_hl_interface/share/ur10e_hl_interface/meshes/UT_1,5_VT.dae
+/home/levin/Semi-Automated-Programming-of-Industrial-Robotic-Systems-Using-Large-Language-Models/install/ur10e_hl_interface/share/ur10e_hl_interface/meshes/Schaltschrank_ohne_Tuer.dae
+/home/levin/Semi-Automated-Programming-of-Industrial-Robotic-Systems-Using-Large-Language-Models/install/ur10e_hl_interface/share/ur10e_hl_interface/meshes/VAL-MS-230.stl
+/home/levin/Semi-Automated-Programming-of-Industrial-Robotic-Systems-Using-Large-Language-Models/install/ur10e_hl_interface/share/ur10e_hl_interface/meshes/CLIPFIX-35-5.stl
+/home/levin/Semi-Automated-Programming-of-Industrial-Robotic-Systems-Using-Large-Language-Models/install/ur10e_hl_interface/share/ur10e_hl_interface/meshes/Schaltschrank.stl
+/home/levin/Semi-Automated-Programming-of-Industrial-Robotic-Systems-Using-Large-Language-Models/install/ur10e_hl_interface/share/ur10e_hl_interface/meshes/STU_35_4X10_YE.dae
+/home/levin/Semi-Automated-Programming-of-Industrial-Robotic-Systems-Using-Large-Language-Models/install/ur10e_hl_interface/share/ur10e_hl_interface/meshes/Hutschienen-Halter Kollisionsmodell.stl
+/home/levin/Semi-Automated-Programming-of-Industrial-Robotic-Systems-Using-Large-Language-Models/install/ur10e_hl_interface/share/ur10e_hl_interface/meshes/PT-6-TWIN-BU.dae
+/home/levin/Semi-Automated-Programming-of-Industrial-Robotic-Systems-Using-Large-Language-Models/install/ur10e_hl_interface/share/ur10e_hl_interface/meshes/PTU_2,5-TWIN_BU.dae
+/home/levin/Semi-Automated-Programming-of-Industrial-Robotic-Systems-Using-Large-Language-Models/install/ur10e_hl_interface/share/ur10e_hl_interface/meshes/Schaltschrank_ohne_Tuer.stl
+/home/levin/Semi-Automated-Programming-of-Industrial-Robotic-Systems-Using-Large-Language-Models/install/ur10e_hl_interface/share/ur10e_hl_interface/meshes/VAL-MS-T1-T2.stl
+/home/levin/Semi-Automated-Programming-of-Industrial-Robotic-Systems-Using-Large-Language-Models/install/ur10e_hl_interface/share/ur10e_hl_interface/meshes/UT_1,5_OG.dae
+/home/levin/Semi-Automated-Programming-of-Industrial-Robotic-Systems-Using-Large-Language-Models/install/ur10e_hl_interface/share/ur10e_hl_interface/meshes/STU_35_4X10_YE.stl
+/home/levin/Semi-Automated-Programming-of-Industrial-Robotic-Systems-Using-Large-Language-Models/install/ur10e_hl_interface/share/ur10e_hl_interface/meshes/VAL-MS-230.dae
+/home/levin/Semi-Automated-Programming-of-Industrial-Robotic-Systems-Using-Large-Language-Models/install/ur10e_hl_interface/share/ur10e_hl_interface/meshes/PT-6-TWIN.stl
+/home/levin/Semi-Automated-Programming-of-Industrial-Robotic-Systems-Using-Large-Language-Models/install/ur10e_hl_interface/share/ur10e_hl_interface/meshes/UT_1,5_OG.stl
+/home/levin/Semi-Automated-Programming-of-Industrial-Robotic-Systems-Using-Large-Language-Models/install/ur10e_hl_interface/share/ur10e_hl_interface/meshes/QTCU_2,5.stl
+/home/levin/Semi-Automated-Programming-of-Industrial-Robotic-Systems-Using-Large-Language-Models/install/ur10e_hl_interface/share/ur10e_hl_interface/meshes/Hutschiene.stl
+/home/levin/Semi-Automated-Programming-of-Industrial-Robotic-Systems-Using-Large-Language-Models/install/ur10e_hl_interface/share/ur10e_hl_interface/meshes/CLIPFIX-35-5.dae
+/home/levin/Semi-Automated-Programming-of-Industrial-Robotic-Systems-Using-Large-Language-Models/install/ur10e_hl_interface/share/ur10e_hl_interface/meshes/QTCU_2,5.dae
+/home/levin/Semi-Automated-Programming-of-Industrial-Robotic-Systems-Using-Large-Language-Models/install/ur10e_hl_interface/share/ur10e_hl_interface/meshes/VAL-MS-T1-T2.dae
+/home/levin/Semi-Automated-Programming-of-Industrial-Robotic-Systems-Using-Large-Language-Models/install/ur10e_hl_interface/share/ur10e_hl_interface/meshes/lps-logo-text.stl
+/home/levin/Semi-Automated-Programming-of-Industrial-Robotic-Systems-Using-Large-Language-Models/install/ur10e_hl_interface/share/ur10e_hl_interface/meshes/CLIPFIX-35.dae
+/home/levin/Semi-Automated-Programming-of-Industrial-Robotic-Systems-Using-Large-Language-Models/install/ur10e_hl_interface/share/ur10e_hl_interface/meshes/PTU_2,5-TWIN_BU.stl
+/home/levin/Semi-Automated-Programming-of-Industrial-Robotic-Systems-Using-Large-Language-Models/install/ur10e_hl_interface/share/ur10e_hl_interface/meshes/UT-16-PE.stl
+/home/levin/Semi-Automated-Programming-of-Industrial-Robotic-Systems-Using-Large-Language-Models/install/ur10e_hl_interface/share/ur10e_hl_interface/meshes/Hutschienen-Halter.dae
+/home/levin/Semi-Automated-Programming-of-Industrial-Robotic-Systems-Using-Large-Language-Models/install/ur10e_hl_interface/share/ur10e_hl_interface/environment/library_path.sh
+/home/levin/Semi-Automated-Programming-of-Industrial-Robotic-Systems-Using-Large-Language-Models/install/ur10e_hl_interface/share/ur10e_hl_interface/environment/library_path.dsv
+/home/levin/Semi-Automated-Programming-of-Industrial-Robotic-Systems-Using-Large-Language-Models/install/ur10e_hl_interface/share/ament_index/resource_index/package_run_dependencies/ur10e_hl_interface
+/home/levin/Semi-Automated-Programming-of-Industrial-Robotic-Systems-Using-Large-Language-Models/install/ur10e_hl_interface/share/ament_index/resource_index/parent_prefix_path/ur10e_hl_interface
+/home/levin/Semi-Automated-Programming-of-Industrial-Robotic-Systems-Using-Large-Language-Models/install/ur10e_hl_interface/share/ur10e_hl_interface/environment/ament_prefix_path.sh
+/home/levin/Semi-Automated-Programming-of-Industrial-Robotic-Systems-Using-Large-Language-Models/install/ur10e_hl_interface/share/ur10e_hl_interface/environment/ament_prefix_path.dsv
+/home/levin/Semi-Automated-Programming-of-Industrial-Robotic-Systems-Using-Large-Language-Models/install/ur10e_hl_interface/share/ur10e_hl_interface/environment/path.sh
+/home/levin/Semi-Automated-Programming-of-Industrial-Robotic-Systems-Using-Large-Language-Models/install/ur10e_hl_interface/share/ur10e_hl_interface/environment/path.dsv
+/home/levin/Semi-Automated-Programming-of-Industrial-Robotic-Systems-Using-Large-Language-Models/install/ur10e_hl_interface/share/ur10e_hl_interface/local_setup.bash
+/home/levin/Semi-Automated-Programming-of-Industrial-Robotic-Systems-Using-Large-Language-Models/install/ur10e_hl_interface/share/ur10e_hl_interface/local_setup.sh
+/home/levin/Semi-Automated-Programming-of-Industrial-Robotic-Systems-Using-Large-Language-Models/install/ur10e_hl_interface/share/ur10e_hl_interface/local_setup.zsh
+/home/levin/Semi-Automated-Programming-of-Industrial-Robotic-Systems-Using-Large-Language-Models/install/ur10e_hl_interface/share/ur10e_hl_interface/local_setup.dsv
+/home/levin/Semi-Automated-Programming-of-Industrial-Robotic-Systems-Using-Large-Language-Models/install/ur10e_hl_interface/share/ur10e_hl_interface/package.dsv
+/home/levin/Semi-Automated-Programming-of-Industrial-Robotic-Systems-Using-Large-Language-Models/install/ur10e_hl_interface/share/ament_index/resource_index/packages/ur10e_hl_interface
+/home/levin/Semi-Automated-Programming-of-Industrial-Robotic-Systems-Using-Large-Language-Models/install/ur10e_hl_interface/share/ur10e_hl_interface/cmake/export_ur10e_hl_interfaceExport.cmake
+/home/levin/Semi-Automated-Programming-of-Industrial-Robotic-Systems-Using-Large-Language-Models/install/ur10e_hl_interface/share/ur10e_hl_interface/cmake/export_ur10e_hl_interfaceExport-noconfig.cmake
+/home/levin/Semi-Automated-Programming-of-Industrial-Robotic-Systems-Using-Large-Language-Models/install/ur10e_hl_interface/share/ur10e_hl_interface/cmake/ament_cmake_export_targets-extras.cmake
+/home/levin/Semi-Automated-Programming-of-Industrial-Robotic-Systems-Using-Large-Language-Models/install/ur10e_hl_interface/share/ur10e_hl_interface/cmake/ament_cmake_export_dependencies-extras.cmake
+/home/levin/Semi-Automated-Programming-of-Industrial-Robotic-Systems-Using-Large-Language-Models/install/ur10e_hl_interface/share/ur10e_hl_interface/cmake/ur10e_hl_interfaceConfig.cmake
+/home/levin/Semi-Automated-Programming-of-Industrial-Robotic-Systems-Using-Large-Language-Models/install/ur10e_hl_interface/share/ur10e_hl_interface/cmake/ur10e_hl_interfaceConfig-version.cmake
+/home/levin/Semi-Automated-Programming-of-Industrial-Robotic-Systems-Using-Large-Language-Models/install/ur10e_hl_interface/share/ur10e_hl_interface/package.xml

@@ -48,7 +48,7 @@ class Config:
     """Zentrale Konfigurationsklasse"""
     APP_TITLE = "PROBOT - LLM-Aided Robot Programming"
     WINDOW_SIZE = (1200, 900)
-    WORKSPACE_PATH = os.path.expanduser("~/ur10_ws")
+    WORKSPACE_PATH = os.path.expanduser("~/Semi-Automated-Programming-of-Industrial-Robotic-Systems-Using-Large-Language-Models")
     LOGO_PATH = "Resources/LPS_logo.png"
 
     # API Keys (must be set as environment variables)

@@ -27,7 +27,7 @@ void RobotHLInterface::initialize()
 {
   // Initialize MoveIt
   move_group_ = std::make_shared<moveit::planning_interface::MoveGroupInterface>(
-      shared_from_this(), "ur10e_arm");
+      shared_from_this(), "irb120_arm");
 
   total_placed_count_ = 0;
 

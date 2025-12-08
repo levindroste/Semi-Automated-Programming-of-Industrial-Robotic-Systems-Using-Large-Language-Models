@@ -25,7 +25,7 @@ class AMLPromptParser:
             return
 
         # Pfade
-        base = os.path.expanduser("~/ur10_ws/src/ur10e_hl_interface/config")
+        base = os.path.expanduser("~/Semi-Automated-Programming-of-Industrial-Robotic-Systems-Using-Large-Language-Models/src/ur10e_hl_interface/config")
         self.config_path = f"{base}/AML-Datei-V04.aml"
         self.state_path = f"{base}/SchaltschrankZustand.aml"
 

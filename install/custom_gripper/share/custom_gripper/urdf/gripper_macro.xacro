@@ -1,0 +1,114 @@
+<?xml version="1.0"?>
+<robot xmlns:xacro="http://wiki.ros.org/xacro">
+  <xacro:macro name="gripper" params="parent *origin simulated:=true">
+
+    <xacro:property name="finger_width" value="0.01" />
+    <xacro:property name="finger_spacing" value="0.13" />
+    <xacro:property name="finger_offset" value="${finger_spacing / 2}" />
+    <xacro:property name="finger_range" value="${finger_offset - finger_width / 2}" />
+
+    <xacro:include filename="$(find custom_gripper)/urdf/gripper.ros2_control.xacro" />
+    <xacro:gripper_ros2_control finger_closed_position="0." simulated="${simulated}" />
+
+
+    <!-- Fixed Joint connecting to parent -->
+    <joint name="${parent}_to_gripper" type="fixed">
+      <xacro:insert_block name="origin" />
+      <parent link="${parent}" />
+      <child link="gripper_base" />
+    </joint>
+
+    <!-- Basis -->
+    <link name="gripper_base">
+      <visual>
+        <origin xyz="0 0 0" rpy="0 0 1.57079633" />
+        <geometry>
+          <box size="0.15 0.02 0.02" />
+        </geometry>
+        <material name="grey">
+          <color rgba="0.6 0.6 0.6 1" />
+        </material>
+      </visual>
+      <collision>
+        <origin xyz="0 0 0" rpy="0 0 0" />
+        <geometry>
+          <box size="0.15 0.02 0.02" />
+        </geometry>
+      </collision>
+      <inertial>
+        <mass value="0.2" />
+        <origin xyz="0 0 0" rpy="0 0 0" />
+        <inertia ixx="1e-4" ixy="0" ixz="0" iyy="1e-4" iyz="0" izz="1e-4" />
+      </inertial>
+    </link>
+
+    <!-- Linker Finger -->
+    <link name="left_finger">
+      <visual>
+        <origin xyz="0 0 -0.05" rpy="0 0 0" />
+        <geometry>
+          <box size="${finger_width} ${finger_width} 0.10" />
+        </geometry>
+        <material name="blue">
+          <color rgba="0.2 0.2 1 1" />
+        </material>
+      </visual>
+      <collision>
+        <origin xyz="0 0 -0.05" rpy="0 0 0" />
+        <geometry>
+          <box size="${finger_width} ${finger_width} 0.10" />
+        </geometry>
+      </collision>
+      <inertial>
+        <mass value="0.05" />
+        <origin xyz="0 0 -0.05" rpy="0 0 0" />
+        <inertia ixx="1e-5" ixy="0" ixz="0" iyy="1e-5" iyz="0" izz="1e-5" />
+      </inertial>
+    </link>
+
+    <joint name="left_finger_joint" type="prismatic">
+      <parent link="gripper_base" />
+      <child link="left_finger" />
+      <origin xyz="0 ${finger_offset} 0" rpy="0 0 0" />
+      <axis xyz="0 1 0" />
+      <limit effort="5.0" velocity="0.5" lower="-${finger_range}" upper="0.0" />
+    </joint>
+
+    <!-- Rechter Finger -->
+    <link name="right_finger">
+      <visual>
+        <origin xyz="0 0 -0.05" rpy="0 0 0" />
+        <geometry>
+          <box size="${finger_width} ${finger_width} 0.10" />
+        </geometry>
+        <material name="green">
+          <color rgba="0.2 1 0.2 1" />
+        </material>
+      </visual>
+      <collision>
+        <origin xyz="0 0 -0.05" rpy="0 0 0" />
+        <geometry>
+          <box size="${finger_width} ${finger_width} 0.10" />
+        </geometry>
+      </collision>
+      <inertial>
+        <mass value="0.05" />
+        <origin xyz="0 0 -0.05" rpy="0 0 0" />
+        <inertia ixx="1e-5" ixy="0" ixz="0" iyy="1e-5" iyz="0" izz="1e-5" />
+      </inertial>
+    </link>
+
+    <joint name="right_finger_joint" type="prismatic">
+      <parent link="gripper_base" />
+      <child link="right_finger" />
+      <origin xyz="0 -${finger_offset} 0" rpy="0 0 0" />
+      <axis xyz="0 1 0" />
+      <!-- IMPORTANT do not set a slow speed here otherwise  -->
+      <!-- the dart simulator will block the joint at the limit -->
+      <!-- see info on this bug   -->
+      <!-- https://github.com/gazebosim/gz-sim/issues/2785#issuecomment-2672110918 -->
+      <limit effort="5.0" velocity="0.5" lower="0.0" upper="${finger_range}" />
+      <mimic joint="left_finger_joint" multiplier="-1" />
+    </joint>
+  </xacro:macro>
+</robot>

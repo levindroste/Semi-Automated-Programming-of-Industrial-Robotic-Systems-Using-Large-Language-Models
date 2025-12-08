@@ -193,8 +193,8 @@ int main(int argc, char** argv)
     auto robot = std::make_shared<RobotHLInterface>();
     robot->initialize();
 
-    std::string state_file = std::string(std::getenv("HOME")) + 
-        "/ur10_ws/src/ur10e_hl_interface/config/SchaltschrankZustand.aml";
+    std::string state_file = std::string(std::getenv("HOME")) +
+        "/Semi-Automated-Programming-of-Industrial-Robotic-Systems-Using-Large-Language-Models/src/ur10e_hl_interface/config/SchaltschrankZustand.aml";
 
     {data['state_load_code']}
     if (!robot->move_to_home()) {{

@@ -1,0 +1,207 @@
+[0.000000] (-) TimerEvent: {}
+[0.000082] (-) JobUnselected: {'identifier': 'custom_gripper'}
+[0.000163] (-) JobUnselected: {'identifier': 'ur10e_control'}
+[0.000283] (-) JobUnselected: {'identifier': 'ur_with_gripper'}
+[0.000660] (-) JobUnselected: {'identifier': 'ur_with_gripper_moveit_config'}
+[0.000744] (ur10e_hl_interface) JobQueued: {'identifier': 'ur10e_hl_interface', 'dependencies': OrderedDict()}
+[0.000773] (ur10e_hl_interface) JobStarted: {'identifier': 'ur10e_hl_interface'}
+[0.008356] (ur10e_hl_interface) JobProgress: {'identifier': 'ur10e_hl_interface', 'progress': 'cmake'}
+[0.009171] (ur10e_hl_interface) JobProgress: {'identifier': 'ur10e_hl_interface', 'progress': 'build'}
+[0.009976] (ur10e_hl_interface) Command: {'cmd': ['/usr/bin/cmake', '--build', '/home/levin/Semi-Automated-Programming-of-Industrial-Robotic-Systems-Using-Large-Language-Models/build/ur10e_hl_interface', '--', '-j20', '-l20'], 'cwd': '/home/levin/Semi-Automated-Programming-of-Industrial-Robotic-Systems-Using-Large-Language-Models/build/ur10e_hl_interface', 'env': OrderedDict([('LESSOPEN', '| /usr/bin/lesspipe %s'), ('USER', 'levin'), ('CLAUDE_CODE_ENTRYPOINT', 'cli'), ('LC_TIME', 'de_DE.UTF-8'), ('GIT_EDITOR', 'true'), ('XDG_SESSION_TYPE', 'x11'), ('SHLVL', '2'), ('LD_LIBRARY_PATH', '/usr/lib/x86_64-linux-gnu/gazebo-11/plugins:/opt/ros/humble/opt/rviz_ogre_vendor/lib:/opt/ros/humble/lib/x86_64-linux-gnu:/opt/ros/humble/lib'), ('HOME', '/home/levin'), ('OLDPWD', '/home/levin'), ('DESKTOP_SESSION', 'ubuntu'), ('NVM_BIN', '/home/levin/.nvm/versions/node/v22.15.1/bin'), ('NVM_INC', '/home/levin/.nvm/versions/node/v22.15.1/include/node'), ('ROS_PYTHON_VERSION', '3'), ('GNOME_SHELL_SESSION_MODE', 'ubuntu'), ('GTK_MODULES', 'gail:atk-bridge'), ('LC_MONETARY', 'de_DE.UTF-8'), ('SYSTEMD_EXEC_PID', '1705'), ('DBUS_SESSION_BUS_ADDRESS', 'unix:path=/run/user/1000/bus'), ('COLORTERM', 'truecolor'), ('NVM_DIR', '/home/levin/.nvm'), ('ROS_DISTRO', 'humble'), ('GTK_IM_MODULE', 'ibus'), ('LOGNAME', 'levin'), ('_', '/usr/bin/colcon'), ('ROS_VERSION', '2'), ('XDG_SESSION_CLASS', 'user'), ('USERNAME', 'levin'), ('TERM', 'xterm-256color'), ('OTEL_EXPORTER_OTLP_METRICS_TEMPORALITY_PREFERENCE', 'delta'), ('GNOME_DESKTOP_SESSION_ID', 'this-is-deprecated'), ('ROS_LOCALHOST_ONLY', '0'), ('WINDOWPATH', '2'), ('PATH', '/home/levin/.nvm/versions/node/v22.15.1/bin:/opt/ros/humble/bin:/home/levin/.local/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/snap/bin:/snap/bin'), ('SESSION_MANAGER', 'local/levin:@/tmp/.ICE-unix/1678,unix/levin:/tmp/.ICE-unix/1678'), ('COREPACK_ENABLE_AUTO_PIN', '0'), ('XDG_MENU_PREFIX', 'gnome-'), ('LC_ADDRESS', 'de_DE.UTF-8'), ('GNOME_TERMINAL_SCREEN', '/org/gnome/Terminal/screen/ef830775_3378_4f04_bed7_804eb4df0894'), ('XDG_RUNTIME_DIR', '/run/user/1000'), ('DISPLAY', ':0'), ('NoDefaultCurrentDirectoryInExePath', '1'), ('LANG', 'en_US.UTF-8'), ('XDG_CURRENT_DESKTOP', 'ubuntu:GNOME'), ('LC_TELEPHONE', 'de_DE.UTF-8'), ('XMODIFIERS', '@im=ibus'), ('XDG_SESSION_DESKTOP', 'ubuntu'), ('XAUTHORITY', '/run/user/1000/gdm/Xauthority'), ('LS_COLORS', 'rs=0:di=01;34:ln=01;36:mh=00:pi=40;33:so=01;35:do=01;35:bd=40;33;01:cd=40;33;01:or=40;31;01:mi=00:su=37;41:sg=30;43:ca=30;41:tw=30;42:ow=34;42:st=37;44:ex=01;32:*.tar=01;31:*.tgz=01;31:*.arc=01;31:*.arj=01;31:*.taz=01;31:*.lha=01;31:*.lz4=01;31:*.lzh=01;31:*.lzma=01;31:*.tlz=01;31:*.txz=01;31:*.tzo=01;31:*.t7z=01;31:*.zip=01;31:*.z=01;31:*.dz=01;31:*.gz=01;31:*.lrz=01;31:*.lz=01;31:*.lzo=01;31:*.xz=01;31:*.zst=01;31:*.tzst=01;31:*.bz2=01;31:*.bz=01;31:*.tbz=01;31:*.tbz2=01;31:*.tz=01;31:*.deb=01;31:*.rpm=01;31:*.jar=01;31:*.war=01;31:*.ear=01;31:*.sar=01;31:*.rar=01;31:*.alz=01;31:*.ace=01;31:*.zoo=01;31:*.cpio=01;31:*.7z=01;31:*.rz=01;31:*.cab=01;31:*.wim=01;31:*.swm=01;31:*.dwm=01;31:*.esd=01;31:*.jpg=01;35:*.jpeg=01;35:*.mjpg=01;35:*.mjpeg=01;35:*.gif=01;35:*.bmp=01;35:*.pbm=01;35:*.pgm=01;35:*.ppm=01;35:*.tga=01;35:*.xbm=01;35:*.xpm=01;35:*.tif=01;35:*.tiff=01;35:*.png=01;35:*.svg=01;35:*.svgz=01;35:*.mng=01;35:*.pcx=01;35:*.mov=01;35:*.mpg=01;35:*.mpeg=01;35:*.m2v=01;35:*.mkv=01;35:*.webm=01;35:*.webp=01;35:*.ogm=01;35:*.mp4=01;35:*.m4v=01;35:*.mp4v=01;35:*.vob=01;35:*.qt=01;35:*.nuv=01;35:*.wmv=01;35:*.asf=01;35:*.rm=01;35:*.rmvb=01;35:*.flc=01;35:*.avi=01;35:*.fli=01;35:*.flv=01;35:*.gl=01;35:*.dl=01;35:*.xcf=01;35:*.xwd=01;35:*.yuv=01;35:*.cgm=01;35:*.emf=01;35:*.ogv=01;35:*.ogx=01;35:*.aac=00;36:*.au=00;36:*.flac=00;36:*.m4a=00;36:*.mid=00;36:*.midi=00;36:*.mka=00;36:*.mp3=00;36:*.mpc=00;36:*.ogg=00;36:*.ra=00;36:*.wav=00;36:*.oga=00;36:*.opus=00;36:*.spx=00;36:*.xspf=00;36:'), ('GNOME_TERMINAL_SERVICE', ':1.122'), ('SSH_AGENT_LAUNCHER', 'gnome-keyring'), ('SSH_AUTH_SOCK', '/run/user/1000/keyring/ssh'), ('AMENT_PREFIX_PATH', '/opt/ros/humble'), ('SHELL', '/bin/bash'), ('LC_NAME', 'de_DE.UTF-8'), ('QT_ACCESSIBILITY', '1'), ('GDMSESSION', 'ubuntu'), ('LESSCLOSE', '/usr/bin/lesspipe %s %s'), ('CLAUDECODE', '1'), ('LC_MEASUREMENT', 'de_DE.UTF-8'), ('GPG_AGENT_INFO', '/run/user/1000/gnupg/S.gpg-agent:0:1'), ('LC_IDENTIFICATION', 'de_DE.UTF-8'), ('QT_IM_MODULE', 'ibus'), ('PWD', '/home/levin/Semi-Automated-Programming-of-Industrial-Robotic-Systems-Using-Large-Language-Models/build/ur10e_hl_interface'), ('LC_ALL', 'en_US.UTF-8'), ('XDG_CONFIG_DIRS', '/etc/xdg/xdg-ubuntu:/etc/xdg'), ('NVM_CD_FLAGS', ''), ('XDG_DATA_DIRS', '/usr/share/ubuntu:/usr/share/gnome:/usr/local/share/:/usr/share/:/var/lib/snapd/desktop'), ('PYTHONPATH', '/opt/ros/humble/lib/python3.10/site-packages:/opt/ros/humble/local/lib/python3.10/dist-packages'), ('LC_NUMERIC', 'de_DE.UTF-8'), ('LC_PAPER', 'de_DE.UTF-8'), ('COLCON', '1'), ('VTE_VERSION', '6800'), ('CMAKE_PREFIX_PATH', '/opt/ros/humble')]), 'shell': False}
+[0.088150] (ur10e_hl_interface) StdoutLine: {'line': b'Consolidate compiler generated dependencies of target ur10e_hl_interface\n'}
+[0.088889] (ur10e_hl_interface) StdoutLine: {'line': b'Consolidate compiler generated dependencies of target add_objects_node\n'}
+[0.099808] (-) TimerEvent: {}
+[0.139158] (ur10e_hl_interface) StdoutLine: {'line': b'[ 66%] Built target add_objects_node\n'}
+[0.139402] (ur10e_hl_interface) StdoutLine: {'line': b'[ 66%] Built target ur10e_hl_interface\n'}
+[0.159545] (ur10e_hl_interface) StdoutLine: {'line': b'Consolidate compiler generated dependencies of target clipfix_bewegung\n'}
+[0.177647] (ur10e_hl_interface) StdoutLine: {'line': b'[ 83%] Building CXX object CMakeFiles/clipfix_bewegung.dir/src/clipfix_bewegung.cpp.o\n'}
+[0.199894] (-) TimerEvent: {}
+[0.300155] (-) TimerEvent: {}
+[0.400488] (-) TimerEvent: {}
+[0.500888] (-) TimerEvent: {}
+[0.601139] (-) TimerEvent: {}
+[0.701451] (-) TimerEvent: {}
+[0.801754] (-) TimerEvent: {}
+[0.902071] (-) TimerEvent: {}
+[1.002439] (-) TimerEvent: {}
+[1.102783] (-) TimerEvent: {}
+[1.203074] (-) TimerEvent: {}
+[1.303436] (-) TimerEvent: {}
+[1.403690] (-) TimerEvent: {}
+[1.503939] (-) TimerEvent: {}
+[1.604191] (-) TimerEvent: {}
+[1.704465] (-) TimerEvent: {}
+[1.804781] (-) TimerEvent: {}
+[1.905053] (-) TimerEvent: {}
+[2.005420] (-) TimerEvent: {}
+[2.105672] (-) TimerEvent: {}
+[2.205974] (-) TimerEvent: {}
+[2.306406] (-) TimerEvent: {}
+[2.406671] (-) TimerEvent: {}
+[2.506947] (-) TimerEvent: {}
+[2.607306] (-) TimerEvent: {}
+[2.707628] (-) TimerEvent: {}
+[2.807962] (-) TimerEvent: {}
+[2.908301] (-) TimerEvent: {}
+[3.008613] (-) TimerEvent: {}
+[3.108936] (-) TimerEvent: {}
+[3.209237] (-) TimerEvent: {}
+[3.309572] (-) TimerEvent: {}
+[3.409980] (-) TimerEvent: {}
+[3.510319] (-) TimerEvent: {}
+[3.610574] (-) TimerEvent: {}
+[3.710895] (-) TimerEvent: {}
+[3.811129] (-) TimerEvent: {}
+[3.911469] (-) TimerEvent: {}
+[4.011819] (-) TimerEvent: {}
+[4.112036] (-) TimerEvent: {}
+[4.212235] (-) TimerEvent: {}
+[4.312465] (-) TimerEvent: {}
+[4.412678] (-) TimerEvent: {}
+[4.512944] (-) TimerEvent: {}
+[4.613211] (-) TimerEvent: {}
+[4.713503] (-) TimerEvent: {}
+[4.813887] (-) TimerEvent: {}
+[4.914219] (-) TimerEvent: {}
+[5.014484] (-) TimerEvent: {}
+[5.114704] (-) TimerEvent: {}
+[5.214957] (-) TimerEvent: {}
+[5.315291] (-) TimerEvent: {}
+[5.415664] (-) TimerEvent: {}
+[5.515936] (-) TimerEvent: {}
+[5.616208] (-) TimerEvent: {}
+[5.716460] (-) TimerEvent: {}
+[5.816865] (-) TimerEvent: {}
+[5.917154] (-) TimerEvent: {}
+[6.017594] (-) TimerEvent: {}
+[6.117828] (-) TimerEvent: {}
+[6.218144] (-) TimerEvent: {}
+[6.318556] (-) TimerEvent: {}
+[6.419051] (-) TimerEvent: {}
+[6.519505] (-) TimerEvent: {}
+[6.619822] (-) TimerEvent: {}
+[6.720024] (-) TimerEvent: {}
+[6.820335] (-) TimerEvent: {}
+[6.920646] (-) TimerEvent: {}
+[7.020965] (-) TimerEvent: {}
+[7.121207] (-) TimerEvent: {}
+[7.221535] (-) TimerEvent: {}
+[7.321944] (-) TimerEvent: {}
+[7.422450] (-) TimerEvent: {}
+[7.522758] (-) TimerEvent: {}
+[7.623039] (-) TimerEvent: {}
+[7.723262] (-) TimerEvent: {}
+[7.823485] (-) TimerEvent: {}
+[7.923685] (-) TimerEvent: {}
+[8.024031] (-) TimerEvent: {}
+[8.124396] (-) TimerEvent: {}
+[8.224655] (-) TimerEvent: {}
+[8.324927] (-) TimerEvent: {}
+[8.425217] (-) TimerEvent: {}
+[8.525533] (-) TimerEvent: {}
+[8.625855] (-) TimerEvent: {}
+[8.726148] (-) TimerEvent: {}
+[8.826459] (-) TimerEvent: {}
+[8.926747] (-) TimerEvent: {}
+[9.027170] (-) TimerEvent: {}
+[9.127461] (-) TimerEvent: {}
+[9.227713] (-) TimerEvent: {}
+[9.312670] (ur10e_hl_interface) StdoutLine: {'line': b'[100%] Linking CXX executable clipfix_bewegung\n'}
+[9.327804] (-) TimerEvent: {}
+[9.428085] (-) TimerEvent: {}
+[9.528380] (-) TimerEvent: {}
+[9.628681] (-) TimerEvent: {}
+[9.715954] (ur10e_hl_interface) StdoutLine: {'line': b'[100%] Built target clipfix_bewegung\n'}
+[9.727910] (ur10e_hl_interface) CommandEnded: {'returncode': 0}
+[9.728698] (-) TimerEvent: {}
+[9.729441] (ur10e_hl_interface) JobProgress: {'identifier': 'ur10e_hl_interface', 'progress': 'install'}
+[9.738886] (ur10e_hl_interface) Command: {'cmd': ['/usr/bin/cmake', '--install', '/home/levin/Semi-Automated-Programming-of-Industrial-Robotic-Systems-Using-Large-Language-Models/build/ur10e_hl_interface'], 'cwd': '/home/levin/Semi-Automated-Programming-of-Industrial-Robotic-Systems-Using-Large-Language-Models/build/ur10e_hl_interface', 'env': OrderedDict([('LESSOPEN', '| /usr/bin/lesspipe %s'), ('USER', 'levin'), ('CLAUDE_CODE_ENTRYPOINT', 'cli'), ('LC_TIME', 'de_DE.UTF-8'), ('GIT_EDITOR', 'true'), ('XDG_SESSION_TYPE', 'x11'), ('SHLVL', '2'), ('LD_LIBRARY_PATH', '/usr/lib/x86_64-linux-gnu/gazebo-11/plugins:/opt/ros/humble/opt/rviz_ogre_vendor/lib:/opt/ros/humble/lib/x86_64-linux-gnu:/opt/ros/humble/lib'), ('HOME', '/home/levin'), ('OLDPWD', '/home/levin'), ('DESKTOP_SESSION', 'ubuntu'), ('NVM_BIN', '/home/levin/.nvm/versions/node/v22.15.1/bin'), ('NVM_INC', '/home/levin/.nvm/versions/node/v22.15.1/include/node'), ('ROS_PYTHON_VERSION', '3'), ('GNOME_SHELL_SESSION_MODE', 'ubuntu'), ('GTK_MODULES', 'gail:atk-bridge'), ('LC_MONETARY', 'de_DE.UTF-8'), ('SYSTEMD_EXEC_PID', '1705'), ('DBUS_SESSION_BUS_ADDRESS', 'unix:path=/run/user/1000/bus'), ('COLORTERM', 'truecolor'), ('NVM_DIR', '/home/levin/.nvm'), ('ROS_DISTRO', 'humble'), ('GTK_IM_MODULE', 'ibus'), ('LOGNAME', 'levin'), ('_', '/usr/bin/colcon'), ('ROS_VERSION', '2'), ('XDG_SESSION_CLASS', 'user'), ('USERNAME', 'levin'), ('TERM', 'xterm-256color'), ('OTEL_EXPORTER_OTLP_METRICS_TEMPORALITY_PREFERENCE', 'delta'), ('GNOME_DESKTOP_SESSION_ID', 'this-is-deprecated'), ('ROS_LOCALHOST_ONLY', '0'), ('WINDOWPATH', '2'), ('PATH', '/home/levin/.nvm/versions/node/v22.15.1/bin:/opt/ros/humble/bin:/home/levin/.local/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/snap/bin:/snap/bin'), ('SESSION_MANAGER', 'local/levin:@/tmp/.ICE-unix/1678,unix/levin:/tmp/.ICE-unix/1678'), ('COREPACK_ENABLE_AUTO_PIN', '0'), ('XDG_MENU_PREFIX', 'gnome-'), ('LC_ADDRESS', 'de_DE.UTF-8'), ('GNOME_TERMINAL_SCREEN', '/org/gnome/Terminal/screen/ef830775_3378_4f04_bed7_804eb4df0894'), ('XDG_RUNTIME_DIR', '/run/user/1000'), ('DISPLAY', ':0'), ('NoDefaultCurrentDirectoryInExePath', '1'), ('LANG', 'en_US.UTF-8'), ('XDG_CURRENT_DESKTOP', 'ubuntu:GNOME'), ('LC_TELEPHONE', 'de_DE.UTF-8'), ('XMODIFIERS', '@im=ibus'), ('XDG_SESSION_DESKTOP', 'ubuntu'), ('XAUTHORITY', '/run/user/1000/gdm/Xauthority'), ('LS_COLORS', 'rs=0:di=01;34:ln=01;36:mh=00:pi=40;33:so=01;35:do=01;35:bd=40;33;01:cd=40;33;01:or=40;31;01:mi=00:su=37;41:sg=30;43:ca=30;41:tw=30;42:ow=34;42:st=37;44:ex=01;32:*.tar=01;31:*.tgz=01;31:*.arc=01;31:*.arj=01;31:*.taz=01;31:*.lha=01;31:*.lz4=01;31:*.lzh=01;31:*.lzma=01;31:*.tlz=01;31:*.txz=01;31:*.tzo=01;31:*.t7z=01;31:*.zip=01;31:*.z=01;31:*.dz=01;31:*.gz=01;31:*.lrz=01;31:*.lz=01;31:*.lzo=01;31:*.xz=01;31:*.zst=01;31:*.tzst=01;31:*.bz2=01;31:*.bz=01;31:*.tbz=01;31:*.tbz2=01;31:*.tz=01;31:*.deb=01;31:*.rpm=01;31:*.jar=01;31:*.war=01;31:*.ear=01;31:*.sar=01;31:*.rar=01;31:*.alz=01;31:*.ace=01;31:*.zoo=01;31:*.cpio=01;31:*.7z=01;31:*.rz=01;31:*.cab=01;31:*.wim=01;31:*.swm=01;31:*.dwm=01;31:*.esd=01;31:*.jpg=01;35:*.jpeg=01;35:*.mjpg=01;35:*.mjpeg=01;35:*.gif=01;35:*.bmp=01;35:*.pbm=01;35:*.pgm=01;35:*.ppm=01;35:*.tga=01;35:*.xbm=01;35:*.xpm=01;35:*.tif=01;35:*.tiff=01;35:*.png=01;35:*.svg=01;35:*.svgz=01;35:*.mng=01;35:*.pcx=01;35:*.mov=01;35:*.mpg=01;35:*.mpeg=01;35:*.m2v=01;35:*.mkv=01;35:*.webm=01;35:*.webp=01;35:*.ogm=01;35:*.mp4=01;35:*.m4v=01;35:*.mp4v=01;35:*.vob=01;35:*.qt=01;35:*.nuv=01;35:*.wmv=01;35:*.asf=01;35:*.rm=01;35:*.rmvb=01;35:*.flc=01;35:*.avi=01;35:*.fli=01;35:*.flv=01;35:*.gl=01;35:*.dl=01;35:*.xcf=01;35:*.xwd=01;35:*.yuv=01;35:*.cgm=01;35:*.emf=01;35:*.ogv=01;35:*.ogx=01;35:*.aac=00;36:*.au=00;36:*.flac=00;36:*.m4a=00;36:*.mid=00;36:*.midi=00;36:*.mka=00;36:*.mp3=00;36:*.mpc=00;36:*.ogg=00;36:*.ra=00;36:*.wav=00;36:*.oga=00;36:*.opus=00;36:*.spx=00;36:*.xspf=00;36:'), ('GNOME_TERMINAL_SERVICE', ':1.122'), ('SSH_AGENT_LAUNCHER', 'gnome-keyring'), ('SSH_AUTH_SOCK', '/run/user/1000/keyring/ssh'), ('AMENT_PREFIX_PATH', '/opt/ros/humble'), ('SHELL', '/bin/bash'), ('LC_NAME', 'de_DE.UTF-8'), ('QT_ACCESSIBILITY', '1'), ('GDMSESSION', 'ubuntu'), ('LESSCLOSE', '/usr/bin/lesspipe %s %s'), ('CLAUDECODE', '1'), ('LC_MEASUREMENT', 'de_DE.UTF-8'), ('GPG_AGENT_INFO', '/run/user/1000/gnupg/S.gpg-agent:0:1'), ('LC_IDENTIFICATION', 'de_DE.UTF-8'), ('QT_IM_MODULE', 'ibus'), ('PWD', '/home/levin/Semi-Automated-Programming-of-Industrial-Robotic-Systems-Using-Large-Language-Models/build/ur10e_hl_interface'), ('LC_ALL', 'en_US.UTF-8'), ('XDG_CONFIG_DIRS', '/etc/xdg/xdg-ubuntu:/etc/xdg'), ('NVM_CD_FLAGS', ''), ('XDG_DATA_DIRS', '/usr/share/ubuntu:/usr/share/gnome:/usr/local/share/:/usr/share/:/var/lib/snapd/desktop'), ('PYTHONPATH', '/opt/ros/humble/lib/python3.10/site-packages:/opt/ros/humble/local/lib/python3.10/dist-packages'), ('LC_NUMERIC', 'de_DE.UTF-8'), ('LC_PAPER', 'de_DE.UTF-8'), ('COLCON', '1'), ('VTE_VERSION', '6800'), ('CMAKE_PREFIX_PATH', '/opt/ros/humble')]), 'shell': False}
+[9.747889] (ur10e_hl_interface) StdoutLine: {'line': b'-- Install configuration: ""\n'}
+[9.748083] (ur10e_hl_interface) StdoutLine: {'line': b'-- Up-to-date: /home/levin/Semi-Automated-Programming-of-Industrial-Robotic-Systems-Using-Large-Language-Models/install/ur10e_hl_interface/lib/libur10e_hl_interface.a\n'}
+[9.748530] (ur10e_hl_interface) StdoutLine: {'line': b'-- Installing: /home/levin/Semi-Automated-Programming-of-Industrial-Robotic-Systems-Using-Large-Language-Models/install/ur10e_hl_interface/lib/ur10e_hl_interface/clipfix_bewegung\n'}
+[9.749230] (ur10e_hl_interface) StdoutLine: {'line': b'-- Set runtime path of "/home/levin/Semi-Automated-Programming-of-Industrial-Robotic-Systems-Using-Large-Language-Models/install/ur10e_hl_interface/lib/ur10e_hl_interface/clipfix_bewegung" to ""\n'}
+[9.750194] (ur10e_hl_interface) StdoutLine: {'line': b'-- Up-to-date: /home/levin/Semi-Automated-Programming-of-Industrial-Robotic-Systems-Using-Large-Language-Models/install/ur10e_hl_interface/lib/ur10e_hl_interface/add_objects_node\n'}
+[9.750906] (ur10e_hl_interface) StdoutLine: {'line': b'-- Up-to-date: /home/levin/Semi-Automated-Programming-of-Industrial-Robotic-Systems-Using-Large-Language-Models/install/ur10e_hl_interface/include\n'}
+[9.750974] (ur10e_hl_interface) StdoutLine: {'line': b'-- Up-to-date: /home/levin/Semi-Automated-Programming-of-Industrial-Robotic-Systems-Using-Large-Language-Models/install/ur10e_hl_interface/include/ur10e_hl_interface\n'}
+[9.751008] (ur10e_hl_interface) StdoutLine: {'line': b'-- Up-to-date: /home/levin/Semi-Automated-Programming-of-Industrial-Robotic-Systems-Using-Large-Language-Models/install/ur10e_hl_interface/include/ur10e_hl_interface/robot_hl_interface.hpp\n'}
+[9.751279] (ur10e_hl_interface) StdoutLine: {'line': b'-- Up-to-date: /home/levin/Semi-Automated-Programming-of-Industrial-Robotic-Systems-Using-Large-Language-Models/install/ur10e_hl_interface/share/ur10e_hl_interface/config\n'}
+[9.751317] (ur10e_hl_interface) StdoutLine: {'line': b'-- Up-to-date: /home/levin/Semi-Automated-Programming-of-Industrial-Robotic-Systems-Using-Large-Language-Models/install/ur10e_hl_interface/share/ur10e_hl_interface/config/AML-Datei-V04.aml\n'}
+[9.751345] (ur10e_hl_interface) StdoutLine: {'line': b'-- Up-to-date: /home/levin/Semi-Automated-Programming-of-Industrial-Robotic-Systems-Using-Large-Language-Models/install/ur10e_hl_interface/share/ur10e_hl_interface/meshes\n'}
+[9.751371] (ur10e_hl_interface) StdoutLine: {'line': b'-- Up-to-date: /home/levin/Semi-Automated-Programming-of-Industrial-Robotic-Systems-Using-Large-Language-Models/install/ur10e_hl_interface/share/ur10e_hl_interface/meshes/Alt-Ordner\n'}
+[9.751399] (ur10e_hl_interface) StdoutLine: {'line': b'-- Up-to-date: /home/levin/Semi-Automated-Programming-of-Industrial-Robotic-Systems-Using-Large-Language-Models/install/ur10e_hl_interface/share/ur10e_hl_interface/meshes/Alt-Ordner/PERF-2000MM_3D.stl\n'}
+[9.751428] (ur10e_hl_interface) StdoutLine: {'line': b'-- Up-to-date: /home/levin/Semi-Automated-Programming-of-Industrial-Robotic-Systems-Using-Large-Language-Models/install/ur10e_hl_interface/share/ur10e_hl_interface/meshes/Alt-Ordner/Unnamed-Schaltschrank.stl\n'}
+[9.751456] (ur10e_hl_interface) StdoutLine: {'line': b'-- Up-to-date: /home/levin/Semi-Automated-Programming-of-Industrial-Robotic-Systems-Using-Large-Language-Models/install/ur10e_hl_interface/share/ur10e_hl_interface/meshes/Alt-Ordner/NS-35.dae\n'}
+[9.751491] (ur10e_hl_interface) StdoutLine: {'line': b'-- Up-to-date: /home/levin/Semi-Automated-Programming-of-Industrial-Robotic-Systems-Using-Large-Language-Models/install/ur10e_hl_interface/share/ur10e_hl_interface/meshes/Alt-Ordner/Schaltschrank-1.stl\n'}
+[9.751521] (ur10e_hl_interface) StdoutLine: {'line': b'-- Up-to-date: /home/levin/Semi-Automated-Programming-of-Industrial-Robotic-Systems-Using-Large-Language-Models/install/ur10e_hl_interface/share/ur10e_hl_interface/meshes/UT_1,5_VT.stl\n'}
+[9.751550] (ur10e_hl_interface) StdoutLine: {'line': b'-- Up-to-date: /home/levin/Semi-Automated-Programming-of-Industrial-Robotic-Systems-Using-Large-Language-Models/install/ur10e_hl_interface/share/ur10e_hl_interface/meshes/PT-6-TWIN-BU.stl\n'}
+[9.751579] (ur10e_hl_interface) StdoutLine: {'line': b'-- Up-to-date: /home/levin/Semi-Automated-Programming-of-Industrial-Robotic-Systems-Using-Large-Language-Models/install/ur10e_hl_interface/share/ur10e_hl_interface/meshes/Schaltschrank.dae\n'}
+[9.751631] (ur10e_hl_interface) StdoutLine: {'line': b'-- Up-to-date: /home/levin/Semi-Automated-Programming-of-Industrial-Robotic-Systems-Using-Large-Language-Models/install/ur10e_hl_interface/share/ur10e_hl_interface/meshes/PT-6-TWIN.dae\n'}
+[9.751669] (ur10e_hl_interface) StdoutLine: {'line': b'-- Up-to-date: /home/levin/Semi-Automated-Programming-of-Industrial-Robotic-Systems-Using-Large-Language-Models/install/ur10e_hl_interface/share/ur10e_hl_interface/meshes/Neue Klemmen\n'}
+[9.751707] (ur10e_hl_interface) StdoutLine: {'line': b'-- Up-to-date: /home/levin/Semi-Automated-Programming-of-Industrial-Robotic-Systems-Using-Large-Language-Models/install/ur10e_hl_interface/share/ur10e_hl_interface/meshes/Neue Klemmen/PTU 2,5-TWIN BU.stl\n'}
+[9.751733] (ur10e_hl_interface) StdoutLine: {'line': b'-- Up-to-date: /home/levin/Semi-Automated-Programming-of-Industrial-Robotic-Systems-Using-Large-Language-Models/install/ur10e_hl_interface/share/ur10e_hl_interface/meshes/Neue Klemmen/PTU 2,5-TWIN BU.stp\n'}
+[9.751759] (ur10e_hl_interface) StdoutLine: {'line': b'-- Up-to-date: /home/levin/Semi-Automated-Programming-of-Industrial-Robotic-Systems-Using-Large-Language-Models/install/ur10e_hl_interface/share/ur10e_hl_interface/meshes/Neue Klemmen/UT 1,5 OG.stl\n'}
+[9.751806] (ur10e_hl_interface) StdoutLine: {'line': b'-- Up-to-date: /home/levin/Semi-Automated-Programming-of-Industrial-Robotic-Systems-Using-Large-Language-Models/install/ur10e_hl_interface/share/ur10e_hl_interface/meshes/Neue Klemmen/UT 1,5 OG.dae\n'}
+[9.751834] (ur10e_hl_interface) StdoutLine: {'line': b'-- Up-to-date: /home/levin/Semi-Automated-Programming-of-Industrial-Robotic-Systems-Using-Large-Language-Models/install/ur10e_hl_interface/share/ur10e_hl_interface/meshes/Neue Klemmen/UT 1,5 VT.dae\n'}
+[9.751868] (ur10e_hl_interface) StdoutLine: {'line': b'-- Up-to-date: /home/levin/Semi-Automated-Programming-of-Industrial-Robotic-Systems-Using-Large-Language-Models/install/ur10e_hl_interface/share/ur10e_hl_interface/meshes/Neue Klemmen/QTCU 2,5.stl\n'}
+[9.751911] (ur10e_hl_interface) StdoutLine: {'line': b'-- Up-to-date: /home/levin/Semi-Automated-Programming-of-Industrial-Robotic-Systems-Using-Large-Language-Models/install/ur10e_hl_interface/share/ur10e_hl_interface/meshes/Neue Klemmen/UT 1,5 VT.stl\n'}
+[9.751950] (ur10e_hl_interface) StdoutLine: {'line': b'-- Up-to-date: /home/levin/Semi-Automated-Programming-of-Industrial-Robotic-Systems-Using-Large-Language-Models/install/ur10e_hl_interface/share/ur10e_hl_interface/meshes/Neue Klemmen/STU 35 4X10 YE.stp\n'}
+[9.751987] (ur10e_hl_interface) StdoutLine: {'line': b'-- Up-to-date: /home/levin/Semi-Automated-Programming-of-Industrial-Robotic-Systems-Using-Large-Language-Models/install/ur10e_hl_interface/share/ur10e_hl_interface/meshes/Neue Klemmen/QTCU 2,5.dae\n'}
+[9.752012] (ur10e_hl_interface) StdoutLine: {'line': b'-- Up-to-date: /home/levin/Semi-Automated-Programming-of-Industrial-Robotic-Systems-Using-Large-Language-Models/install/ur10e_hl_interface/share/ur10e_hl_interface/meshes/Neue Klemmen/STU 35 4X10 YE.dae\n'}
+[9.752039] (ur10e_hl_interface) StdoutLine: {'line': b'-- Up-to-date: /home/levin/Semi-Automated-Programming-of-Industrial-Robotic-Systems-Using-Large-Language-Models/install/ur10e_hl_interface/share/ur10e_hl_interface/meshes/Neue Klemmen/STU 35 4X10 YE.stl\n'}
+[9.752065] (ur10e_hl_interface) StdoutLine: {'line': b'-- Up-to-date: /home/levin/Semi-Automated-Programming-of-Industrial-Robotic-Systems-Using-Large-Language-Models/install/ur10e_hl_interface/share/ur10e_hl_interface/meshes/Neue Klemmen/QTCU 2,5.stp\n'}
+[9.752088] (ur10e_hl_interface) StdoutLine: {'line': b'-- Up-to-date: /home/levin/Semi-Automated-Programming-of-Industrial-Robotic-Systems-Using-Large-Language-Models/install/ur10e_hl_interface/share/ur10e_hl_interface/meshes/Neue Klemmen/PTU 2,5-TWIN BU.dae\n'}
+[9.752119] (ur10e_hl_interface) StdoutLine: {'line': b'-- Up-to-date: /home/levin/Semi-Automated-Programming-of-Industrial-Robotic-Systems-Using-Large-Language-Models/install/ur10e_hl_interface/share/ur10e_hl_interface/meshes/Neue Klemmen/UT 1,5 VT.stp\n'}
+[9.752266] (ur10e_hl_interface) StdoutLine: {'line': b'-- Up-to-date: /home/levin/Semi-Automated-Programming-of-Industrial-Robotic-Systems-Using-Large-Language-Models/install/ur10e_hl_interface/share/ur10e_hl_interface/meshes/Neue Klemmen/UT 1,5 OG.stp\n'}
+[9.752499] (ur10e_hl_interface) StdoutLine: {'line': b'-- Up-to-date: /home/levin/Semi-Automated-Programming-of-Industrial-Robotic-Systems-Using-Large-Language-Models/install/ur10e_hl_interface/share/ur10e_hl_interface/meshes/UT-16-PE.dae\n'}
+[9.752657] (ur10e_hl_interface) StdoutLine: {'line': b'-- Up-to-date: /home/levin/Semi-Automated-Programming-of-Industrial-Robotic-Systems-Using-Large-Language-Models/install/ur10e_hl_interface/share/ur10e_hl_interface/meshes/Hutschienen-Halter.stl\n'}
+[9.752857] (ur10e_hl_interface) StdoutLine: {'line': b'-- Up-to-date: /home/levin/Semi-Automated-Programming-of-Industrial-Robotic-Systems-Using-Large-Language-Models/install/ur10e_hl_interface/share/ur10e_hl_interface/meshes/CLIPFIX-35.stl\n'}
+[9.753372] (ur10e_hl_interface) StdoutLine: {'line': b'-- Up-to-date: /home/levin/Semi-Automated-Programming-of-Industrial-Robotic-Systems-Using-Large-Language-Models/install/ur10e_hl_interface/share/ur10e_hl_interface/meshes/UT_1,5_VT.dae\n'}
+[9.753487] (ur10e_hl_interface) StdoutLine: {'line': b'-- Up-to-date: /home/levin/Semi-Automated-Programming-of-Industrial-Robotic-Systems-Using-Large-Language-Models/install/ur10e_hl_interface/share/ur10e_hl_interface/meshes/Schaltschrank_ohne_Tuer.dae\n'}
+[9.753560] (ur10e_hl_interface) StdoutLine: {'line': b'-- Up-to-date: /home/levin/Semi-Automated-Programming-of-Industrial-Robotic-Systems-Using-Large-Language-Models/install/ur10e_hl_interface/share/ur10e_hl_interface/meshes/VAL-MS-230.stl\n'}
+[9.753722] (ur10e_hl_interface) StdoutLine: {'line': b'-- Up-to-date: /home/levin/Semi-Automated-Programming-of-Industrial-Robotic-Systems-Using-Large-Language-Models/install/ur10e_hl_interface/share/ur10e_hl_interface/meshes/CLIPFIX-35-5.stl\n'}
+[9.753758] (ur10e_hl_interface) StdoutLine: {'line': b'-- Up-to-date: /home/levin/Semi-Automated-Programming-of-Industrial-Robotic-Systems-Using-Large-Language-Models/install/ur10e_hl_interface/share/ur10e_hl_interface/meshes/Schaltschrank.stl\n'}
+[9.753799] (ur10e_hl_interface) StdoutLine: {'line': b'-- Up-to-date: /home/levin/Semi-Automated-Programming-of-Industrial-Robotic-Systems-Using-Large-Language-Models/install/ur10e_hl_interface/share/ur10e_hl_interface/meshes/STU_35_4X10_YE.dae\n'}
+[9.753829] (ur10e_hl_interface) StdoutLine: {'line': b'-- Up-to-date: /home/levin/Semi-Automated-Programming-of-Industrial-Robotic-Systems-Using-Large-Language-Models/install/ur10e_hl_interface/share/ur10e_hl_interface/meshes/Hutschienen-Halter Kollisionsmodell.stl\n'}
+[9.753857] (ur10e_hl_interface) StdoutLine: {'line': b'-- Up-to-date: /home/levin/Semi-Automated-Programming-of-Industrial-Robotic-Systems-Using-Large-Language-Models/install/ur10e_hl_interface/share/ur10e_hl_interface/meshes/PT-6-TWIN-BU.dae\n'}
+[9.753884] (ur10e_hl_interface) StdoutLine: {'line': b'-- Up-to-date: /home/levin/Semi-Automated-Programming-of-Industrial-Robotic-Systems-Using-Large-Language-Models/install/ur10e_hl_interface/share/ur10e_hl_interface/meshes/PTU_2,5-TWIN_BU.dae\n'}
+[9.753909] (ur10e_hl_interface) StdoutLine: {'line': b'-- Up-to-date: /home/levin/Semi-Automated-Programming-of-Industrial-Robotic-Systems-Using-Large-Language-Models/install/ur10e_hl_interface/share/ur10e_hl_interface/meshes/Schaltschrank_ohne_Tuer.stl\n'}
+[9.753937] (ur10e_hl_interface) StdoutLine: {'line': b'-- Up-to-date: /home/levin/Semi-Automated-Programming-of-Industrial-Robotic-Systems-Using-Large-Language-Models/install/ur10e_hl_interface/share/ur10e_hl_interface/meshes/VAL-MS-T1-T2.stl\n'}
+[9.753963] (ur10e_hl_interface) StdoutLine: {'line': b'-- Up-to-date: /home/levin/Semi-Automated-Programming-of-Industrial-Robotic-Systems-Using-Large-Language-Models/install/ur10e_hl_interface/share/ur10e_hl_interface/meshes/UT_1,5_OG.dae\n'}
+[9.753989] (ur10e_hl_interface) StdoutLine: {'line': b'-- Up-to-date: /home/levin/Semi-Automated-Programming-of-Industrial-Robotic-Systems-Using-Large-Language-Models/install/ur10e_hl_interface/share/ur10e_hl_interface/meshes/STU_35_4X10_YE.stl\n'}
+[9.754015] (ur10e_hl_interface) StdoutLine: {'line': b'-- Up-to-date: /home/levin/Semi-Automated-Programming-of-Industrial-Robotic-Systems-Using-Large-Language-Models/install/ur10e_hl_interface/share/ur10e_hl_interface/meshes/VAL-MS-230.dae\n'}
+[9.754040] (ur10e_hl_interface) StdoutLine: {'line': b'-- Up-to-date: /home/levin/Semi-Automated-Programming-of-Industrial-Robotic-Systems-Using-Large-Language-Models/install/ur10e_hl_interface/share/ur10e_hl_interface/meshes/PT-6-TWIN.stl\n'}
+[9.754065] (ur10e_hl_interface) StdoutLine: {'line': b'-- Up-to-date: /home/levin/Semi-Automated-Programming-of-Industrial-Robotic-Systems-Using-Large-Language-Models/install/ur10e_hl_interface/share/ur10e_hl_interface/meshes/UT_1,5_OG.stl\n'}
+[9.754239] (ur10e_hl_interface) StdoutLine: {'line': b'-- Up-to-date: /home/levin/Semi-Automated-Programming-of-Industrial-Robotic-Systems-Using-Large-Language-Models/install/ur10e_hl_interface/share/ur10e_hl_interface/meshes/QTCU_2,5.stl\n'}
+[9.754275] (ur10e_hl_interface) StdoutLine: {'line': b'-- Up-to-date: /home/levin/Semi-Automated-Programming-of-Industrial-Robotic-Systems-Using-Large-Language-Models/install/ur10e_hl_interface/share/ur10e_hl_interface/meshes/Hutschiene.stl\n'}
+[9.754358] (ur10e_hl_interface) StdoutLine: {'line': b'-- Up-to-date: /home/levin/Semi-Automated-Programming-of-Industrial-Robotic-Systems-Using-Large-Language-Models/install/ur10e_hl_interface/share/ur10e_hl_interface/meshes/CLIPFIX-35-5.dae\n'}
+[9.754390] (ur10e_hl_interface) StdoutLine: {'line': b'-- Up-to-date: /home/levin/Semi-Automated-Programming-of-Industrial-Robotic-Systems-Using-Large-Language-Models/install/ur10e_hl_interface/share/ur10e_hl_interface/meshes/QTCU_2,5.dae\n'}
+[9.754430] (ur10e_hl_interface) StdoutLine: {'line': b'-- Up-to-date: /home/levin/Semi-Automated-Programming-of-Industrial-Robotic-Systems-Using-Large-Language-Models/install/ur10e_hl_interface/share/ur10e_hl_interface/meshes/VAL-MS-T1-T2.dae\n'}
+[9.754475] (ur10e_hl_interface) StdoutLine: {'line': b'-- Up-to-date: /home/levin/Semi-Automated-Programming-of-Industrial-Robotic-Systems-Using-Large-Language-Models/install/ur10e_hl_interface/share/ur10e_hl_interface/meshes/lps-logo-text.stl\n'}
+[9.754501] (ur10e_hl_interface) StdoutLine: {'line': b'-- Up-to-date: /home/levin/Semi-Automated-Programming-of-Industrial-Robotic-Systems-Using-Large-Language-Models/install/ur10e_hl_interface/share/ur10e_hl_interface/meshes/CLIPFIX-35.dae\n'}
+[9.754525] (ur10e_hl_interface) StdoutLine: {'line': b'-- Up-to-date: /home/levin/Semi-Automated-Programming-of-Industrial-Robotic-Systems-Using-Large-Language-Models/install/ur10e_hl_interface/share/ur10e_hl_interface/meshes/PTU_2,5-TWIN_BU.stl\n'}
+[9.754549] (ur10e_hl_interface) StdoutLine: {'line': b'-- Up-to-date: /home/levin/Semi-Automated-Programming-of-Industrial-Robotic-Systems-Using-Large-Language-Models/install/ur10e_hl_interface/share/ur10e_hl_interface/meshes/UT-16-PE.stl\n'}
+[9.754577] (ur10e_hl_interface) StdoutLine: {'line': b'-- Up-to-date: /home/levin/Semi-Automated-Programming-of-Industrial-Robotic-Systems-Using-Large-Language-Models/install/ur10e_hl_interface/share/ur10e_hl_interface/meshes/Hutschienen-Halter.dae\n'}
+[9.754603] (ur10e_hl_interface) StdoutLine: {'line': b'-- Up-to-date: /home/levin/Semi-Automated-Programming-of-Industrial-Robotic-Systems-Using-Large-Language-Models/install/ur10e_hl_interface/share/ur10e_hl_interface/environment/library_path.sh\n'}
+[9.754639] (ur10e_hl_interface) StdoutLine: {'line': b'-- Up-to-date: /home/levin/Semi-Automated-Programming-of-Industrial-Robotic-Systems-Using-Large-Language-Models/install/ur10e_hl_interface/share/ur10e_hl_interface/environment/library_path.dsv\n'}
+[9.754678] (ur10e_hl_interface) StdoutLine: {'line': b'-- Up-to-date: /home/levin/Semi-Automated-Programming-of-Industrial-Robotic-Systems-Using-Large-Language-Models/install/ur10e_hl_interface/share/ament_index/resource_index/package_run_dependencies/ur10e_hl_interface\n'}
+[9.754944] (ur10e_hl_interface) StdoutLine: {'line': b'-- Up-to-date: /home/levin/Semi-Automated-Programming-of-Industrial-Robotic-Systems-Using-Large-Language-Models/install/ur10e_hl_interface/share/ament_index/resource_index/parent_prefix_path/ur10e_hl_interface\n'}
+[9.754982] (ur10e_hl_interface) StdoutLine: {'line': b'-- Up-to-date: /home/levin/Semi-Automated-Programming-of-Industrial-Robotic-Systems-Using-Large-Language-Models/install/ur10e_hl_interface/share/ur10e_hl_interface/environment/ament_prefix_path.sh\n'}
+[9.755067] (ur10e_hl_interface) StdoutLine: {'line': b'-- Up-to-date: /home/levin/Semi-Automated-Programming-of-Industrial-Robotic-Systems-Using-Large-Language-Models/install/ur10e_hl_interface/share/ur10e_hl_interface/environment/ament_prefix_path.dsv\n'}
+[9.755114] (ur10e_hl_interface) StdoutLine: {'line': b'-- Up-to-date: /home/levin/Semi-Automated-Programming-of-Industrial-Robotic-Systems-Using-Large-Language-Models/install/ur10e_hl_interface/share/ur10e_hl_interface/environment/path.sh\n'}
+[9.755158] (ur10e_hl_interface) StdoutLine: {'line': b'-- Up-to-date: /home/levin/Semi-Automated-Programming-of-Industrial-Robotic-Systems-Using-Large-Language-Models/install/ur10e_hl_interface/share/ur10e_hl_interface/environment/path.dsv\n'}
+[9.755250] (ur10e_hl_interface) StdoutLine: {'line': b'-- Up-to-date: /home/levin/Semi-Automated-Programming-of-Industrial-Robotic-Systems-Using-Large-Language-Models/install/ur10e_hl_interface/share/ur10e_hl_interface/local_setup.bash\n'}
+[9.755281] (ur10e_hl_interface) StdoutLine: {'line': b'-- Up-to-date: /home/levin/Semi-Automated-Programming-of-Industrial-Robotic-Systems-Using-Large-Language-Models/install/ur10e_hl_interface/share/ur10e_hl_interface/local_setup.sh\n'}
+[9.755312] (ur10e_hl_interface) StdoutLine: {'line': b'-- Up-to-date: /home/levin/Semi-Automated-Programming-of-Industrial-Robotic-Systems-Using-Large-Language-Models/install/ur10e_hl_interface/share/ur10e_hl_interface/local_setup.zsh\n'}
+[9.755370] (ur10e_hl_interface) StdoutLine: {'line': b'-- Up-to-date: /home/levin/Semi-Automated-Programming-of-Industrial-Robotic-Systems-Using-Large-Language-Models/install/ur10e_hl_interface/share/ur10e_hl_interface/local_setup.dsv\n'}
+[9.755601] (ur10e_hl_interface) StdoutLine: {'line': b'-- Installing: /home/levin/Semi-Automated-Programming-of-Industrial-Robotic-Systems-Using-Large-Language-Models/install/ur10e_hl_interface/share/ur10e_hl_interface/package.dsv\n'}
+[9.755866] (ur10e_hl_interface) StdoutLine: {'line': b'-- Up-to-date: /home/levin/Semi-Automated-Programming-of-Industrial-Robotic-Systems-Using-Large-Language-Models/install/ur10e_hl_interface/share/ament_index/resource_index/packages/ur10e_hl_interface\n'}
+[9.756018] (ur10e_hl_interface) StdoutLine: {'line': b'-- Up-to-date: /home/levin/Semi-Automated-Programming-of-Industrial-Robotic-Systems-Using-Large-Language-Models/install/ur10e_hl_interface/share/ur10e_hl_interface/cmake/export_ur10e_hl_interfaceExport.cmake\n'}
+[9.756069] (ur10e_hl_interface) StdoutLine: {'line': b'-- Up-to-date: /home/levin/Semi-Automated-Programming-of-Industrial-Robotic-Systems-Using-Large-Language-Models/install/ur10e_hl_interface/share/ur10e_hl_interface/cmake/export_ur10e_hl_interfaceExport-noconfig.cmake\n'}
+[9.756223] (ur10e_hl_interface) StdoutLine: {'line': b'-- Up-to-date: /home/levin/Semi-Automated-Programming-of-Industrial-Robotic-Systems-Using-Large-Language-Models/install/ur10e_hl_interface/share/ur10e_hl_interface/cmake/ament_cmake_export_targets-extras.cmake\n'}
+[9.756383] (ur10e_hl_interface) StdoutLine: {'line': b'-- Up-to-date: /home/levin/Semi-Automated-Programming-of-Industrial-Robotic-Systems-Using-Large-Language-Models/install/ur10e_hl_interface/share/ur10e_hl_interface/cmake/ament_cmake_export_dependencies-extras.cmake\n'}
+[9.756423] (ur10e_hl_interface) StdoutLine: {'line': b'-- Up-to-date: /home/levin/Semi-Automated-Programming-of-Industrial-Robotic-Systems-Using-Large-Language-Models/install/ur10e_hl_interface/share/ur10e_hl_interface/cmake/ur10e_hl_interfaceConfig.cmake\n'}
+[9.756457] (ur10e_hl_interface) StdoutLine: {'line': b'-- Up-to-date: /home/levin/Semi-Automated-Programming-of-Industrial-Robotic-Systems-Using-Large-Language-Models/install/ur10e_hl_interface/share/ur10e_hl_interface/cmake/ur10e_hl_interfaceConfig-version.cmake\n'}
+[9.756606] (ur10e_hl_interface) StdoutLine: {'line': b'-- Up-to-date: /home/levin/Semi-Automated-Programming-of-Industrial-Robotic-Systems-Using-Large-Language-Models/install/ur10e_hl_interface/share/ur10e_hl_interface/package.xml\n'}
+[9.756963] (ur10e_hl_interface) CommandEnded: {'returncode': 0}
+[9.772355] (ur10e_hl_interface) JobEnded: {'identifier': 'ur10e_hl_interface', 'rc': 0}
+[9.772931] (-) EventReactorShutdown: {}

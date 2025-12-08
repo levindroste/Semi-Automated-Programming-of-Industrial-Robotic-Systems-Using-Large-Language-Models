@@ -1,0 +1,2 @@
+source;share/ur_with_gripper/environment/ament_prefix_path.sh
+source;share/ur_with_gripper/environment/path.sh

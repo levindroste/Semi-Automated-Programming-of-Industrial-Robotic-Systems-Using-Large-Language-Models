@@ -13,7 +13,7 @@ class AMLParser:
     def __init__(self, aml_file_path: str = None):
         """Initialisiert Parser mit AML-Pfad"""
         self.aml_file_path = aml_file_path or os.path.expanduser(
-            "~/ur10_ws/src/ur10e_hl_interface/config/AML-Datei-V04.aml"
+            "~/Semi-Automated-Programming-of-Industrial-Robotic-Systems-Using-Large-Language-Models/src/ur10e_hl_interface/config/AML-Datei-V04.aml"
         )
         self.objects = {}
         self.robot_params = {}

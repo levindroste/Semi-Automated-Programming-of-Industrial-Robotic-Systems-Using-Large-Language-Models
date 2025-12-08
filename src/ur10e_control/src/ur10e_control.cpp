@@ -87,7 +87,7 @@ int main(int argc, char * argv[])
   rclcpp::sleep_for(std::chrono::seconds(5));
 
   // Verwende die bekannte, korrekte Gruppenbezeichnung
-  const std::string gruppe = "ur10e_arm";
+  const std::string gruppe = "irb120_arm";
   
   try {
     RCLCPP_INFO(logger, "Verbinde mit Robotergruppe: %s", gruppe.c_str());

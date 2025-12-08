@@ -1,0 +1,72 @@
+-- The C compiler identification is GNU 11.4.0
+-- The CXX compiler identification is GNU 11.4.0
+-- Detecting C compiler ABI info
+-- Detecting C compiler ABI info - done
+-- Check for working C compiler: /usr/bin/cc - skipped
+-- Detecting C compile features
+-- Detecting C compile features - done
+-- Detecting CXX compiler ABI info
+-- Detecting CXX compiler ABI info - done
+-- Check for working CXX compiler: /usr/bin/c++ - skipped
+-- Detecting CXX compile features
+-- Detecting CXX compile features - done
+-- Found ament_cmake: 1.3.11 (/opt/ros/humble/share/ament_cmake/cmake)
+-- Found Python3: /usr/bin/python3 (found version "3.10.12") found components: Interpreter 
+-- Found ament_lint_auto: 0.12.12 (/opt/ros/humble/share/ament_lint_auto/cmake)
+-- Added test 'flake8' to check Python code syntax and style conventions
+-- Added test 'lint_cmake' to check CMake code style
+-- Added test 'pep257' to check Python code against some of the docstring style conventions in PEP 257
+-- Added test 'xmllint' to check XML markup files
+-- Configuring done
+-- Generating done
+-- Build files have been written to: /home/levin/Semi-Automated-Programming-of-Industrial-Robotic-Systems-Using-Large-Language-Models/build/ur_with_gripper
+-- Install configuration: ""
+-- Installing: /home/levin/Semi-Automated-Programming-of-Industrial-Robotic-Systems-Using-Large-Language-Models/install/ur_with_gripper/share/ur_with_gripper/launch
+-- Installing: /home/levin/Semi-Automated-Programming-of-Industrial-Robotic-Systems-Using-Large-Language-Models/install/ur_with_gripper/share/ur_with_gripper/launch/view_robot.launch.py
+-- Installing: /home/levin/Semi-Automated-Programming-of-Industrial-Robotic-Systems-Using-Large-Language-Models/install/ur_with_gripper/share/ur_with_gripper/launch/ur_sim_control.launch.py
+-- Installing: /home/levin/Semi-Automated-Programming-of-Industrial-Robotic-Systems-Using-Large-Language-Models/install/ur_with_gripper/share/ur_with_gripper/launch/start_robot.launch.py
+-- Installing: /home/levin/Semi-Automated-Programming-of-Industrial-Robotic-Systems-Using-Large-Language-Models/install/ur_with_gripper/share/ur_with_gripper/launch/add_objects.launch.py
+-- Installing: /home/levin/Semi-Automated-Programming-of-Industrial-Robotic-Systems-Using-Large-Language-Models/install/ur_with_gripper/share/ur_with_gripper/urdf
+-- Installing: /home/levin/Semi-Automated-Programming-of-Industrial-Robotic-Systems-Using-Large-Language-Models/install/ur_with_gripper/share/ur_with_gripper/urdf/ur_with_gripper_macro.xacro
+-- Installing: /home/levin/Semi-Automated-Programming-of-Industrial-Robotic-Systems-Using-Large-Language-Models/install/ur_with_gripper/share/ur_with_gripper/urdf/ur_with_gripper.urdf.xacro
+-- Installing: /home/levin/Semi-Automated-Programming-of-Industrial-Robotic-Systems-Using-Large-Language-Models/install/ur_with_gripper/share/ur_with_gripper/urdf/irb120_ros2control.xacro
+-- Installing: /home/levin/Semi-Automated-Programming-of-Industrial-Robotic-Systems-Using-Large-Language-Models/install/ur_with_gripper/share/ur_with_gripper/urdf/irb120_macro.urdf.xacro
+-- Installing: /home/levin/Semi-Automated-Programming-of-Industrial-Robotic-Systems-Using-Large-Language-Models/install/ur_with_gripper/share/ur_with_gripper/rviz
+-- Installing: /home/levin/Semi-Automated-Programming-of-Industrial-Robotic-Systems-Using-Large-Language-Models/install/ur_with_gripper/share/ur_with_gripper/rviz/view_robot.rviz
+-- Installing: /home/levin/Semi-Automated-Programming-of-Industrial-Robotic-Systems-Using-Large-Language-Models/install/ur_with_gripper/share/ur_with_gripper/config
+-- Installing: /home/levin/Semi-Automated-Programming-of-Industrial-Robotic-Systems-Using-Large-Language-Models/install/ur_with_gripper/share/ur_with_gripper/config/irb120_controllers.yaml
+-- Installing: /home/levin/Semi-Automated-Programming-of-Industrial-Robotic-Systems-Using-Large-Language-Models/install/ur_with_gripper/share/ur_with_gripper/config/ur10e_controllers.yaml
+-- Installing: /home/levin/Semi-Automated-Programming-of-Industrial-Robotic-Systems-Using-Large-Language-Models/install/ur_with_gripper/share/ur_with_gripper/config/ur_calibration.yaml
+-- Installing: /home/levin/Semi-Automated-Programming-of-Industrial-Robotic-Systems-Using-Large-Language-Models/install/ur_with_gripper/share/ur_with_gripper/meshes
+-- Installing: /home/levin/Semi-Automated-Programming-of-Industrial-Robotic-Systems-Using-Large-Language-Models/install/ur_with_gripper/share/ur_with_gripper/meshes/irb120
+-- Installing: /home/levin/Semi-Automated-Programming-of-Industrial-Robotic-Systems-Using-Large-Language-Models/install/ur_with_gripper/share/ur_with_gripper/meshes/irb120/collision
+-- Installing: /home/levin/Semi-Automated-Programming-of-Industrial-Robotic-Systems-Using-Large-Language-Models/install/ur_with_gripper/share/ur_with_gripper/meshes/irb120/collision/link_3.stl
+-- Installing: /home/levin/Semi-Automated-Programming-of-Industrial-Robotic-Systems-Using-Large-Language-Models/install/ur_with_gripper/share/ur_with_gripper/meshes/irb120/collision/link_5.stl
+-- Installing: /home/levin/Semi-Automated-Programming-of-Industrial-Robotic-Systems-Using-Large-Language-Models/install/ur_with_gripper/share/ur_with_gripper/meshes/irb120/collision/link_1.stl
+-- Installing: /home/levin/Semi-Automated-Programming-of-Industrial-Robotic-Systems-Using-Large-Language-Models/install/ur_with_gripper/share/ur_with_gripper/meshes/irb120/collision/link_2.stl
+-- Installing: /home/levin/Semi-Automated-Programming-of-Industrial-Robotic-Systems-Using-Large-Language-Models/install/ur_with_gripper/share/ur_with_gripper/meshes/irb120/collision/base_link.stl
+-- Installing: /home/levin/Semi-Automated-Programming-of-Industrial-Robotic-Systems-Using-Large-Language-Models/install/ur_with_gripper/share/ur_with_gripper/meshes/irb120/collision/link_6.stl
+-- Installing: /home/levin/Semi-Automated-Programming-of-Industrial-Robotic-Systems-Using-Large-Language-Models/install/ur_with_gripper/share/ur_with_gripper/meshes/irb120/collision/link_4.stl
+-- Installing: /home/levin/Semi-Automated-Programming-of-Industrial-Robotic-Systems-Using-Large-Language-Models/install/ur_with_gripper/share/ur_with_gripper/meshes/irb120/visual
+-- Installing: /home/levin/Semi-Automated-Programming-of-Industrial-Robotic-Systems-Using-Large-Language-Models/install/ur_with_gripper/share/ur_with_gripper/meshes/irb120/visual/base_link.dae
+-- Installing: /home/levin/Semi-Automated-Programming-of-Industrial-Robotic-Systems-Using-Large-Language-Models/install/ur_with_gripper/share/ur_with_gripper/meshes/irb120/visual/link_1.dae
+-- Installing: /home/levin/Semi-Automated-Programming-of-Industrial-Robotic-Systems-Using-Large-Language-Models/install/ur_with_gripper/share/ur_with_gripper/meshes/irb120/visual/link_6.dae
+-- Installing: /home/levin/Semi-Automated-Programming-of-Industrial-Robotic-Systems-Using-Large-Language-Models/install/ur_with_gripper/share/ur_with_gripper/meshes/irb120/visual/link_4.dae
+-- Installing: /home/levin/Semi-Automated-Programming-of-Industrial-Robotic-Systems-Using-Large-Language-Models/install/ur_with_gripper/share/ur_with_gripper/meshes/irb120/visual/link_3.dae
+-- Installing: /home/levin/Semi-Automated-Programming-of-Industrial-Robotic-Systems-Using-Large-Language-Models/install/ur_with_gripper/share/ur_with_gripper/meshes/irb120/visual/link_2.dae
+-- Installing: /home/levin/Semi-Automated-Programming-of-Industrial-Robotic-Systems-Using-Large-Language-Models/install/ur_with_gripper/share/ur_with_gripper/meshes/irb120/visual/link_5.dae
+-- Installing: /home/levin/Semi-Automated-Programming-of-Industrial-Robotic-Systems-Using-Large-Language-Models/install/ur_with_gripper/share/ament_index/resource_index/package_run_dependencies/ur_with_gripper
+-- Installing: /home/levin/Semi-Automated-Programming-of-Industrial-Robotic-Systems-Using-Large-Language-Models/install/ur_with_gripper/share/ament_index/resource_index/parent_prefix_path/ur_with_gripper
+-- Installing: /home/levin/Semi-Automated-Programming-of-Industrial-Robotic-Systems-Using-Large-Language-Models/install/ur_with_gripper/share/ur_with_gripper/environment/ament_prefix_path.sh
+-- Installing: /home/levin/Semi-Automated-Programming-of-Industrial-Robotic-Systems-Using-Large-Language-Models/install/ur_with_gripper/share/ur_with_gripper/environment/ament_prefix_path.dsv
+-- Installing: /home/levin/Semi-Automated-Programming-of-Industrial-Robotic-Systems-Using-Large-Language-Models/install/ur_with_gripper/share/ur_with_gripper/environment/path.sh
+-- Installing: /home/levin/Semi-Automated-Programming-of-Industrial-Robotic-Systems-Using-Large-Language-Models/install/ur_with_gripper/share/ur_with_gripper/environment/path.dsv
+-- Installing: /home/levin/Semi-Automated-Programming-of-Industrial-Robotic-Systems-Using-Large-Language-Models/install/ur_with_gripper/share/ur_with_gripper/local_setup.bash
+-- Installing: /home/levin/Semi-Automated-Programming-of-Industrial-Robotic-Systems-Using-Large-Language-Models/install/ur_with_gripper/share/ur_with_gripper/local_setup.sh
+-- Installing: /home/levin/Semi-Automated-Programming-of-Industrial-Robotic-Systems-Using-Large-Language-Models/install/ur_with_gripper/share/ur_with_gripper/local_setup.zsh
+-- Installing: /home/levin/Semi-Automated-Programming-of-Industrial-Robotic-Systems-Using-Large-Language-Models/install/ur_with_gripper/share/ur_with_gripper/local_setup.dsv
+-- Installing: /home/levin/Semi-Automated-Programming-of-Industrial-Robotic-Systems-Using-Large-Language-Models/install/ur_with_gripper/share/ur_with_gripper/package.dsv
+-- Installing: /home/levin/Semi-Automated-Programming-of-Industrial-Robotic-Systems-Using-Large-Language-Models/install/ur_with_gripper/share/ament_index/resource_index/packages/ur_with_gripper
+-- Installing: /home/levin/Semi-Automated-Programming-of-Industrial-Robotic-Systems-Using-Large-Language-Models/install/ur_with_gripper/share/ur_with_gripper/cmake/ur_with_gripperConfig.cmake
+-- Installing: /home/levin/Semi-Automated-Programming-of-Industrial-Robotic-Systems-Using-Large-Language-Models/install/ur_with_gripper/share/ur_with_gripper/cmake/ur_with_gripperConfig-version.cmake
+-- Installing: /home/levin/Semi-Automated-Programming-of-Industrial-Robotic-Systems-Using-Large-Language-Models/install/ur_with_gripper/share/ur_with_gripper/package.xml

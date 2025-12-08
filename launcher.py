@@ -28,24 +28,18 @@ class ROS2Launcher:
             time.sleep(wait)
 
     def run(self):
-        print("ROS2 UR10e Setup")
+        print("ROS2 ABB IRB 120 Setup")
 
-        # Launch config
-        cfg = "description_package:=ur_with_gripper description_file:=ur_with_gripper.urdf.xacro " \
-              "ur_type:=ur10e runtime_config_package:=ur_with_gripper " \
-              "controllers_file:=ur10e_controllers.yaml initial_joint_controller:=ur10e_arm_controller"
-
-        # Start Gazebo with retry
+        # Start Gazebo with IRB 120 robot (controllers are spawned by Gazebo plugin)
         while True:
-            self._cmd(f"ros2 launch ur_simulation_gz ur_sim_control.launch.py {cfg}", "Gazebo", 0)
-            if input("\nRoboter in Gazebo/Rviz aufrecht? [j/n]: ").lower() == 'j':
+            self._cmd("ros2 launch ur_with_gripper ur_sim_control.launch.py", "Gazebo", 0)
+            if input("\nRobot in Gazebo/Rviz upright? [y/n]: ").lower() == 'y':
                 break
-            print("Neustart...")
+            print("Restarting...")
             time.sleep(2)
 
-        # Launch sequence
+        # Launch sequence (spawn_controllers removed - handled by Gazebo plugin)
         cmds = [
-            ("ros2 launch ur_with_gripper_moveit_config spawn_controllers.launch.py", "Controllers", 2),
             ("RCUTILS_LOGGING_SEVERITY_THRESHOLD=DEBUG ros2 launch ur_with_gripper_moveit_config move_group.launch.py",
              "Move Group", 2),
             ("ros2 param set /move_group use_sim_time true", None, 2),
@@ -57,7 +51,7 @@ class ROS2Launcher:
         for cmd, tab, wait in cmds:
             self._cmd(cmd, tab, wait)
 
-        print("\nSetup abgeschlossen!")
+        print("\nSetup complete!")
 
 
 if __name__ == "__main__":

@@ -1,0 +1,123 @@
+<?xml version="1.0"?>
+<!--
+  ABB IRB 120 Robot ros2_control configuration
+  Adapted from IFRA-Cranfield/irb120_PoseEstimation repository
+-->
+
+<robot xmlns:xacro="http://ros.org/wiki/xacro">
+
+  <xacro:macro name="irb120_ros2_control" params="simulated:=true">
+
+    <ros2_control name="irb120_robot" type="system">
+
+      <!-- Hardware plugin -->
+      <hardware>
+        <xacro:if value="${simulated}">
+          <plugin>gz_ros2_control/GazeboSimSystem</plugin>
+        </xacro:if>
+        <xacro:unless value="${simulated}">
+          <plugin>mock_components/GenericSystem</plugin>
+        </xacro:unless>
+      </hardware>
+
+      <!-- irb120_joint_1 -->
+      <joint name="irb120_joint_1">
+        <command_interface name="position">
+          <param name="min">-2.87979</param>
+          <param name="max">2.87979</param>
+        </command_interface>
+        <command_interface name="velocity">
+          <param name="min">-4.36332</param>
+          <param name="max">4.36332</param>
+        </command_interface>
+        <state_interface name="position">
+          <param name="initial_value">0.0</param>
+        </state_interface>
+        <state_interface name="velocity"/>
+      </joint>
+
+      <!-- irb120_joint_2 -->
+      <joint name="irb120_joint_2">
+        <command_interface name="position">
+          <param name="min">-1.91986</param>
+          <param name="max">1.91986</param>
+        </command_interface>
+        <command_interface name="velocity">
+          <param name="min">-4.36332</param>
+          <param name="max">4.36332</param>
+        </command_interface>
+        <state_interface name="position">
+          <param name="initial_value">0.0</param>
+        </state_interface>
+        <state_interface name="velocity"/>
+      </joint>
+
+      <!-- irb120_joint_3 -->
+      <joint name="irb120_joint_3">
+        <command_interface name="position">
+          <param name="min">-1.91986</param>
+          <param name="max">1.22173</param>
+        </command_interface>
+        <command_interface name="velocity">
+          <param name="min">-4.36332</param>
+          <param name="max">4.36332</param>
+        </command_interface>
+        <state_interface name="position">
+          <param name="initial_value">0.0</param>
+        </state_interface>
+        <state_interface name="velocity"/>
+      </joint>
+
+      <!-- irb120_joint_4 -->
+      <joint name="irb120_joint_4">
+        <command_interface name="position">
+          <param name="min">-2.79253</param>
+          <param name="max">2.79253</param>
+        </command_interface>
+        <command_interface name="velocity">
+          <param name="min">-5.58505</param>
+          <param name="max">5.58505</param>
+        </command_interface>
+        <state_interface name="position">
+          <param name="initial_value">0.0</param>
+        </state_interface>
+        <state_interface name="velocity"/>
+      </joint>
+
+      <!-- irb120_joint_5 -->
+      <joint name="irb120_joint_5">
+        <command_interface name="position">
+          <param name="min">-2.00</param>
+          <param name="max">2.00</param>
+        </command_interface>
+        <command_interface name="velocity">
+          <param name="min">-5.58505</param>
+          <param name="max">5.58505</param>
+        </command_interface>
+        <state_interface name="position">
+          <param name="initial_value">0.0</param>
+        </state_interface>
+        <state_interface name="velocity"/>
+      </joint>
+
+      <!-- irb120_joint_6 -->
+      <joint name="irb120_joint_6">
+        <command_interface name="position">
+          <param name="min">-6.98132</param>
+          <param name="max">6.98132</param>
+        </command_interface>
+        <command_interface name="velocity">
+          <param name="min">-7.33038</param>
+          <param name="max">7.33038</param>
+        </command_interface>
+        <state_interface name="position">
+          <param name="initial_value">0.0</param>
+        </state_interface>
+        <state_interface name="velocity"/>
+      </joint>
+
+    </ros2_control>
+
+  </xacro:macro>
+
+</robot>

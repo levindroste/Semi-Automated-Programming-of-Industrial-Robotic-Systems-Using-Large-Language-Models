@@ -2,7 +2,7 @@
 
 ## Project Overview
 
-This project enables **semi-automated programming of industrial robotic systems using Large Language Models**. It combines LLMs with a UR10e collaborative robot to allow non-programmers to command complex robotic tasks through natural language descriptions.
+This project enables **semi-automated programming of industrial robotic systems using Large Language Models**. It combines LLMs with an **ABB IRB 120** industrial robot to allow non-programmers to command complex robotic tasks through natural language descriptions.
 
 ### Core Concept
 A **two-level LLM processing pipeline** transforms natural language task descriptions into executable C++ robot control code:
@@ -64,14 +64,54 @@ Start rosbridge (ask user to run `./launch_rosbridge.sh` in a separate terminal)
 
 ```
 /home/levin/Semi-Automated-Programming-of-Industrial-Robotic-Systems-Using-Large-Language-Models/
-├── GUI/PROBOT_GUI/          # Python GUI application (PyQt6)
-├── src/                     # ROS2 C++ packages for robot control
-│   ├── ur10e_hl_interface/  # Core high-level robot interface
-│   ├── ur_with_gripper/     # Robot URDF and launch files
-│   └── [other packages]     # MoveIt config, control, gripper
-├── launcher.py              # Automated ROS2 launcher
-└── README.md                # Project documentation
+├── GUI/PROBOT_GUI/                  # Python GUI application (PyQt6)
+├── src/                             # ROS2 C++ packages for robot control
+│   ├── ur10e_hl_interface/          # Core high-level robot interface
+│   ├── ur_with_gripper/             # Robot URDF, meshes, and launch files
+│   │   ├── urdf/                    # XACRO robot descriptions
+│   │   │   ├── irb120_macro.urdf.xacro      # IRB 120 robot definition
+│   │   │   ├── irb120_ros2control.xacro     # ros2_control interfaces
+│   │   │   ├── ur_with_gripper.urdf.xacro   # Main robot + gripper assembly
+│   │   │   └── ur_with_gripper_macro.xacro  # Robot-gripper macro
+│   │   ├── meshes/irb120/           # Robot visual/collision meshes
+│   │   ├── config/                  # Controller configurations
+│   │   └── launch/                  # Launch files
+│   ├── ur_with_gripper_moveit_config/  # MoveIt configuration
+│   ├── custom_gripper/              # Parallel gripper URDF
+│   └── ur10e_control/               # Robot control node
+├── launcher.py                      # Automated ROS2 launcher
+└── README.md                        # Project documentation
 ```
+
+---
+
+## ABB IRB 120 Robot Configuration
+
+### Robot Specifications
+- **Model**: ABB IRB 120 (6-axis industrial robot)
+- **Payload**: 3 kg
+- **Reach**: 580 mm
+- **MoveIt Group Name**: `irb120_arm`
+- **TF Prefix**: `irb120_` (all links/joints use this prefix)
+
+### Joint Configuration
+| Joint | Axis | Lower Limit | Upper Limit | Max Velocity |
+|-------|------|-------------|-------------|--------------|
+| irb120_joint_1 | Z | -2.88 rad | 2.88 rad | 4.36 rad/s |
+| irb120_joint_2 | Y | -1.92 rad | 1.92 rad | 4.36 rad/s |
+| irb120_joint_3 | Y | -1.92 rad | 1.22 rad | 4.36 rad/s |
+| irb120_joint_4 | X | -2.79 rad | 2.79 rad | 5.59 rad/s |
+| irb120_joint_5 | Y | -2.00 rad | 2.00 rad | 5.59 rad/s |
+| irb120_joint_6 | X | -6.98 rad | 6.98 rad | 7.33 rad/s |
+
+### Key Links
+- `irb120_base_link` → `irb120_link_1` → ... → `irb120_link_6` → `irb120_flange` → `irb120_tool0`
+- Gripper attaches to `irb120_tool0` with origin `xyz="0 0 0.01" rpy="0 3.14159 0"`
+
+### Gripper
+- **Type**: Custom parallel gripper (2-finger)
+- **Joints**: `left_finger_joint` (prismatic), `right_finger_joint` (mimic)
+- **Controller**: `gripper_controller` (position_controllers/GripperActionController)
 
 ---
 
@@ -80,7 +120,7 @@ Start rosbridge (ask user to run `./launch_rosbridge.sh` in a separate terminal)
 ### Robot Control Stack (C++)
 - **ROS2 Humble**: Middleware and communication framework
 - **MoveIt2**: Motion planning and collision avoidance
-- **Gazebo Ignition**: Physics simulation
+- **Gazebo Ignition (gz-sim)**: Physics simulation
 - **TinyXML2**: AML configuration parsing
 
 ### GUI and LLM Integration (Python)
@@ -284,23 +324,67 @@ AML files use XML to define industrial automation components:
 
 ## Common Tasks
 
-### Launch Robot Simulation
+### Launch Robot via GUI (Recommended)
+The GUI "Setup Robot" button launches the complete robot stack:
 ```bash
-python launcher.py  # Automated launcher
-# OR manually:
+cd ~/Semi-Automated-Programming-of-Industrial-Robotic-Systems-Using-Large-Language-Models
+python GUI/PROBOT_GUI/main.py
+# Click "Setup Robot" button - opens gnome-terminal tabs with:
+# 1. Gazebo simulation
+# 2. MoveIt move_group
+# 3. MoveIt RViz
+# 4. Scene objects
+```
+
+### Launch Robot Visualization (RViz only)
+```bash
+source /opt/ros/humble/setup.bash
+source install/setup.bash
+ros2 launch ur_with_gripper view_robot.launch.py
+```
+
+### Launch Full Gazebo Simulation (Manual)
+```bash
+source /opt/ros/humble/setup.bash
+source install/setup.bash
 ros2 launch ur_with_gripper ur_sim_control.launch.py
+```
+
+### Launch MoveIt Demo
+```bash
+ros2 launch ur_with_gripper_moveit_config demo.launch.py
 ```
 
 ### Run GUI Application
 ```bash
-cd GUI/PROBOT_GUI
-source .venv/bin/activate
-python main.py
+cd ~/Semi-Automated-Programming-of-Industrial-Robotic-Systems-Using-Large-Language-Models
+python GUI/PROBOT_GUI/main.py
 ```
 
-### Build Specific Package
+### Test Robot Movement via Command Line
 ```bash
-colcon build --packages-select ur10e_hl_interface
+# Check controllers are active
+ros2 control list_controllers
+# Expected: irb120_arm_controller [active], joint_state_broadcaster [active]
+
+# Move to a position (joints in radians)
+ros2 action send_goal /irb120_arm_controller/follow_joint_trajectory \
+  control_msgs/action/FollowJointTrajectory \
+  "{trajectory: {joint_names: [irb120_joint_1, irb120_joint_2, irb120_joint_3, irb120_joint_4, irb120_joint_5, irb120_joint_6], points: [{positions: [0.5, 0.0, 0.0, 0.0, 0.0, 0.0], time_from_start: {sec: 3}}]}}"
+
+# Return to home position
+ros2 action send_goal /irb120_arm_controller/follow_joint_trajectory \
+  control_msgs/action/FollowJointTrajectory \
+  "{trajectory: {joint_names: [irb120_joint_1, irb120_joint_2, irb120_joint_3, irb120_joint_4, irb120_joint_5, irb120_joint_6], points: [{positions: [0.0, 0.0, 0.0, 0.0, 0.0, 0.0], time_from_start: {sec: 3}}]}}"
+```
+
+### Build Packages
+```bash
+# Build all
+colcon build
+
+# Build specific package
+colcon build --packages-select ur_with_gripper
 source install/setup.bash
 ```
 
@@ -311,6 +395,13 @@ ros2 run ur10e_hl_interface clipfix_bewegung
 
 ### View Current Robot State
 Check [SchaltschrankZustand.aml](src/ur10e_hl_interface/config/SchaltschrankZustand.aml) for current component locations and availability.
+
+### Clean Build (when URDF changes aren't reflecting)
+```bash
+rm -rf build/ install/ log/
+colcon build
+source install/setup.bash
+```
 
 ---
 
@@ -363,10 +454,56 @@ Check [SchaltschrankZustand.aml](src/ur10e_hl_interface/config/SchaltschrankZust
 - Monitor MoveIt planning: Launch RViz2
 - Verify AML state file integrity: Check XML syntax
 
+### URDF/Visualization Issues
+- **Robot not displaying**: Kill old ROS processes (`pkill -9 -f robot_state_publisher`)
+- **Mesh not found**: Verify `$(find package_name)` paths in xacro files
+- **Changes not reflecting**: Rebuild package AND re-source (`source install/setup.bash`)
+- **RViz shows old model**: Must close and relaunch RViz after URDF changes
+- **Wrong workspace sourced**: Check `ros2 pkg prefix ur_with_gripper` returns correct path
+
 ### LLM Output Issues
 - Review prompts in [prompts.py](GUI/PROBOT_GUI/prompts.py)
 - Check component availability in AML
 - Validate Level 1 output before Level 2
+
+---
+
+## ROS2 Action Interfaces
+
+The robot exposes these action servers for motion control:
+
+| Action | Type | Purpose |
+|--------|------|---------|
+| `/irb120_arm_controller/follow_joint_trajectory` | `control_msgs/action/FollowJointTrajectory` | Send joint trajectories |
+| `/gripper_controller/gripper_cmd` | `control_msgs/action/GripperCommand` | Open/close gripper |
+| `/move_action` | `moveit_msgs/action/MoveGroup` | MoveIt planning interface |
+| `/execute_trajectory` | `moveit_msgs/action/ExecuteTrajectory` | Execute planned trajectory |
+
+**Note**: The gripper_controller must be manually loaded if not active:
+```bash
+ros2 control load_controller gripper_controller --set-state active
+```
+
+### Gripper Control
+The gripper uses negative position values (joint moves inward):
+- **Position 0.0** = Closed (fingers together)
+- **Position -0.04** = Partially open
+- **Position -0.06** = Fully open
+
+```bash
+# Load gripper controller first
+ros2 control load_controller gripper_controller --set-state active
+
+# Open gripper
+ros2 action send_goal /gripper_controller/gripper_cmd \
+  control_msgs/action/GripperCommand \
+  "{command: {position: -0.04, max_effort: 2.0}}"
+
+# Close gripper
+ros2 action send_goal /gripper_controller/gripper_cmd \
+  control_msgs/action/GripperCommand \
+  "{command: {position: 0.0, max_effort: 2.0}}"
+```
 
 ---
 
@@ -385,13 +522,5 @@ Check [SchaltschrankZustand.aml](src/ur10e_hl_interface/config/SchaltschrankZust
 - **ROS2 Documentation**: https://docs.ros.org/en/humble/
 - **MoveIt2 Documentation**: https://moveit.picknik.ai/humble/
 - **AutomationML Standard**: https://www.automationml.org/
-- **UR10e Robot Manual**: Universal Robots documentation
-
----
-
-## Current File in IDE
-
-**[aml_parser.py](GUI/PROBOT_GUI/aml_parser.py)** (351 lines)
-- Legacy AML parsing utilities
-- Functions for extracting component data from XML
-- Being superseded by [aml_prompt_parser.py](GUI/PROBOT_GUI/aml_prompt_parser.py) singleton pattern
+- **ABB IRB 120 Datasheet**: https://new.abb.com/products/robotics/robots/articulated-robots/irb-120
+- **IRB 120 Meshes Source**: https://github.com/IFRA-Cranfield/irb120_PoseEstimation

@@ -1,0 +1,16 @@
+/home/levin/Semi-Automated-Programming-of-Industrial-Robotic-Systems-Using-Large-Language-Models/install/ur10e_control/lib/ur10e_control/ur10e_control
+/home/levin/Semi-Automated-Programming-of-Industrial-Robotic-Systems-Using-Large-Language-Models/install/ur10e_control/share/ament_index/resource_index/package_run_dependencies/ur10e_control
+/home/levin/Semi-Automated-Programming-of-Industrial-Robotic-Systems-Using-Large-Language-Models/install/ur10e_control/share/ament_index/resource_index/parent_prefix_path/ur10e_control
+/home/levin/Semi-Automated-Programming-of-Industrial-Robotic-Systems-Using-Large-Language-Models/install/ur10e_control/share/ur10e_control/environment/ament_prefix_path.sh
+/home/levin/Semi-Automated-Programming-of-Industrial-Robotic-Systems-Using-Large-Language-Models/install/ur10e_control/share/ur10e_control/environment/ament_prefix_path.dsv
+/home/levin/Semi-Automated-Programming-of-Industrial-Robotic-Systems-Using-Large-Language-Models/install/ur10e_control/share/ur10e_control/environment/path.sh
+/home/levin/Semi-Automated-Programming-of-Industrial-Robotic-Systems-Using-Large-Language-Models/install/ur10e_control/share/ur10e_control/environment/path.dsv
+/home/levin/Semi-Automated-Programming-of-Industrial-Robotic-Systems-Using-Large-Language-Models/install/ur10e_control/share/ur10e_control/local_setup.bash
+/home/levin/Semi-Automated-Programming-of-Industrial-Robotic-Systems-Using-Large-Language-Models/install/ur10e_control/share/ur10e_control/local_setup.sh
+/home/levin/Semi-Automated-Programming-of-Industrial-Robotic-Systems-Using-Large-Language-Models/install/ur10e_control/share/ur10e_control/local_setup.zsh
+/home/levin/Semi-Automated-Programming-of-Industrial-Robotic-Systems-Using-Large-Language-Models/install/ur10e_control/share/ur10e_control/local_setup.dsv
+/home/levin/Semi-Automated-Programming-of-Industrial-Robotic-Systems-Using-Large-Language-Models/install/ur10e_control/share/ur10e_control/package.dsv
+/home/levin/Semi-Automated-Programming-of-Industrial-Robotic-Systems-Using-Large-Language-Models/install/ur10e_control/share/ament_index/resource_index/packages/ur10e_control
+/home/levin/Semi-Automated-Programming-of-Industrial-Robotic-Systems-Using-Large-Language-Models/install/ur10e_control/share/ur10e_control/cmake/ur10e_controlConfig.cmake
+/home/levin/Semi-Automated-Programming-of-Industrial-Robotic-Systems-Using-Large-Language-Models/install/ur10e_control/share/ur10e_control/cmake/ur10e_controlConfig-version.cmake
+/home/levin/Semi-Automated-Programming-of-Industrial-Robotic-Systems-Using-Large-Language-Models/install/ur10e_control/share/ur10e_control/package.xml

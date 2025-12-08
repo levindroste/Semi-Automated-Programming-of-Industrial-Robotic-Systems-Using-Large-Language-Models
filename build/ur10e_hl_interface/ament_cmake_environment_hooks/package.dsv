@@ -1,0 +1,4 @@
+source;share/ur10e_hl_interface/local_setup.bash
+source;share/ur10e_hl_interface/local_setup.dsv
+source;share/ur10e_hl_interface/local_setup.sh
+source;share/ur10e_hl_interface/local_setup.zsh
