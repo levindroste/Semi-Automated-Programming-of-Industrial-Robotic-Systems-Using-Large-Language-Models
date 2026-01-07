@@ -435,11 +435,13 @@ bool RobotHLInterfaceSimple::PickAndPlace(const std::string& object_name, const 
     }
   }
 
-  // 3. Attach object to gripper for visualization (both simulation and real robot mode)
-  if (!attachObject(object.id)) {
-    RCLCPP_WARN(this->get_logger(), "Failed to attach object (continuing anyway)");
+  // 3. Attach object to gripper (simulation only - causes planning issues in real robot mode)
+  if (!real_robot_mode_) {
+    if (!attachObject(object.id)) {
+      RCLCPP_WARN(this->get_logger(), "Failed to attach object (continuing anyway)");
+    }
+    std::this_thread::sleep_for(100ms);
   }
-  std::this_thread::sleep_for(100ms);
 
   // 4. Move up linearly to approach position
   // For real robot: skip simulation planning if below min Z, but still send MOVEZ
@@ -511,11 +513,13 @@ bool RobotHLInterfaceSimple::PickAndPlace(const std::string& object_name, const 
     }
   }
 
-  // 8. Detach object from gripper for visualization (both simulation and real robot mode)
-  if (!detachObject(object.id)) {
-    RCLCPP_WARN(this->get_logger(), "Failed to detach object (continuing anyway)");
+  // 8. Detach object from gripper (simulation only - causes planning issues in real robot mode)
+  if (!real_robot_mode_) {
+    if (!detachObject(object.id)) {
+      RCLCPP_WARN(this->get_logger(), "Failed to detach object (continuing anyway)");
+    }
+    std::this_thread::sleep_for(100ms);
   }
-  std::this_thread::sleep_for(100ms);
 
   // 9. Update object location and stack level in memory
   object.stack_level = level;
@@ -1592,8 +1596,11 @@ bool RobotHLInterfaceSimple::attachObject(const std::string& object_id)
   // This handles removing from world and adding as attached correctly
   move_group_->attachObject(object_id, eef_link_, gripper_touch_links_);
 
-  // Wait for attachment to propagate
-  std::this_thread::sleep_for(150ms);  // Reduced from 300ms
+  // Wait for attachment to propagate (increased for planning scene sync)
+  std::this_thread::sleep_for(500ms);
+
+  // Force planning scene state refresh to ensure consistency
+  move_group_->getCurrentState(5.0);
 
   RCLCPP_INFO(this->get_logger(), "Successfully attached %s", object_id.c_str());
   return true;
@@ -1607,8 +1614,11 @@ bool RobotHLInterfaceSimple::detachObject(const std::string& object_id)
   // This returns the object to the world at its current position
   move_group_->detachObject(object_id);
 
-  // Wait for detachment to propagate
-  std::this_thread::sleep_for(150ms);  // Reduced from 300ms
+  // Wait for detachment to propagate (increased for planning scene sync)
+  std::this_thread::sleep_for(500ms);
+
+  // Force planning scene state refresh to ensure consistency
+  move_group_->getCurrentState(5.0);
 
   RCLCPP_INFO(this->get_logger(), "Successfully detached %s", object_id.c_str());
   return true;

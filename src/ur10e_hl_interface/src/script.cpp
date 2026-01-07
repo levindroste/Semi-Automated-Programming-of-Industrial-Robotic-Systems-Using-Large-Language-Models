@@ -1,7 +1,5 @@
 #include <rclcpp/rclcpp.hpp>
 #include "ur10e_hl_interface/robot_hl_interface_simple.hpp"
-#include <vector>
-#include <string>
 
 int main(int argc, char** argv)
 {
@@ -9,8 +7,7 @@ int main(int argc, char** argv)
 
     auto robot = std::make_shared<RobotHLInterfaceSimple>();
 
-    RCLCPP_INFO(robot->get_logger(), "=== FULL GRID COVERAGE TEST ===");
-    RCLCPP_INFO(robot->get_logger(), "Moving one cube to every grid square (A1-E5)");
+    RCLCPP_INFO(robot->get_logger(), "Starte Aufgabenausführung...");
 
     // Initialize MoveIt and load AML configuration
     if (!robot->initialize()) {
@@ -19,47 +16,63 @@ int main(int argc, char** argv)
         return 1;
     }
 
-    // Clear and create single cube at A1
+    // === PHASE 1: ZELLKONFIGURATION (Instant-Operationen, keine Roboterbewegung) ===
+
+    RCLCPP_INFO(robot->get_logger(), "Phase 1: Zellkonfiguration wird vorbereitet...");
+
+    // Entferne alle existierenden Würfel
     robot->ClearAllCubes();
-    std::string cube = robot->AddCube("A1", "Rot", 0);
-    RCLCPP_INFO(robot->get_logger(), "Created: %s (Red at A1)", cube.c_str());
+    RCLCPP_INFO(robot->get_logger(), "Alle Würfel wurden entfernt");
 
-    // Define all grid squares in order (row by row)
-    std::vector<std::string> grid_squares = {
-        "A1", "B1", "C1", "D1", "E1",
-        "A2", "B2", "C2", "D2", "E2",
-        "A3", "B3", "C3", "D3", "E3",
-        "A4", "B4", "C4", "D4", "E4",
-        "A5", "B5", "C5", "D5", "E5"
-    };
+    // Erstelle roten Würfel bei C5
+    std::string cube_rot = robot->AddCube("C5", "Rot", 0);
+    RCLCPP_INFO(robot->get_logger(), "Roter Würfel erstellt: %s bei C5", cube_rot.c_str());
 
-    int total = grid_squares.size();
-    int current = 1;
+    // Erstelle gelben Würfel bei B5
+    std::string cube_gelb = robot->AddCube("B5", "Gelb", 0);
+    RCLCPP_INFO(robot->get_logger(), "Gelber Würfel erstellt: %s bei B5", cube_gelb.c_str());
 
-    // Move cube to each square (starting from second since cube is at A1)
-    for (size_t i = 1; i < grid_squares.size(); i++) {
-        const std::string& target = grid_squares[i];
+    // Erstelle grünen Würfel bei A5
+    std::string cube_gruen = robot->AddCube("A5", "Gruen", 0);
+    RCLCPP_INFO(robot->get_logger(), "Grüner Würfel erstellt: %s bei A5", cube_gruen.c_str());
 
-        RCLCPP_INFO(robot->get_logger(), "=== Move %d/%d: %s -> %s ===",
-                    current, total - 1, grid_squares[i-1].c_str(), target.c_str());
+    RCLCPP_INFO(robot->get_logger(), "Phase 1 abgeschlossen: Drei Würfel in Reihe 5 platziert");
 
-        if (!robot->PickAndPlace(cube, target, 0)) {
-            RCLCPP_ERROR(robot->get_logger(), "Failed to move cube to %s!", target.c_str());
-            rclcpp::shutdown();
-            return 1;
-        }
+    // === PHASE 2: ROBOTER-AUFGABE (Physische Bewegungen) ===
 
-        current++;
+    RCLCPP_INFO(robot->get_logger(), "Phase 2: Baue Ampel bei A2...");
+
+    // Platziere roten Würfel als Basis bei A2 (Level 0)
+    RCLCPP_INFO(robot->get_logger(), "Platziere roten Würfel (Basis) bei A2...");
+    if (!robot->PickAndPlace(cube_rot, "A2", 0)) {
+        RCLCPP_ERROR(robot->get_logger(), "Fehler beim Platzieren des roten Würfels bei A2!");
+        return 1;
     }
+    RCLCPP_INFO(robot->get_logger(), "Roter Würfel erfolgreich bei A2 platziert");
 
-    RCLCPP_INFO(robot->get_logger(), "=== FULL GRID COVERAGE COMPLETE ===");
-    RCLCPP_INFO(robot->get_logger(), "Cube visited all 25 grid squares!");
-    RCLCPP_INFO(robot->get_logger(), "Final position: E5");
+    // Stapel gelben Würfel auf roten Würfel bei A2 (Level 1)
+    RCLCPP_INFO(robot->get_logger(), "Stapel gelben Würfel auf roten Würfel...");
+    if (!robot->PickAndPlace(cube_gelb, "A2", 1)) {
+        RCLCPP_ERROR(robot->get_logger(), "Fehler beim Stapeln des gelben Würfels auf Level 1!");
+        return 1;
+    }
+    RCLCPP_INFO(robot->get_logger(), "Gelber Würfel erfolgreich auf Level 1 gestapelt");
 
-    // Return to home
+    // Stapel grünen Würfel auf gelben Würfel bei A2 (Level 2)
+    RCLCPP_INFO(robot->get_logger(), "Stapel grünen Würfel auf gelben Würfel...");
+    if (!robot->PickAndPlace(cube_gruen, "A2", 2)) {
+        RCLCPP_ERROR(robot->get_logger(), "Fehler beim Stapeln des grünen Würfels auf Level 2!");
+        return 1;
+    }
+    RCLCPP_INFO(robot->get_logger(), "Grüner Würfel erfolgreich auf Level 2 gestapelt");
+
+    RCLCPP_INFO(robot->get_logger(), "Ampel erfolgreich bei A2 gebaut (Rot-Gelb-Grün)");
+
+    // Fahre zur Home-Position zurück
+    RCLCPP_INFO(robot->get_logger(), "Fahre zur Home-Position...");
     robot->moveToHome();
 
-    RCLCPP_INFO(robot->get_logger(), "Test erfolgreich abgeschlossen!");
+    RCLCPP_INFO(robot->get_logger(), "Aufgabe erfolgreich abgeschlossen!");
     rclcpp::shutdown();
     return 0;
 }
