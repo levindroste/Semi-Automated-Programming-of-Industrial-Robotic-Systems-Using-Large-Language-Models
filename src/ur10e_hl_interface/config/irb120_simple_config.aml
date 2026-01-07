@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<CAEXFile xmlns="http://www.dke.de/CAEX" FileName="irb120_simple_config.aml" SchemaVersion="3.0">
+    <InstanceHierarchy Name="Robot-Config">
+        <InternalElement Name="IRB120">
+            <Attribute Name="ApproachHeight">
+                <Value>0.05</Value>
+            </Attribute>
+            <Attribute Name="VelocityScaling">
+                <Value>0.3</Value>
+            </Attribute>
+            <Attribute Name="AccelerationScaling">
+                <Value>0.3</Value>
+            </Attribute>
+            <Attribute Name="PlannerID">
+                <Value>RRTConnect</Value>
+            </Attribute>
+            <Attribute Name="GripperOrientation">
+                <Value>1.0,0.0,0.0,0.0</Value>
+            </Attribute>
+        </InternalElement>
+    </InstanceHierarchy>
+    <InstanceHierarchy Name="Grid-Config">
+        <InternalElement Name="GridParameters">
+            <Attribute Name="A1SpawnPosition">
+                <Value>0.5021,-0.0812,0.0</Value>
+            </Attribute>
+            <Attribute Name="GridSpacing">
+                <Value>0.0474</Value>
+            </Attribute>
+            <Attribute Name="GripOffset">
+                <Value>0.016,0.015,0.0777</Value>
+            </Attribute>
+        </InternalElement>
+        <InternalElement Name="SpecialPositions">
+            <InternalElement Name="X">
+                <Attribute Name="Position">
+                    <Value>0.0312,0.3020,0.1019</Value>
+                </Attribute>
+            </InternalElement>
+        </InternalElement>
+    </InstanceHierarchy>
+    <InstanceHierarchy Name="Objects">
+        <InternalElement Name="cube_0" ID="cube_0">
+            <Attribute Name="Location" AttributeDataType="xs:string">
+                <Value>D3</Value>
+            </Attribute>
+            <Attribute Name="Dimensions" AttributeDataType="xs:string" Unit="m">
+                <Value>0.030,0.030,0.030</Value>
+            </Attribute>
+            <Attribute Name="Color" AttributeDataType="xs:string">
+                <Value>Rot</Value>
+            </Attribute>
+        </InternalElement>
+    </InstanceHierarchy>
+</CAEXFile>

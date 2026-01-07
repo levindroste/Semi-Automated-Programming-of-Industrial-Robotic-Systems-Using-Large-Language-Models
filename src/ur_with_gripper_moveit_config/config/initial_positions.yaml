@@ -1,0 +1,10 @@
+# Default initial positions for IRB 120's ros2_control fake system
+
+initial_positions:
+  left_finger_joint: 0
+  irb120_joint_1: 0
+  irb120_joint_2: 0
+  irb120_joint_3: 0
+  irb120_joint_4: 0
+  irb120_joint_5: 0
+  irb120_joint_6: 0

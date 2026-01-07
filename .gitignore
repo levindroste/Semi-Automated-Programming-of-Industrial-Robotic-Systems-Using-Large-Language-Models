@@ -1,0 +1,98 @@
+# =========================
+# ROS2 / Colcon Build Artifacts
+# =========================
+build/
+install/
+log/
+
+# =========================
+# Python
+# =========================
+# Virtual environments
+venv/
+.venv/
+env/
+.Python
+
+# Byte-compiled / optimized / DLL files
+__pycache__/
+*.py[cod]
+*$py.class
+*.pyo
+*.pyd
+
+# Distribution / packaging
+*.egg
+*.egg-info/
+dist/
+eggs/
+*.manifest
+*.spec
+
+# =========================
+# Environment Variables (secrets)
+# =========================
+.env
+.env.local
+.env.*.local
+
+# =========================
+# IDE / Editor
+# =========================
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+*.sublime-workspace
+*.sublime-project
+
+# =========================
+# OS Generated Files
+# =========================
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+
+# =========================
+# Claude Code / MCP Local Config
+# =========================
+.claude/
+.mcp.json
+claude.md
+
+# =========================
+# Local documentation / manuals (not source code)
+# =========================
+*.txt
+!README.txt
+
+# =========================
+# Local setup / internal docs
+# =========================
+instructions.md
+MCP_SETUP.md
+ROS_MCP_SETUP.md
+
+# =========================
+# Test scripts (local only)
+# =========================
+robot_client.py
+robot_test_move.py
+
+# =========================
+# Old / unused files
+# =========================
+# Old source files
+src/ur10e_hl_interface/src/clipfix_bewegung.cpp
+src/ur10e_hl_interface/src/robot_hl_interface.cpp
+src/ur10e_hl_interface/src/add_objects_node.cpp
+src/ur10e_hl_interface/include/ur10e_hl_interface/robot_hl_interface.hpp
+
+# Alt/backup folders
+**/Alt/
+**/Alt-Ordner/

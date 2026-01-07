@@ -1,0 +1,30 @@
+<?xml version="1.0"?>
+<robot xmlns:xacro="http://ros.org/wiki/xacro">
+  <xacro:include filename="$(find ur_with_gripper)/urdf/irb120_macro.urdf.xacro" />
+  <xacro:include filename="$(find custom_gripper)/urdf/gripper_macro.xacro" />
+
+
+<xacro:macro name="irb120_with_gripper"
+  params="
+  parent
+  *origin
+  simulated
+  ">
+  <!-- This will create the IRB 120 robot -->
+  <!-- Robot base sits on top of mounting_block (Z=0.0325 = half of 65mm block height) -->
+  <xacro:irb120_robot
+    parent="${parent}"
+    simulated="${simulated}"
+  >
+    <origin xyz="0 0 0.0325" rpy="0 0 0" />
+  </xacro:irb120_robot>
+
+  <!-- This will create the gripper attached to IRB 120 tool0 -->
+  <!-- Rotated 180° around Y-axis so fingers point away from robot -->
+  <xacro:gripper parent="irb120_tool0" simulated="${simulated}">
+    <origin xyz="0 0 0.01" rpy="0 3.14159 0" />
+  </xacro:gripper>
+</xacro:macro>
+
+
+</robot>

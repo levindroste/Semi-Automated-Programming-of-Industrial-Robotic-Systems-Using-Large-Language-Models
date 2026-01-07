@@ -1,0 +1,270 @@
+<?xml version="1.0" encoding="utf-8"?>
+<CAEXFile SchemaVersion="3.0" FileName="real_robot_cell.aml" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://www.dke.de/CAEX" xsi:schemaLocation="http://www.dke.de/CAEX CAEX_ClassModel_V.3.0.xsd">
+  <SuperiorStandardVersion>AutomationML 2.1</SuperiorStandardVersion>
+  <SourceDocumentInformation OriginName="Claude Code" OriginID="real-robot-cell" OriginVersion="1.0" LastWritingDateTime="2025-01-01T00:00:00" OriginProjectID="IRB120-Real" OriginProjectTitle="Real Robot Cell Configuration" />
+
+  <!--
+    ============================================================================
+    REAL ROBOT CELL CONFIGURATION
+    ============================================================================
+
+    This file defines collision objects for the real ABB IRB 120 robot cell.
+    Edit the positions and add objects to match your actual cell layout.
+
+    COORDINATE SYSTEM:
+    - Origin (0,0,0) is at the robot base
+    - X: forward (away from robot)
+    - Y: left
+    - Z: up
+
+    UNITS:
+    - Positions in meters (m)
+    - Orientations as quaternions (x, y, z, w)
+
+    TO ADD A NEW OBJECT:
+    1. Copy one of the InternalElement blocks below
+    2. Change the Name and ID
+    3. Set Position, Orientierung (orientation), and dimensions
+    4. Optionally add a Mesh-Datei for visual representation
+    ============================================================================
+  -->
+
+  <InstanceHierarchy Name="Roboter-Parameter" ID="robot-params">
+    <Version>1.0.0</Version>
+    <InternalElement Name="Greif-Parameter" ID="grasp-params">
+      <Attribute Name="Approach-Höhe" AttributeDataType="xs:double" Unit="mm">
+        <Value>100</Value>
+      </Attribute>
+      <Attribute Name="Standard-Pick-Orientierung" AttributeDataType="xs:string" Unit="quaternion">
+        <Value>1.0,0.0,0.0,0.0</Value>
+      </Attribute>
+      <Attribute Name="Standard-Place-Orientierung" AttributeDataType="xs:string" Unit="quaternion">
+        <Value>0.0,0.0,0.707,0.707</Value>
+      </Attribute>
+    </InternalElement>
+  </InstanceHierarchy>
+
+  <InstanceHierarchy Name="Geometrie-Bibliothek" ID="geometry-lib">
+    <Version>1.0.0</Version>
+    <InternalElement Name="Bauteile" ID="components">
+
+      <!--
+        ========================================
+        ROBOT MOUNTING BLOCK
+        ========================================
+        65mm tall block matching the IRB 120 base footprint (~180mm x 180mm)
+      -->
+      <InternalElement Name="Montageblock" ID="mounting-block-id" RefBaseSystemUnitPath="Bauteile/Umgebung">
+        <Attribute Name="Basics" AttributeDataType="xs:string">
+          <Attribute Name="Name" AttributeDataType="xs:string">
+            <Value>Montageblock</Value>
+          </Attribute>
+          <Attribute Name="Beschreibung" AttributeDataType="xs:string">
+            <Value>Robot mounting block - 65mm height, matching robot base footprint</Value>
+          </Attribute>
+          <Attribute Name="Farbe" AttributeDataType="xs:string">
+            <Value>Grau</Value>
+          </Attribute>
+          <Attribute Name="IsStatic" AttributeDataType="xs:boolean">
+            <Value>true</Value>
+          </Attribute>
+        </Attribute>
+        <Attribute Name="Geometrie" AttributeDataType="xs:string">
+          <!-- Block dimensions: 0.18m x 0.18m x 0.065m (matches IRB 120 base) -->
+          <Attribute Name="Dimensionen" AttributeDataType="xs:string" Unit="m">
+            <Value>0.18,0.18,0.065</Value>
+          </Attribute>
+        </Attribute>
+        <Attribute Name="Spawn-Daten" AttributeDataType="xs:string">
+          <!-- Position: centered under robot, Z=-0.0325 means top at robot base (Z=0) -->
+          <Attribute Name="Position" AttributeDataType="xs:string" Unit="m">
+            <Value>0.0,0.0,-0.0325</Value>
+          </Attribute>
+          <Attribute Name="Orientierung" AttributeDataType="xs:string" Unit="quaternion">
+            <Value>0.0,0.0,0.0,1.0</Value>
+          </Attribute>
+          <Attribute Name="Mesh-Datei" AttributeDataType="xs:string">
+            <Value></Value>
+          </Attribute>
+          <Attribute Name="Primitive" AttributeDataType="xs:string">
+            <Value>box</Value>
+          </Attribute>
+        </Attribute>
+      </InternalElement>
+
+      <!--
+        ========================================
+        MESH OBJECT
+        ========================================
+        Large mesh placed 20cm in front of robot on the floor
+      -->
+      <InternalElement Name="Mesh" ID="mesh-id" RefBaseSystemUnitPath="Bauteile/Umgebung">
+        <Attribute Name="Basics" AttributeDataType="xs:string">
+          <Attribute Name="Name" AttributeDataType="xs:string">
+            <Value>Mesh</Value>
+          </Attribute>
+          <Attribute Name="Beschreibung" AttributeDataType="xs:string">
+            <Value>Main mesh object - placed in front of robot</Value>
+          </Attribute>
+          <Attribute Name="Farbe" AttributeDataType="xs:string">
+            <Value>Grau</Value>
+          </Attribute>
+          <Attribute Name="IsStatic" AttributeDataType="xs:boolean">
+            <Value>true</Value>
+          </Attribute>
+        </Attribute>
+        <Attribute Name="Spawn-Daten" AttributeDataType="xs:string">
+          <Attribute Name="Position" AttributeDataType="xs:string" Unit="m">
+            <Value>0.2,0.0,0.0</Value>
+          </Attribute>
+          <Attribute Name="Orientierung" AttributeDataType="xs:string" Unit="quaternion">
+            <Value>0.0,0.0,0.0,1.0</Value>
+          </Attribute>
+          <Attribute Name="Mesh-Datei" AttributeDataType="xs:string">
+            <Value>Mesh.stl</Value>
+          </Attribute>
+        </Attribute>
+      </InternalElement>
+
+      <!--
+        ========================================
+        WÜRFEL (CUBES) - 4 colored cubes
+        ========================================
+        30mm cubes placed next to the mesh
+      -->
+      <InternalElement Name="Wuerfel_Schwarz" ID="wuerfel-schwarz-id" RefBaseSystemUnitPath="Bauteile/Umgebung">
+        <Attribute Name="Basics" AttributeDataType="xs:string">
+          <Attribute Name="Name" AttributeDataType="xs:string">
+            <Value>Wuerfel_Schwarz</Value>
+          </Attribute>
+          <Attribute Name="Beschreibung" AttributeDataType="xs:string">
+            <Value>Black cube - 30mm</Value>
+          </Attribute>
+          <Attribute Name="Farbe" AttributeDataType="xs:string">
+            <Value>Schwarz</Value>
+          </Attribute>
+          <Attribute Name="IsStatic" AttributeDataType="xs:boolean">
+            <Value>false</Value>
+          </Attribute>
+        </Attribute>
+        <Attribute Name="Geometrie" AttributeDataType="xs:string">
+          <Attribute Name="Dimensionen" AttributeDataType="xs:string" Unit="mm">
+            <Value>30,30,30</Value>
+          </Attribute>
+        </Attribute>
+        <Attribute Name="Spawn-Daten" AttributeDataType="xs:string">
+          <Attribute Name="Position" AttributeDataType="xs:string" Unit="m">
+            <Value>0.2,0.15,0.015</Value>
+          </Attribute>
+          <Attribute Name="Orientierung" AttributeDataType="xs:string" Unit="quaternion">
+            <Value>0.0,0.0,0.0,1.0</Value>
+          </Attribute>
+          <Attribute Name="Mesh-Datei" AttributeDataType="xs:string">
+            <Value>Wuerfel.stl</Value>
+          </Attribute>
+        </Attribute>
+      </InternalElement>
+
+      <InternalElement Name="Wuerfel_Rot" ID="wuerfel-rot-id" RefBaseSystemUnitPath="Bauteile/Umgebung">
+        <Attribute Name="Basics" AttributeDataType="xs:string">
+          <Attribute Name="Name" AttributeDataType="xs:string">
+            <Value>Wuerfel_Rot</Value>
+          </Attribute>
+          <Attribute Name="Beschreibung" AttributeDataType="xs:string">
+            <Value>Red cube - 30mm</Value>
+          </Attribute>
+          <Attribute Name="Farbe" AttributeDataType="xs:string">
+            <Value>Rot</Value>
+          </Attribute>
+          <Attribute Name="IsStatic" AttributeDataType="xs:boolean">
+            <Value>false</Value>
+          </Attribute>
+        </Attribute>
+        <Attribute Name="Geometrie" AttributeDataType="xs:string">
+          <Attribute Name="Dimensionen" AttributeDataType="xs:string" Unit="mm">
+            <Value>30,30,30</Value>
+          </Attribute>
+        </Attribute>
+        <Attribute Name="Spawn-Daten" AttributeDataType="xs:string">
+          <Attribute Name="Position" AttributeDataType="xs:string" Unit="m">
+            <Value>0.2,0.20,0.015</Value>
+          </Attribute>
+          <Attribute Name="Orientierung" AttributeDataType="xs:string" Unit="quaternion">
+            <Value>0.0,0.0,0.0,1.0</Value>
+          </Attribute>
+          <Attribute Name="Mesh-Datei" AttributeDataType="xs:string">
+            <Value>Wuerfel.stl</Value>
+          </Attribute>
+        </Attribute>
+      </InternalElement>
+
+      <InternalElement Name="Wuerfel_Gruen" ID="wuerfel-gruen-id" RefBaseSystemUnitPath="Bauteile/Umgebung">
+        <Attribute Name="Basics" AttributeDataType="xs:string">
+          <Attribute Name="Name" AttributeDataType="xs:string">
+            <Value>Wuerfel_Gruen</Value>
+          </Attribute>
+          <Attribute Name="Beschreibung" AttributeDataType="xs:string">
+            <Value>Green cube - 30mm</Value>
+          </Attribute>
+          <Attribute Name="Farbe" AttributeDataType="xs:string">
+            <Value>Gruen</Value>
+          </Attribute>
+          <Attribute Name="IsStatic" AttributeDataType="xs:boolean">
+            <Value>false</Value>
+          </Attribute>
+        </Attribute>
+        <Attribute Name="Geometrie" AttributeDataType="xs:string">
+          <Attribute Name="Dimensionen" AttributeDataType="xs:string" Unit="mm">
+            <Value>30,30,30</Value>
+          </Attribute>
+        </Attribute>
+        <Attribute Name="Spawn-Daten" AttributeDataType="xs:string">
+          <Attribute Name="Position" AttributeDataType="xs:string" Unit="m">
+            <Value>0.2,0.25,0.015</Value>
+          </Attribute>
+          <Attribute Name="Orientierung" AttributeDataType="xs:string" Unit="quaternion">
+            <Value>0.0,0.0,0.0,1.0</Value>
+          </Attribute>
+          <Attribute Name="Mesh-Datei" AttributeDataType="xs:string">
+            <Value>Wuerfel.stl</Value>
+          </Attribute>
+        </Attribute>
+      </InternalElement>
+
+      <InternalElement Name="Wuerfel_Gelb" ID="wuerfel-gelb-id" RefBaseSystemUnitPath="Bauteile/Umgebung">
+        <Attribute Name="Basics" AttributeDataType="xs:string">
+          <Attribute Name="Name" AttributeDataType="xs:string">
+            <Value>Wuerfel_Gelb</Value>
+          </Attribute>
+          <Attribute Name="Beschreibung" AttributeDataType="xs:string">
+            <Value>Yellow cube - 30mm</Value>
+          </Attribute>
+          <Attribute Name="Farbe" AttributeDataType="xs:string">
+            <Value>Gelb</Value>
+          </Attribute>
+          <Attribute Name="IsStatic" AttributeDataType="xs:boolean">
+            <Value>false</Value>
+          </Attribute>
+        </Attribute>
+        <Attribute Name="Geometrie" AttributeDataType="xs:string">
+          <Attribute Name="Dimensionen" AttributeDataType="xs:string" Unit="mm">
+            <Value>30,30,30</Value>
+          </Attribute>
+        </Attribute>
+        <Attribute Name="Spawn-Daten" AttributeDataType="xs:string">
+          <Attribute Name="Position" AttributeDataType="xs:string" Unit="m">
+            <Value>0.2,0.30,0.015</Value>
+          </Attribute>
+          <Attribute Name="Orientierung" AttributeDataType="xs:string" Unit="quaternion">
+            <Value>0.0,0.0,0.0,1.0</Value>
+          </Attribute>
+          <Attribute Name="Mesh-Datei" AttributeDataType="xs:string">
+            <Value>Wuerfel.stl</Value>
+          </Attribute>
+        </Attribute>
+      </InternalElement>
+
+    </InternalElement>
+  </InstanceHierarchy>
+
+</CAEXFile>

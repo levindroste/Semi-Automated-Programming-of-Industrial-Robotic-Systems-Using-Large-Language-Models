@@ -1,0 +1,26 @@
+moveit_setup_assistant_config:
+  urdf:
+    package: ur_with_gripper
+    relative_path: urdf/ur_with_gripper.urdf.xacro
+    xacro_args: ur_type:=ur10e
+  srdf:
+    relative_path: config/ur.srdf
+  package_settings:
+    author_name: El Jawad Alaa
+    author_email: ejalaa12+pro@gmail.com
+    generated_timestamp: 1745969801
+  control_xacro:
+    command:
+      - position
+    state:
+      - position
+      - velocity
+  modified_urdf:
+    xacros:
+      - control_xacro
+  control_xacro:
+    command:
+      - position
+    state:
+      - position
+      - velocity

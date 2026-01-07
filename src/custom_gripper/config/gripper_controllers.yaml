@@ -1,0 +1,18 @@
+controller_manager:
+  ros__parameters:
+    update_rate: 500  # Hz
+    joint_state_broadcaster:
+      type: joint_state_broadcaster/JointStateBroadcaster
+    gripper_controller:
+      type: position_controllers/GripperActionController
+
+gripper_controller:
+  ros__parameters:
+    default: true
+    joint: left_finger_joint
+    use_effort_interface: true
+    use_speed_interface: true
+    max_effort: 5.0
+    allow_stalling: true
+    goal_tolerance: 0.1
+
