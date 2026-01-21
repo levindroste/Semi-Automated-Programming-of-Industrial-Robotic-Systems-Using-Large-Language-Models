@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
-<CAEXFile xmlns="http://www.dke.de/CAEX" FileName="irb120_simple_config.aml" SchemaVersion="3.0">
+<CAEXFile xmlns="http://www.dke.de/CAEX" FileName="wuerfel_config.aml" SchemaVersion="3.0">
     <InstanceHierarchy Name="Robot-Config">
         <InternalElement Name="IRB120">
             <Attribute Name="ApproachHeight">
-                <Value>0.05</Value>
+                <Value>0.10</Value>
             </Attribute>
             <Attribute Name="VelocityScaling">
                 <Value>0.3</Value>
@@ -48,12 +48,12 @@
                 <Value>0.030,0.030,0.030</Value>
             </Attribute>
             <Attribute Name="Color" AttributeDataType="xs:string">
-                <Value>Rot</Value>
+                <Value>Gruen</Value>
             </Attribute>
         </InternalElement>
         <InternalElement Name="cube_1" ID="cube_1">
             <Attribute Name="Location" AttributeDataType="xs:string">
-                <Value>A2:1</Value>
+                <Value>A3</Value>
             </Attribute>
             <Attribute Name="Dimensions" AttributeDataType="xs:string" Unit="m">
                 <Value>0.030,0.030,0.030</Value>
@@ -64,13 +64,24 @@
         </InternalElement>
         <InternalElement Name="cube_2" ID="cube_2">
             <Attribute Name="Location" AttributeDataType="xs:string">
-                <Value>A2:2</Value>
+                <Value>A4</Value>
             </Attribute>
             <Attribute Name="Dimensions" AttributeDataType="xs:string" Unit="m">
                 <Value>0.030,0.030,0.030</Value>
             </Attribute>
             <Attribute Name="Color" AttributeDataType="xs:string">
-                <Value>Gruen</Value>
+                <Value>Rot</Value>
+            </Attribute>
+        </InternalElement>
+        <InternalElement Name="cube_3" ID="cube_3">
+            <Attribute Name="Location" AttributeDataType="xs:string">
+                <Value>A5</Value>
+            </Attribute>
+            <Attribute Name="Dimensions" AttributeDataType="xs:string" Unit="m">
+                <Value>0.030,0.030,0.030</Value>
+            </Attribute>
+            <Attribute Name="Color" AttributeDataType="xs:string">
+                <Value>Schwarz</Value>
             </Attribute>
         </InternalElement>
     </InstanceHierarchy>

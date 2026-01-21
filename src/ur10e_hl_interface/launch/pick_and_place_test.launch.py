@@ -49,7 +49,7 @@ def generate_launch_description():
 
     # Get path to AML config file
     ur10e_hl_interface_dir = get_package_share_directory('ur10e_hl_interface')
-    aml_file = os.path.join(ur10e_hl_interface_dir, 'config', 'irb120_simple_config.aml')
+    aml_file = os.path.join(ur10e_hl_interface_dir, 'config', 'wuerfel_config.aml')
 
     # Pick and place test node
     pick_and_place_test_node = Node(

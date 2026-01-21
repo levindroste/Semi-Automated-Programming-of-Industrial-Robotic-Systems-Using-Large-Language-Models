@@ -48,13 +48,16 @@ class AddCollisionObjectsNode(Node):
         # Declare parameters
         self.declare_parameter('mesh_directory', '')
         self.declare_parameter('aml_file', '')
+        self.declare_parameter('cell_mode', 'wuerfel')  # 'wuerfel' or 'klemmen'
         # Note: use_sim_time is automatically declared by ROS, don't redeclare
 
         self.mesh_directory = self.get_parameter('mesh_directory').get_parameter_value().string_value
         self.aml_file = self.get_parameter('aml_file').get_parameter_value().string_value
+        self.cell_mode = self.get_parameter('cell_mode').get_parameter_value().string_value
 
         self.get_logger().info(f'Mesh directory: {self.mesh_directory}')
         self.get_logger().info(f'AML file: {self.aml_file}')
+        self.get_logger().info(f'Cell mode: {self.cell_mode}')
 
         # Callback group for service calls
         self.callback_group = ReentrantCallbackGroup()
@@ -146,27 +149,48 @@ class AddCollisionObjectsNode(Node):
             self.get_logger().error(f'Service call failed: {e}')
 
     def get_objects_to_add(self):
-        """Return list of objects to add from AML file."""
+        """Return list of objects to add based on cell_mode."""
         objects = []
 
-        # Always add the mesh_object (Hutschienen-Halter)
-        objects.append({
-            'name': 'mesh_object',
-            'type': 'mesh',
-            'mesh_file': 'Mesh.stl',
-            'position': [0.2971, -0.0962, 0.0],
-            'orientation': [0.0, 0.0, 0.0, 1.0],
-            'scale': 0.001,
-            'color': 'Grau',
-        })
+        if self.cell_mode == 'wuerfel':
+            # WÜRFEL MODE: Load mesh + cubes from wuerfel_config.aml
+            self.get_logger().info('Loading objects for WÜRFEL mode')
 
-        # Try to load objects from AML file
-        aml_objects = self.parse_aml_objects()
-        if aml_objects:
-            objects.extend(aml_objects)
-            self.get_logger().info(f'Loaded {len(aml_objects)} objects from AML file')
+            # Add the mesh_object (Hutschienen-Halter)
+            objects.append({
+                'name': 'mesh_object',
+                'type': 'mesh',
+                'mesh_file': 'Mesh.stl',
+                'position': [0.2971, -0.0962, 0.0],
+                'orientation': [0.0, 0.0, 0.0, 1.0],
+                'scale': 0.001,
+                'color': 'Grau',
+            })
+
+            # Load cubes from AML file
+            aml_objects = self.parse_aml_objects()
+            if aml_objects:
+                objects.extend(aml_objects)
+                self.get_logger().info(f'Loaded {len(aml_objects)} cubes from AML file')
+
+        elif self.cell_mode == 'klemmen':
+            # KLEMMEN MODE: Load hollow Kartons and Klemmen from klemmen_config.aml
+            self.get_logger().info('Loading objects for KLEMMEN mode')
+
+            # Load hollow Karton boxes
+            karton_objects = self.parse_kartons_from_aml()
+            if karton_objects:
+                objects.extend(karton_objects)
+                self.get_logger().info(f'Loaded {len(karton_objects)} Karton parts from klemmen_config.aml')
+
+            # Load Klemmen as collision objects
+            klemmen_objects = self.parse_klemmen_from_aml()
+            if klemmen_objects:
+                objects.extend(klemmen_objects)
+                self.get_logger().info(f'Loaded {len(klemmen_objects)} Klemmen from klemmen_config.aml')
+
         else:
-            self.get_logger().warn('No objects found in AML file or AML parsing failed')
+            self.get_logger().warn(f'Unknown cell_mode: {self.cell_mode}, loading nothing')
 
         return objects
 
@@ -178,7 +202,7 @@ class AddCollisionObjectsNode(Node):
             # Default path
             aml_path = os.path.expanduser(
                 '~/Semi-Automated-Programming-of-Industrial-Robotic-Systems-Using-Large-Language-Models'
-                '/src/ur10e_hl_interface/config/irb120_simple_config.aml'
+                '/src/ur10e_hl_interface/config/wuerfel_config.aml'
             )
 
         if not os.path.exists(aml_path):
@@ -353,6 +377,225 @@ class AddCollisionObjectsNode(Node):
                         'scale': 0.001,
                         'color': color,
                     })
+
+        return objects
+
+    def parse_kartons_from_aml(self):
+        """Parse Kartons from klemmen_config.aml and return hollow box objects (bottom + 4 walls)."""
+        objects = []
+
+        # Path to klemmen_config.aml
+        klemmen_aml_path = os.path.expanduser(
+            '~/Semi-Automated-Programming-of-Industrial-Robotic-Systems-Using-Large-Language-Models'
+            '/src/ur10e_hl_interface/config/klemmen_config.aml'
+        )
+
+        if not os.path.exists(klemmen_aml_path):
+            self.get_logger().info(f'Klemmen config not found: {klemmen_aml_path}')
+            return []
+
+        # Wall thickness in meters
+        WALL_THICKNESS = 0.003  # 3mm
+
+        try:
+            tree = ET.parse(klemmen_aml_path)
+            root = tree.getroot()
+            ns = {'aml': 'http://www.dke.de/CAEX'}
+
+            # Find Kartons InstanceHierarchy
+            for hierarchy in root.findall('.//aml:InstanceHierarchy', ns):
+                if hierarchy.get('Name') == 'Kartons':
+                    for elem in hierarchy.findall('aml:InternalElement', ns):
+                        name = elem.get('Name')
+                        if not name:
+                            continue
+
+                        # Get attributes
+                        spawn_position = None
+                        dimensions = [0.2, 0.1, 0.08]  # Default: 200mm x 100mm x 80mm
+
+                        for attr in elem.findall('aml:Attribute', ns):
+                            attr_name = attr.get('Name')
+                            value_elem = attr.find('aml:Value', ns)
+                            if value_elem is None or not value_elem.text:
+                                continue
+
+                            if attr_name == 'SpawnPosition':
+                                try:
+                                    parts = value_elem.text.split(',')
+                                    if len(parts) >= 3:
+                                        spawn_position = [float(p) for p in parts[:3]]
+                                except ValueError:
+                                    pass
+                            elif attr_name == 'Dimensions':
+                                try:
+                                    parts = value_elem.text.split(',')
+                                    if len(parts) >= 3:
+                                        dimensions = [float(p) for p in parts[:3]]
+                                except ValueError:
+                                    pass
+
+                        if spawn_position:
+                            # Create hollow box: bottom + 4 walls
+                            # spawn_position is the center of the box
+                            cx, cy, cz = spawn_position
+                            length, width, height = dimensions  # X, Y, Z dimensions
+                            half_l, half_w, half_h = length/2, width/2, height/2
+                            wt = WALL_THICKNESS
+                            half_wt = wt / 2
+
+                            self.get_logger().info(f'Karton {name}: pos={spawn_position}, dim={dimensions} (hollow)')
+
+                            # Bottom plate
+                            objects.append({
+                                'name': f'{name}_bottom',
+                                'type': 'box',
+                                'position': [cx, cy, cz - half_h + half_wt],
+                                'orientation': [0.0, 0.0, 0.0, 1.0],
+                                'dimensions': [length, width, wt],
+                                'color': 'Grau',
+                            })
+
+                            # Front wall (X+)
+                            objects.append({
+                                'name': f'{name}_front',
+                                'type': 'box',
+                                'position': [cx + half_l - half_wt, cy, cz],
+                                'orientation': [0.0, 0.0, 0.0, 1.0],
+                                'dimensions': [wt, width, height],
+                                'color': 'Grau',
+                            })
+
+                            # Back wall (X-)
+                            objects.append({
+                                'name': f'{name}_back',
+                                'type': 'box',
+                                'position': [cx - half_l + half_wt, cy, cz],
+                                'orientation': [0.0, 0.0, 0.0, 1.0],
+                                'dimensions': [wt, width, height],
+                                'color': 'Grau',
+                            })
+
+                            # Left wall (Y-)
+                            objects.append({
+                                'name': f'{name}_left',
+                                'type': 'box',
+                                'position': [cx, cy - half_w + half_wt, cz],
+                                'orientation': [0.0, 0.0, 0.0, 1.0],
+                                'dimensions': [length, wt, height],
+                                'color': 'Grau',
+                            })
+
+                            # Right wall (Y+)
+                            objects.append({
+                                'name': f'{name}_right',
+                                'type': 'box',
+                                'position': [cx, cy + half_w - half_wt, cz],
+                                'orientation': [0.0, 0.0, 0.0, 1.0],
+                                'dimensions': [length, wt, height],
+                                'color': 'Grau',
+                            })
+
+        except ET.ParseError as e:
+            self.get_logger().error(f'Error parsing klemmen_config.aml: {e}')
+        except Exception as e:
+            self.get_logger().error(f'Unexpected error parsing klemmen config: {e}')
+
+        return objects
+
+    def parse_klemmen_from_aml(self):
+        """Parse Klemmen from klemmen_config.aml and create collision objects."""
+        objects = []
+
+        # Path to klemmen_config.aml
+        klemmen_aml_path = os.path.expanduser(
+            '~/Semi-Automated-Programming-of-Industrial-Robotic-Systems-Using-Large-Language-Models'
+            '/src/ur10e_hl_interface/config/klemmen_config.aml'
+        )
+
+        if not os.path.exists(klemmen_aml_path):
+            self.get_logger().info(f'Klemmen config not found: {klemmen_aml_path}')
+            return []
+
+        try:
+            tree = ET.parse(klemmen_aml_path)
+            root = tree.getroot()
+            ns = {'aml': 'http://www.dke.de/CAEX'}
+
+            # Helper function to get attribute value
+            def get_attribute(elem, attr_name):
+                for attr in elem.findall('aml:Attribute', ns):
+                    if attr.get('Name') == attr_name:
+                        value_elem = attr.find('aml:Value', ns)
+                        if value_elem is not None and value_elem.text:
+                            return value_elem.text
+                return None
+
+            # Helper function to parse vector from string "x,y,z"
+            def parse_vector(value_str):
+                if not value_str:
+                    return [0.0, 0.0, 0.0]
+                parts = value_str.split(',')
+                if len(parts) >= 3:
+                    return [float(p) for p in parts[:3]]
+                return [0.0, 0.0, 0.0]
+
+            # Find Klemmen InstanceHierarchy
+            for hierarchy in root.findall('.//aml:InstanceHierarchy', ns):
+                if hierarchy.get('Name') == 'Klemmen':
+                    for klemme_elem in hierarchy.findall('aml:InternalElement', ns):
+                        klemme_name = klemme_elem.get('Name')  # e.g., "Klemme1"
+                        if not klemme_name:
+                            continue
+
+                        # Parse attributes
+                        anzahl_str = get_attribute(klemme_elem, 'Anzahl')
+                        grip_pos_str = get_attribute(klemme_elem, 'GrippingPosition')
+                        x_offset_str = get_attribute(klemme_elem, 'GrippingXOffset')
+
+                        if not all([anzahl_str, grip_pos_str, x_offset_str]):
+                            self.get_logger().warn(f'Klemme {klemme_name} missing required attributes, skipping')
+                            continue
+
+                        anzahl = int(anzahl_str)
+                        grip_pos = parse_vector(grip_pos_str)
+                        x_offset = float(x_offset_str)
+
+                        # Calculate dimensions (user-specified formulas)
+                        length_x = x_offset - 0.003  # XOffset - 3mm
+                        width_y = 0.01              # 10mm
+                        height_z = grip_pos[2] - 0.08  # GripZ - 8cm
+
+                        # Ensure positive dimensions
+                        if height_z <= 0:
+                            self.get_logger().warn(f'Klemme {klemme_name}: calculated height_z={height_z} is non-positive, skipping')
+                            continue
+
+                        self.get_logger().info(f'Klemme {klemme_name}: anzahl={anzahl}, grip_pos={grip_pos}, x_offset={x_offset}')
+                        self.get_logger().info(f'  -> dimensions: [{length_x:.4f}, {width_y:.4f}, {height_z:.4f}]')
+
+                        # Create collision object for each instance
+                        for i in range(anzahl):
+                            obj_name = f"{klemme_name}_{i+1}"
+
+                            # SpawnPosition: GrippingPosition is centered on clamp
+                            spawn_x = grip_pos[0] + (i * x_offset)
+                            spawn_y = grip_pos[1]
+                            spawn_z = height_z / 2  # Center of height
+
+                            objects.append({
+                                'name': obj_name,
+                                'type': 'box',
+                                'dimensions': [length_x, width_y, height_z],
+                                'position': [spawn_x, spawn_y, spawn_z],
+                                'orientation': [0.0, 0.0, 0.0, 1.0],
+                                'color': 'Grau'
+                            })
+
+        except ET.ParseError as e:
+            self.get_logger().error(f'Error parsing klemmen_config.aml for Klemmen: {e}')
+        except Exception as e:
+            self.get_logger().error(f'Unexpected error parsing Klemmen: {e}')
 
         return objects
 

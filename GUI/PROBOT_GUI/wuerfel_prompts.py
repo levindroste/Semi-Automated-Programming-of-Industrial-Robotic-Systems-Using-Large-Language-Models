@@ -1,8 +1,8 @@
-# irb120_prompts.py
-# Prompt generation for IRB 120 robot system
+# wuerfel_prompts.py
+# Prompt generation for IRB 120 robot system - Würfel-Modus (Cube Mode)
 # Uses dynamic AML data for cube positions and colors
 
-from irb120_aml_parser import get_irb120_parser
+from wuerfel_aml_parser import get_wuerfel_parser
 
 
 def generate_level1_prompt(cell_setup_text: str = "", robot_task_text: str = "") -> str:
@@ -14,7 +14,7 @@ def generate_level1_prompt(cell_setup_text: str = "", robot_task_text: str = "")
         cell_setup_text: User description for cell configuration changes (optional)
         robot_task_text: User description for robot task
     """
-    parser = get_irb120_parser()
+    parser = get_wuerfel_parser()
     data = parser.get_prompt_data()
 
     # Determine which modes are active
@@ -115,6 +115,15 @@ Wenn der Benutzer den Roboter bewegen möchte, muss er
 
 """
 
+    # Warning about scene state when cell setup is active
+    current_state_warning = ""
+    if cell_setup_mode:
+        current_state_warning = """
+⚠️ **ACHTUNG: Dies ist der AUSGANGSZUSTAND vor Phase 1!**
+Nach ClearAllCubes() + AddCube() existieren NUR die neuen Würfel.
+Die unten gelisteten Würfel werden in Phase 1 GELÖSCHT und durch neue ersetzt.
+"""
+
     return f"""You are PROBOT Level 1 for the ABB IRB 120 robot system.
 Your task is to analyze user requests and create a detailed step-by-step plan.
 
@@ -146,69 +155,53 @@ When moving stacked cubes:
 2. Use temporary positions for intermediate storage
 3. Then rebuild the stack at the destination from BOTTOM to TOP
 
-**Example: Moving a traffic light from C3 to C4**
-Stack at C3: cube_0 (green, level 0) -> cube_1 (yellow, level 1) -> cube_2 (red, level 2)
+**Example: Moving a stack from x.n to x.n+1**
+Stack at x.n: cube_0 (bottom) -> cube_1 (middle) -> cube_2 (top)
 
 Step 1 - Disassemble (top to bottom):
-1. PickAndPlace("cube_2", "D3", 0)  // Pick red (top), place at temp
-2. PickAndPlace("cube_1", "D4", 0)  // Pick yellow (now top), place at temp
-3. PickAndPlace("cube_0", "C4", 0)  // Pick green (now top), place at destination
+1. PickAndPlace("cube_2", "x+1.n", 0)    // top → temp
+2. PickAndPlace("cube_1", "x+1.n+1", 0)  // middle → temp
+3. PickAndPlace("cube_0", "x.n+1", 0)    // bottom → Ziel
 
 Step 2 - Reassemble (bottom to top):
-4. PickAndPlace("cube_1", "C4", 1)  // Stack yellow on green
-5. PickAndPlace("cube_2", "C4", 2)  // Stack red on yellow
+4. PickAndPlace("cube_1", "x.n+1", 1)    // stack level 1
+5. PickAndPlace("cube_2", "x.n+1", 2)    // stack level 2
 
 **RULE: Before picking a cube, check if it has cubes on top. If yes, move those first!**
 
-=== CRITICAL: GRIPPER CLEARANCE CONSTRAINT ===
+=== BUCHSTABEN UND FORMEN ===
 
-**The gripper is large and requires clearance space in front of each position!**
+**Buchstaben/Formen werden FLACH auf dem Grid gelegt - NICHT gestapelt!**
+Jeder Würfel = eine Grid-Position (level=0)
 
-For any position XN (where N is the row number 2-5):
-- Position X(N-1) MUST be FREE to access XN
-- Example: To pick/place at A4 → A3 must be free
-- Example: To pick/place at B2 → B1 must be free
-- Example: To pick/place at C3 → C2 must be free
+**Buchstabe "L" (4 Würfel):**
+Startpunkt x.n (obere linke Ecke)
+- Stamm vertikal: x.n, x.n+1, x.n+2
+- Fuß horizontal: x+1.n+2
 
-**Row 1 positions (A1, B1, C1, D1, E1) are ALWAYS accessible** - nothing is in front of them.
+**Pfeil (IMMER 6 Würfel: 4 Schaft + 2 Flügel):**
 
-**PLANNING IMPLICATIONS:**
-1. When moving cubes, consider the order to avoid blocking yourself
-2. When building a "traffic light" (Ampel), place from BACK to FRONT:
-   - Place at X3 first, then X2, then X1 (if building toward front)
-3. If position in front is occupied, move that cube first!
+Benutzer gibt Start (x.n) und Ende an.
 
-**Example - Building traffic light at C column:**
-BAD ORDER (will fail):
-1. Place red at C1 ✓
-2. Place yellow at C2 ✗ (C1 has red, blocks gripper!)
+**Horizontaler Pfeil von x.n nach x+3.n:**
+- Schaft: x.n → x+1.n → x+2.n → x+3.n (4 Positionen)
+- Flügel: x+2.n-1, x+2.n+1 (über/unter dem vorletzten Würfel)
+- Spitze zeigt zu x+3.n (Endpunkt)
 
-GOOD ORDER:
-1. Place green at C3 ✓ (C2 free)
-2. Place yellow at C2 ✓ (C1 free)
-3. Place red at C1 ✓ (always accessible)
+**Vertikaler Pfeil von x.n nach x.n+3:**
+- Schaft: x.n → x.n+1 → x.n+2 → x.n+3
+- Flügel: x-1.n+2, x+1.n+2
 
-**Example - Moving cube from A4 when A3 is occupied:**
-1. First move the cube at A3 to a temp position
-2. Then pick from A4
-3. Optionally move A3's cube back if needed
-
-**INITIAL CUBE PLACEMENT BEST PRACTICES (for AddCube):**
-
-When using AddCube() to set up the scene, follow these rules to avoid blocking issues:
-1. **Prefer row 1 positions** (A1, B1, C1, D1, E1) - always accessible
-2. **If using other rows**, ensure cubes don't block each other:
-   - BAD: Green at C4, Yellow at C5 (C4 blocks C5)
-   - GOOD: Yellow at C4, Green at C5 (pick yellow first, then C4 is free for green)
-3. **Plan the pick order** - place cubes so earlier picks free later ones
-4. The system will auto-move blocking cubes, but proper planning is more efficient
+⚠️ **VOR JEDEM PickAndPlace PRÜFEN:**
+1. Ist Zielposition FREI? (Nicht in "Occupied positions" UND nicht durch AddCube belegt)
+2. Nach Phase 1 sind ALLE AddCube-Positionen BELEGT!
 
 === GRID LAYOUT ===
 
 {data['grid_text']}
 
 === CURRENT SCENE STATE ===
-
+{current_state_warning}
 {data['objects_text']}
 
 Occupied positions: {', '.join(data['occupied']) if data['occupied'] else 'None'}
@@ -253,21 +246,25 @@ Note: Use German color names in code (Rot, Gruen, Gelb, etc.)
 AUFGABENVERSTÄNDNIS:
 [Was der Benutzer erreichen möchte]
 
-VALIDIERUNG:
-[Prüfung ob Würfel existieren, Positionen gültig sind]
-
 PLAN:
 Phase 1 - Zellkonfiguration:
-1. ClearAllCubes()  // IMMER zuerst aufrufen!
-2. AddCube(...) für jeden gewünschten Würfel
+1. ClearAllCubes()
+2. AddCube("Position", "Farbe", level) für jeden Würfel
+...
+
+WÜRFEL NACH PHASE 1:
+[Liste ALLE Würfel die nach Phase 1 existieren - NUR diese sind für Phase 2 verfügbar!]
+- cube_0: Position (Farbe)
+- cube_1: Position (Farbe)
 ...
 
 Phase 2 - Roboter-Aufgabe:
-1. [Schritt mit PickAndPlace falls nötig]
+[Verwende NUR die Würfel aus "WÜRFEL NACH PHASE 1"!]
+1. PickAndPlace("cube_X", "Ziel", level)
 ...
 
 ZUSAMMENFASSUNG:
-[Kurze Beschreibung was passieren wird]
+[Kurze Beschreibung]
 
 === BENUTZERANFRAGE ===
 
@@ -277,13 +274,26 @@ Analysiere diese Anfrage und erstelle einen detaillierten Plan auf Deutsch.
 """
 
 
-def generate_level2_prompt() -> str:
+def generate_level2_prompt(cell_setup_mode: bool = False) -> str:
     """
     Generate Level 2 system prompt for C++ code generation.
-    Includes current scene state for reference.
+
+    Args:
+        cell_setup_mode: If True, indicates that Level 1 used cell setup (ClearAllCubes + AddCube).
+                         In this case, the AML scene state is irrelevant - use Level 1 cube list instead.
     """
-    parser = get_irb120_parser()
+    parser = get_wuerfel_parser()
     data = parser.get_prompt_data()
+
+    # Scene state section depends on whether cell setup was used
+    if cell_setup_mode:
+        scene_state_section = """⚠️ **WICHTIG: Cell Setup wurde in Level 1 verwendet!**
+Die AML-Daten sind IRRELEVANT - nach ClearAllCubes() existieren NUR die neuen AddCube-Würfel.
+
+**Verwende die Würfel aus der Level 1 Analyse (Abschnitt "WÜRFEL NACH PHASE 1")!**
+Diese Würfel wurden durch AddCube() erstellt und haben Namen wie cube_0, cube_1, etc."""
+    else:
+        scene_state_section = data['objects_text']
 
     return f"""You are PROBOT Level 2 for the ABB IRB 120 robot system.
 Generate C++ code based on the Level 1 analysis plan.
@@ -324,12 +334,11 @@ The RobotHLInterfaceSimple class provides these methods:
 
 === CURRENT SCENE STATE (for reference) ===
 
-{data['objects_text']}
+{scene_state_section}
 
 === CODE TEMPLATE ===
 
 Generate ONLY pure C++ code. NO markdown formatting, NO explanations.
-Use this exact structure:
 
 #include <rclcpp/rclcpp.hpp>
 #include "ur10e_hl_interface/robot_hl_interface_simple.hpp"
@@ -337,101 +346,49 @@ Use this exact structure:
 int main(int argc, char** argv)
 {{
     rclcpp::init(argc, argv);
-
     auto robot = std::make_shared<RobotHLInterfaceSimple>();
+    RCLCPP_INFO(robot->get_logger(), "Starte Aufgabenausführung...");
 
-    RCLCPP_INFO(robot->get_logger(), "Starting task execution...");
-
-    // Initialize MoveIt and load AML configuration
     if (!robot->initialize()) {{
-        RCLCPP_ERROR(robot->get_logger(), "Failed to initialize robot interface");
+        RCLCPP_ERROR(robot->get_logger(), "Initialisierung fehlgeschlagen");
         rclcpp::shutdown();
         return 1;
     }}
 
-    // === PHASE 1: CELL SETUP (instant operations, no robot movement) ===
+    // === PHASE 1: CELL SETUP (instant, no robot movement) ===
+    // robot->ClearAllCubes();
+    // std::string cube_0 = robot->AddCube("A1", "Gruen", 0);
 
-    // ALWAYS clear all cubes first, then add the desired ones
-    // robot->ClearAllCubes();  // Remove everything first!
+    // === PHASE 2: ROBOT TASK (physical movement) ===
+    // if (!robot->PickAndPlace("cube_0", "B1", 0)) {{ return 1; }}
 
-    // Add new cubes (on table)
-    // std::string new_cube = robot->AddCube("E1", "Blau");
-    // RCLCPP_INFO(robot->get_logger(), "Created cube: %s", new_cube.c_str());
-
-    // Add stacked cubes (instant, no robot movement) - e.g. traffic light
-    // robot->AddCube("C3", "Gruen", 0); // Green on table (bottom)
-    // robot->AddCube("C3", "Gelb", 1);  // Yellow on green (middle)
-    // robot->AddCube("C3", "Rot", 2);   // Red on yellow (top)
-
-    // === PHASE 2: ROBOT TASK (robot movement) ===
-
-    // Robot picks and places cube on floor (level 0)
-    // if (!robot->PickAndPlace("cube_0", "A3")) {{
-    //     RCLCPP_ERROR(robot->get_logger(), "PickAndPlace failed!");
-    //     return 1;
-    // }}
-
-    // Robot stacks cube on top of another cube (level 1)
-    // if (!robot->PickAndPlace("cube_1", "A3", 1)) {{
-    //     RCLCPP_ERROR(robot->get_logger(), "Stack at level 1 failed!");
-    //     return 1;
-    // }}
-
-    // Robot ejects cube to ramp (zur Rampe/Rutsche)
-    // if (!robot->PickAndPlace("cube_0", "X")) {{
-    //     RCLCPP_ERROR(robot->get_logger(), "Eject to ramp failed!");
-    //     return 1;
-    // }}
-
-    // Move to home when done
     robot->moveToHome();
-
-    RCLCPP_INFO(robot->get_logger(), "Task completed successfully!");
+    RCLCPP_INFO(robot->get_logger(), "Aufgabe erfolgreich abgeschlossen!");
     rclcpp::shutdown();
     return 0;
 }}
 
-=== IMPORTANT RULES ===
+=== BUCHSTABEN/FORMEN FLACH LEGEN ===
 
-1. Generate ONLY the C++ code, no markdown code blocks
-2. Check return values and log errors appropriately
-3. Use the exact object names from the current scene
-4. For new cubes, store the returned name if needed later
-5. End with moveToHome() unless specified otherwise
-6. If the plan is invalid, generate code that logs an error and returns 1
-7. **GRIPPER CLEARANCE**: For positions X2-X5, position X(N-1) must be free!
-   - A4 needs A3 free, B2 needs B1 free, etc.
-   - X1 row positions are always accessible
-   - The system auto-moves blocking cubes, but proper planning is more efficient
-8. **CUBE PLACEMENT ORDER**: When adding cubes, prefer row 1 positions (A1-E1).
-   If placing at higher rows, consider pick order to avoid mutual blocking.
-   Example: If building Ampel from cubes at different positions:
-   - Place cube that will be picked LAST at higher row (e.g., C5)
-   - Place cube that will be picked FIRST at lower row (e.g., C4)
+**Buchstaben/Formen werden FLACH auf dem Grid gelegt - NICHT gestapelt!**
+Alle Würfel auf level=0, unterschiedliche Grid-Positionen.
 
-=== ERROR HANDLING PATTERN ===
+Beispiel "L" (4 Würfel): A1, A2, A3 (Stamm) + B1 (Fuß)
+Pfeil (6 Würfel): 4 Schaft + 2 Flügel (siehe Level 1 Analyse)
 
-For validation failures, generate:
+=== REGELN ===
 
-#include <rclcpp/rclcpp.hpp>
-#include "ur10e_hl_interface/robot_hl_interface_simple.hpp"
-
-int main(int argc, char** argv)
-{{
-    rclcpp::init(argc, argv);
-    auto robot = std::make_shared<RobotHLInterfaceSimple>();
-
-    RCLCPP_ERROR(robot->get_logger(), "Cannot execute task: [specific error]");
-
-    rclcpp::shutdown();
-    return 1;
-}}
+1. NUR C++ Code ausgeben - keine Markdown-Blöcke, keine Erklärungen
+2. Exakte Würfelnamen aus Level 1 Analyse verwenden (cube_0, cube_1, etc.)
+3. PickAndPlace Rückgabewerte prüfen, bei Fehler return 1
+4. Am Ende moveToHome() aufrufen
+5. **CHECKLISTE**: Ist Zielposition FREI? AddCube-Positionen sind sofort BELEGT!
 """
 
 
 def get_scene_summary() -> str:
     """Get a brief summary of the current scene for display"""
-    parser = get_irb120_parser()
+    parser = get_wuerfel_parser()
     objects = parser.get_current_objects()
 
     if not objects:
@@ -446,7 +403,7 @@ def get_scene_summary() -> str:
 
 def get_available_positions() -> str:
     """Get formatted list of available positions"""
-    parser = get_irb120_parser()
+    parser = get_wuerfel_parser()
     free = parser.get_free_positions()
 
     if not free:
@@ -457,7 +414,7 @@ def get_available_positions() -> str:
 
 def reload_scene():
     """Reload scene data from AML"""
-    parser = get_irb120_parser()
+    parser = get_wuerfel_parser()
     parser.reload()
     print("Scene data reloaded from AML")
 

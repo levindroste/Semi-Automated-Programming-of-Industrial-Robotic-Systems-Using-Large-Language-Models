@@ -40,6 +40,9 @@ namespace {
   // Minimum Z height for real robot movements (real robot table is higher than simulation)
   // Calibrated: z=0.18m was 4cm too high, adjusted to 0.15m (1cm higher than 0.14m)
   constexpr double REAL_ROBOT_MIN_Z = 0.15;
+
+  // Lateral approach offset (3mm) to avoid pushing objects when gripping
+  constexpr double LATERAL_APPROACH_OFFSET = 0.003;
 }
 
 shape_msgs::msg::Mesh RobotHLInterfaceSimple::loadSTLMesh(const std::string& filepath, double scale)
@@ -99,6 +102,17 @@ RobotHLInterfaceSimple::RobotHLInterfaceSimple()
   RCLCPP_INFO(this->get_logger(), "use_sim_time set to true");
 
   // Declare parameters (only if not already declared from launch file)
+  // Cell mode and AML file parameters
+  if (!this->has_parameter("cell_mode")) {
+    this->declare_parameter("cell_mode", std::string("wuerfel"));
+  }
+  if (!this->has_parameter("aml_file_wuerfel")) {
+    this->declare_parameter("aml_file_wuerfel", std::string(""));
+  }
+  if (!this->has_parameter("aml_file_klemmen")) {
+    this->declare_parameter("aml_file_klemmen", std::string(""));
+  }
+  // Legacy parameter for backwards compatibility
   if (!this->has_parameter("aml_file")) {
     this->declare_parameter("aml_file", std::string(""));
   }
@@ -135,13 +149,32 @@ bool RobotHLInterfaceSimple::initialize()
 {
   RCLCPP_INFO(this->get_logger(), "Initializing RobotHLInterfaceSimple...");
 
-  // Get AML file path
-  aml_file_path_ = this->get_parameter("aml_file").as_string();
-  if (aml_file_path_.empty()) {
-    // Default path
-    aml_file_path_ = std::string(std::getenv("HOME")) +
-      "/Semi-Automated-Programming-of-Industrial-Robotic-Systems-Using-Large-Language-Models"
-      "/src/ur10e_hl_interface/config/irb120_simple_config.aml";
+  // Get cell mode and select appropriate AML file
+  std::string cell_mode = this->get_parameter("cell_mode").as_string();
+  RCLCPP_INFO(this->get_logger(), "Cell mode: %s", cell_mode.c_str());
+
+  // Try new parameters first, then fall back to legacy aml_file parameter
+  if (cell_mode == "klemmen") {
+    aml_file_path_ = this->get_parameter("aml_file_klemmen").as_string();
+    if (aml_file_path_.empty()) {
+      // Default path for Klemmen-Modus
+      aml_file_path_ = std::string(std::getenv("HOME")) +
+        "/Semi-Automated-Programming-of-Industrial-Robotic-Systems-Using-Large-Language-Models"
+        "/src/ur10e_hl_interface/config/klemmen_config.aml";
+    }
+  } else {
+    // Default: Würfel-Modus
+    aml_file_path_ = this->get_parameter("aml_file_wuerfel").as_string();
+    if (aml_file_path_.empty()) {
+      // Try legacy parameter
+      aml_file_path_ = this->get_parameter("aml_file").as_string();
+    }
+    if (aml_file_path_.empty()) {
+      // Default path for Würfel-Modus
+      aml_file_path_ = std::string(std::getenv("HOME")) +
+        "/Semi-Automated-Programming-of-Industrial-Robotic-Systems-Using-Large-Language-Models"
+        "/src/ur10e_hl_interface/config/wuerfel_config.aml";
+    }
   }
   RCLCPP_INFO(this->get_logger(), "Using AML file: %s", aml_file_path_.c_str());
 
@@ -159,7 +192,7 @@ bool RobotHLInterfaceSimple::initialize()
 
   // Create publisher for planning scene updates (same approach as add_objects_node.cpp)
   scene_pub_ = this->create_publisher<moveit_msgs::msg::PlanningScene>("planning_scene", 10);
-  rclcpp::sleep_for(std::chrono::seconds(1));  // Wait for subscriber connection
+  rclcpp::sleep_for(std::chrono::milliseconds(200));  // Wait for subscriber connection
 
   // Get frame info
   eef_link_ = move_group_->getEndEffectorLink();
@@ -232,10 +265,32 @@ bool RobotHLInterfaceSimple::PickAndPlace(const std::string& object_name, const 
   const double CUBE_GAP = 0.0;      // No gap - cubes stack directly (30mm per level)
   const double BASE_GRIP_Z = grip_offset_.z;  // Grip height from config (default 0.1m)
 
-  // Validate object exists
+  // Resolve object name - support both instance names (Klemme1_1) and type names (Klemme1)
+  std::string resolved_object_name = object_name;
   auto obj_it = objects_.find(object_name);
+
+  // If not found directly and in Klemmen mode, try to resolve type name to first available instance
+  if (obj_it == objects_.end() && klemmen_mode_) {
+    // Check if this is a type name (no underscore followed by number at end)
+    std::string type_prefix = object_name + "_";
+
+    // Find first available instance of this type
+    for (int i = 1; i <= 10; ++i) {  // Max 10 instances per type
+      std::string instance_name = type_prefix + std::to_string(i);
+      auto instance_it = objects_.find(instance_name);
+      if (instance_it != objects_.end()) {
+        resolved_object_name = instance_name;
+        obj_it = instance_it;
+        RCLCPP_INFO(this->get_logger(), "Resolved type '%s' to instance '%s'",
+                    object_name.c_str(), resolved_object_name.c_str());
+        break;
+      }
+    }
+  }
+
+  // Validate object exists
   if (obj_it == objects_.end()) {
-    RCLCPP_ERROR(this->get_logger(), "Object '%s' not found", object_name.c_str());
+    RCLCPP_ERROR(this->get_logger(), "Object '%s' not found (no available instance)", object_name.c_str());
     return false;
   }
   ObjectInfo& object = obj_it->second;
@@ -244,41 +299,6 @@ bool RobotHLInterfaceSimple::PickAndPlace(const std::string& object_name, const 
   if (!isValidGridName(goal_name)) {
     RCLCPP_ERROR(this->get_logger(), "Goal position '%s' not found", goal_name.c_str());
     return false;
-  }
-
-  // Check gripper clearance for place position (position in front must be free)
-  // Note: "X" (eject position) is always accessible
-  if (goal_name != "X" && !isGripperClearanceOk(goal_name)) {
-    // Auto-move blocking cube out of the way
-    std::string blocking_cube = findBlockingCube(goal_name);
-    if (!blocking_cube.empty()) {
-      std::string temp_pos = findFreeRow1Position();
-      if (!temp_pos.empty()) {
-        // Track this position as claimed during recursive auto-move
-        pending_auto_move_destinations_.insert(temp_pos);
-
-        RCLCPP_WARN(this->get_logger(),
-          "Place position %s blocked by %s - moving to %s temporarily",
-          goal_name.c_str(), blocking_cube.c_str(), temp_pos.c_str());
-
-        // Recursively call PickAndPlace to move blocking cube
-        bool success = PickAndPlace(blocking_cube, temp_pos, 0);
-
-        // Release the pending claim (move completed or failed)
-        pending_auto_move_destinations_.erase(temp_pos);
-
-        if (!success) {
-          RCLCPP_ERROR(this->get_logger(), "Failed to move blocking cube %s", blocking_cube.c_str());
-          return false;
-        }
-        // Now clearance should be OK - continue with original operation
-      } else {
-        RCLCPP_ERROR(this->get_logger(),
-          "Cannot place at %s: no free position to move blocking cube",
-          goal_name.c_str());
-        return false;
-      }
-    }
   }
 
   // Check if goal at this level is already occupied (by another object)
@@ -307,70 +327,68 @@ bool RobotHLInterfaceSimple::PickAndPlace(const std::string& object_name, const 
     return false;
   }
 
-  // Check gripper clearance for pick position (position in front must be free)
-  if (!isGripperClearanceOk(pick_base_position)) {
-    // Auto-move blocking cube out of the way
-    std::string blocking_cube = findBlockingCube(pick_base_position);
-    if (!blocking_cube.empty()) {
-      std::string temp_pos = findFreeRow1Position();
-      if (!temp_pos.empty()) {
-        // Track this position as claimed during recursive auto-move
-        pending_auto_move_destinations_.insert(temp_pos);
+  // Calculate pick pose - in Klemmen mode, use stored position directly
+  geometry_msgs::msg::Pose pick_pose;
+  GripDirection pick_dir = GripDirection::FRONT;  // Default, overridden in Würfel mode
+  bool use_lateral_approach = false;  // Disabled for Klemmen mode
 
-        RCLCPP_WARN(this->get_logger(),
-          "Pick position %s blocked by %s - moving to %s temporarily",
-          pick_base_position.c_str(), blocking_cube.c_str(), temp_pos.c_str());
+  auto pick_it = grid_positions_.find(pick_base_position);
+  if (pick_it != grid_positions_.end() && klemmen_mode_) {
+    // Klemmen mode: use stored gripping position and orientation directly
+    pick_pose = pick_it->second;
+    pick_dir = GripDirection::LEFT;  // Klemmen are approached from -Y direction
+    use_lateral_approach = true;     // Enable lateral approach for Klemmen (3mm offset)
+    RCLCPP_INFO(this->get_logger(), "Klemmen mode: using stored pick pose for %s (lateral approach from LEFT)", pick_base_position.c_str());
+  } else {
+    // Würfel mode: calculate position and determine approach direction
+    pick_dir = findGripDirection(pick_base_position);
+    auto pick_orientation = getRotatedOrientation(pick_dir);
+    use_lateral_approach = true;
+    RCLCPP_INFO(this->get_logger(), "Pick direction for %s: %s", pick_base_position.c_str(),
+      pick_dir == GripDirection::FRONT ? "FRONT" :
+      pick_dir == GripDirection::LEFT ? "LEFT" :
+      pick_dir == GripDirection::RIGHT ? "RIGHT" : "BACK");
 
-        // Recursively call PickAndPlace to move blocking cube
-        bool success = PickAndPlace(blocking_cube, temp_pos, 0);
+    pick_pose.position = calculateGripPosition(pick_base_position);
+    pick_pose.orientation = pick_orientation;
 
-        // Release the pending claim (move completed or failed)
-        pending_auto_move_destinations_.erase(temp_pos);
-
-        if (!success) {
-          RCLCPP_ERROR(this->get_logger(), "Failed to move blocking cube %s", blocking_cube.c_str());
-          return false;
-        }
-        // Now clearance should be OK - continue with original operation
-      } else {
-        RCLCPP_ERROR(this->get_logger(),
-          "Cannot pick from %s: no free position to move blocking cube",
-          pick_base_position.c_str());
-        return false;
-      }
+    // Adjust Z for stacked objects (include gap between cubes)
+    if (pick_level > 0) {
+      pick_pose.position.z = BASE_GRIP_Z + (pick_level * (CUBE_HEIGHT + CUBE_GAP));
+      RCLCPP_INFO(this->get_logger(), "Picking from stack level %d: pick_z = %.3f", pick_level, pick_pose.position.z);
     }
   }
 
-  // Calculate pick pose using GRIP position (spawn + offset)
-  geometry_msgs::msg::Pose pick_pose;
-  pick_pose.position = calculateGripPosition(pick_base_position);
-  pick_pose.orientation = config_.standard_orientation;
-
-  // Adjust Z for stacked objects (include gap between cubes)
-  if (pick_level > 0) {
-    pick_pose.position.z = BASE_GRIP_Z + (pick_level * (CUBE_HEIGHT + CUBE_GAP));
-    RCLCPP_INFO(this->get_logger(), "Picking from stack level %d: pick_z = %.3f", pick_level, pick_pose.position.z);
-  }
-
-  // Calculate goal pose using GRIP position
+  // Calculate goal pose
   geometry_msgs::msg::Pose goal_pose;
+  double place_z = 0.0;
   if (goal_name == "X") {
     // Special eject position - use stored position directly
     auto special_it = grid_positions_.find("X");
     if (special_it != grid_positions_.end()) {
       goal_pose = special_it->second;
     }
+    place_z = goal_pose.position.z;
+  } else if (isKarton(goal_name)) {
+    // Karton position - use stored PlacePosition and KlemmenGrippingOrientation
+    auto karton_it = karton_positions_.find(goal_name);
+    if (karton_it != karton_positions_.end()) {
+      goal_pose = karton_it->second;
+      place_z = goal_pose.position.z;
+      RCLCPP_INFO(this->get_logger(), "Karton mode: using stored place pose for %s", goal_name.c_str());
+    }
   } else {
-    goal_pose.position = calculateGripPosition(goal_name);
-    goal_pose.orientation = config_.standard_orientation;
-  }
+    // Würfel mode: determine gripper approach direction for place position
+    GripDirection place_dir = findGripDirection(goal_name);
+    auto place_orientation = getRotatedOrientation(place_dir);
+    RCLCPP_INFO(this->get_logger(), "Place direction for %s: %s", goal_name.c_str(),
+      place_dir == GripDirection::FRONT ? "FRONT" :
+      place_dir == GripDirection::LEFT ? "LEFT" :
+      place_dir == GripDirection::RIGHT ? "RIGHT" : "BACK");
 
-  // For normal grid positions, place at height adjusted by stack level
-  // Each level adds (cube height + gap) to the Z position
-  // Base Z = grip_offset_.z (default 0.1m), then +(0.03 + 0.002) per level
-  // Keep eject position X at its original height (Z=0.35)
-  double place_z = goal_pose.position.z;  // Original grid Z for approach calculation
-  if (goal_name != "X") {
+    goal_pose.position = calculateGripPosition(goal_name);
+    goal_pose.orientation = place_orientation;
+
     // Place at grip height + level offset (including gap between cubes)
     place_z = BASE_GRIP_Z + (level * (CUBE_HEIGHT + CUBE_GAP));
     RCLCPP_INFO(this->get_logger(), "Stack level %d: place_z = %.3f (base %.3f + %d * %.3f)",
@@ -397,6 +415,27 @@ bool RobotHLInterfaceSimple::PickAndPlace(const std::string& object_name, const 
   // 1. Move to approach position above object (single approach - no intermediates)
   geometry_msgs::msg::Pose pick_approach = calculateApproachPose(pick_pose);
 
+  // Apply lateral offset based on grip direction for approach position (Würfel mode only)
+  // This ensures the gripper approaches from the side, not directly above
+  if (use_lateral_approach) {
+    switch (pick_dir) {
+      case GripDirection::FRONT:
+        pick_approach.position.x -= LATERAL_APPROACH_OFFSET;
+        break;
+      case GripDirection::LEFT:
+        pick_approach.position.y -= LATERAL_APPROACH_OFFSET;
+        break;
+      case GripDirection::RIGHT:
+        pick_approach.position.y += LATERAL_APPROACH_OFFSET;
+        break;
+      case GripDirection::BACK:
+        pick_approach.position.x += LATERAL_APPROACH_OFFSET;
+        break;
+    }
+    RCLCPP_INFO(this->get_logger(), "Lateral offset applied: approach at (%.3f, %.3f)",
+                pick_approach.position.x, pick_approach.position.y);
+  }
+
   // Calculate real robot approach based on pick level (for stacking support)
   double real_robot_grip_z = REAL_ROBOT_MIN_Z + (pick_level * (CUBE_HEIGHT + CUBE_GAP));
   double real_robot_approach_z = real_robot_grip_z + config_.approach_height;
@@ -410,10 +449,13 @@ bool RobotHLInterfaceSimple::PickAndPlace(const std::string& object_name, const 
     RCLCPP_ERROR(this->get_logger(), "Failed to move to pick approach position");
     return false;
   }
-  // Send to real robot if connected - use joints from trajectory, not simulation feedback
+  // Send to real robot asynchronously - don't wait, let planning continue
   if (real_robot_mode_ && !trajectory_joints.empty()) {
-    sendMoveJ(trajectory_joints);
+    sendMoveJAsync(trajectory_joints);
   }
+
+  // Calculate lateral offset in mm for MOVEX/MOVEY commands
+  double lateral_mm = LATERAL_APPROACH_OFFSET * 1000.0;  // 8mm
 
   // 2. Move down linearly to object
   // For real robot: skip simulation planning if target is below min Z, but still send MOVEZ
@@ -421,6 +463,29 @@ bool RobotHLInterfaceSimple::PickAndPlace(const std::string& object_name, const 
     // Use configured approach height for MOVEZ (not simulation coordinates!)
     RCLCPP_INFO(this->get_logger(), "Linear down to pick: MOVEZ -%.1f mm", approach_height_mm);
     sendMoveZ(-approach_height_mm);
+
+    // Lateral approach to cube based on grip direction (Würfel mode only)
+    if (use_lateral_approach) {
+      switch (pick_dir) {
+        case GripDirection::FRONT:
+          RCLCPP_INFO(this->get_logger(), "Lateral approach: MOVEX +%.1f mm", lateral_mm);
+          sendMoveX(lateral_mm);
+          break;
+        case GripDirection::LEFT:
+          RCLCPP_INFO(this->get_logger(), "Lateral approach: MOVEY +%.1f mm", lateral_mm);
+          sendMoveY(lateral_mm);
+          break;
+        case GripDirection::RIGHT:
+          RCLCPP_INFO(this->get_logger(), "Lateral approach: MOVEY -%.1f mm", lateral_mm);
+          sendMoveY(-lateral_mm);
+          break;
+        case GripDirection::BACK:
+          RCLCPP_INFO(this->get_logger(), "Lateral approach: MOVEX -%.1f mm", lateral_mm);
+          sendMoveX(-lateral_mm);
+          break;
+      }
+    }
+
     sendGrip();
   } else {
     if (!moveCartesian(pick_approach, pick_pose, "Linear down to object", trajectory_joints)) {
@@ -431,6 +496,29 @@ bool RobotHLInterfaceSimple::PickAndPlace(const std::string& object_name, const 
       // Linear move straight down using MOVEZ with configured approach height
       RCLCPP_INFO(this->get_logger(), "Linear down to pick: MOVEZ -%.1f mm", approach_height_mm);
       sendMoveZ(-approach_height_mm);
+
+      // Lateral approach to cube based on grip direction (Würfel mode only)
+      if (use_lateral_approach) {
+        switch (pick_dir) {
+          case GripDirection::FRONT:
+            RCLCPP_INFO(this->get_logger(), "Lateral approach: MOVEX +%.1f mm", lateral_mm);
+            sendMoveX(lateral_mm);
+            break;
+          case GripDirection::LEFT:
+            RCLCPP_INFO(this->get_logger(), "Lateral approach: MOVEY +%.1f mm", lateral_mm);
+            sendMoveY(lateral_mm);
+            break;
+          case GripDirection::RIGHT:
+            RCLCPP_INFO(this->get_logger(), "Lateral approach: MOVEY -%.1f mm", lateral_mm);
+            sendMoveY(-lateral_mm);
+            break;
+          case GripDirection::BACK:
+            RCLCPP_INFO(this->get_logger(), "Lateral approach: MOVEX -%.1f mm", lateral_mm);
+            sendMoveX(-lateral_mm);
+            break;
+        }
+      }
+
       sendGrip();
     }
   }
@@ -440,7 +528,7 @@ bool RobotHLInterfaceSimple::PickAndPlace(const std::string& object_name, const 
     if (!attachObject(object.id)) {
       RCLCPP_WARN(this->get_logger(), "Failed to attach object (continuing anyway)");
     }
-    std::this_thread::sleep_for(100ms);
+    std::this_thread::sleep_for(50ms);
   }
 
   // 4. Move up linearly to approach position
@@ -488,9 +576,9 @@ bool RobotHLInterfaceSimple::PickAndPlace(const std::string& object_name, const 
     RCLCPP_ERROR(this->get_logger(), "Failed to move to place approach position");
     return false;
   }
-  // Send to real robot if connected - use joints from trajectory
+  // Send to real robot asynchronously - don't wait, let planning continue
   if (real_robot_mode_ && !trajectory_joints.empty()) {
-    sendMoveJ(trajectory_joints);
+    sendMoveJAsync(trajectory_joints);
   }
 
   // 7. Move down linearly to final placement position
@@ -518,7 +606,7 @@ bool RobotHLInterfaceSimple::PickAndPlace(const std::string& object_name, const 
     if (!detachObject(object.id)) {
       RCLCPP_WARN(this->get_logger(), "Failed to detach object (continuing anyway)");
     }
-    std::this_thread::sleep_for(100ms);
+    std::this_thread::sleep_for(50ms);
   }
 
   // 9. Update object location and stack level in memory
@@ -548,21 +636,32 @@ bool RobotHLInterfaceSimple::PickAndPlace(const std::string& object_name, const 
     }
   }
 
-  // 11. Check if goal is "X" (eject position) - remove object after 3 seconds
+  // 11. Check if goal is "X" (eject position) or Karton - remove object
   if (goal_name == "X") {
-    RCLCPP_INFO(this->get_logger(), "Object placed at eject position. Waiting 3 seconds before removal...");
-    std::this_thread::sleep_for(std::chrono::milliseconds(1000));  // Reduced from 3000ms
+    RCLCPP_INFO(this->get_logger(), "Object placed at eject position.");
 
-    if (!removeCollisionObject(object.id, object_name)) {
+    if (!removeCollisionObject(object.id, resolved_object_name)) {
       RCLCPP_WARN(this->get_logger(), "Failed to remove object from planning scene");
     }
     RCLCPP_INFO(this->get_logger(), "Object ejected successfully");
+  } else if (isKarton(goal_name)) {
+    // Klemme placed in Karton - remove from simulation (simulates falling into box)
+    RCLCPP_INFO(this->get_logger(), "Klemme '%s' placed in Karton '%s'. Removing from simulation...",
+                resolved_object_name.c_str(), goal_name.c_str());
+
+    if (!removeCollisionObject(object.id, resolved_object_name)) {
+      RCLCPP_WARN(this->get_logger(), "Failed to remove Klemme from planning scene");
+    }
+    RCLCPP_INFO(this->get_logger(), "Klemme dropped into Karton successfully");
   } else {
     // 12. For normal positions, update AML file with location (includes level if > 0)
     if (!updateObjectLocationInAML(object_name, object.location)) {
       RCLCPP_WARN(this->get_logger(), "Failed to update AML file");
     }
   }
+
+  // Ensure all robot commands are completed before returning
+  waitForPendingRobotCommand();
 
   RCLCPP_INFO(this->get_logger(), "=== PickAndPlace COMPLETE ===");
   return true;
@@ -749,7 +848,7 @@ void RobotHLInterfaceSimple::ClearAllCubes()
   }
 
   // Wait for scene updates to propagate
-  std::this_thread::sleep_for(std::chrono::milliseconds(150));  // Reduced from 300ms
+  std::this_thread::sleep_for(std::chrono::milliseconds(50));
 
   // Reset cube ID counter for clean numbering
   next_cube_id_ = 0;
@@ -854,11 +953,23 @@ bool RobotHLInterfaceSimple::parseAMLFile(const std::string& aml_file_path)
     return false;
   }
 
-  // Parse each section
+  // Parse robot parameters
   if (!parseRobotParameters(root)) {
     RCLCPP_WARN(this->get_logger(), "Failed to parse robot parameters (using defaults)");
   }
 
+  // Try to parse Klemmen config (Klemmen-Modus)
+  parseKlemmenConfig(root);
+
+  if (klemmen_mode_) {
+    RCLCPP_INFO(this->get_logger(), "=== KLEMMEN-MODUS AKTIV ===");
+    RCLCPP_INFO(this->get_logger(), "Loaded %zu Klemmen types, %zu Kartons",
+                klemmen_.size(), karton_positions_.size());
+    // In Klemmen mode, we don't need the standard grid config or objects
+    return true;
+  }
+
+  // Standard Würfel-Modus parsing
   if (!parseGridConfig(root)) {
     RCLCPP_ERROR(this->get_logger(), "Failed to parse grid configuration");
     return false;
@@ -1040,8 +1151,13 @@ geometry_msgs::msg::Point RobotHLInterfaceSimple::calculateGripPosition(const st
 
 bool RobotHLInterfaceSimple::isValidGridName(const std::string& grid_name) const
 {
-  // Check special positions
+  // Check special positions (including Karton positions when in Klemmen mode)
   if (grid_positions_.find(grid_name) != grid_positions_.end()) {
+    return true;
+  }
+
+  // Check Karton positions (Klemmen mode)
+  if (karton_positions_.find(grid_name) != karton_positions_.end()) {
     return true;
   }
 
@@ -1053,6 +1169,246 @@ bool RobotHLInterfaceSimple::isValidGridName(const std::string& grid_name) const
   }
 
   return false;
+}
+
+// === KLEMMEN-MODUS SUPPORT ===
+
+bool RobotHLInterfaceSimple::isKarton(const std::string& name) const
+{
+  return karton_positions_.find(name) != karton_positions_.end();
+}
+
+bool RobotHLInterfaceSimple::addKlemmeCollisionObject(const ObjectInfo& obj)
+{
+  // Create collision object as a box with calculated dimensions
+  moveit_msgs::msg::CollisionObject collision_obj;
+  collision_obj.id = obj.id;
+  collision_obj.header.frame_id = "world";
+
+  // Create box primitive
+  shape_msgs::msg::SolidPrimitive box;
+  box.type = shape_msgs::msg::SolidPrimitive::BOX;
+  box.dimensions.resize(3);
+  box.dimensions[0] = obj.width;   // X dimension (length)
+  box.dimensions[1] = obj.depth;   // Y dimension (width = 10mm)
+  box.dimensions[2] = obj.height;  // Z dimension (height)
+
+  // Spawn pose
+  geometry_msgs::msg::Pose spawn_pose;
+  spawn_pose.position = obj.spawn_position;
+  spawn_pose.orientation.x = 0.0;
+  spawn_pose.orientation.y = 0.0;
+  spawn_pose.orientation.z = 0.0;
+  spawn_pose.orientation.w = 1.0;
+
+  collision_obj.primitives.push_back(box);
+  collision_obj.primitive_poses.push_back(spawn_pose);
+  collision_obj.operation = moveit_msgs::msg::CollisionObject::ADD;
+
+  // Create ObjectColor for visualization (gray)
+  moveit_msgs::msg::ObjectColor obj_color;
+  obj_color.id = obj.id;
+  obj_color.color.r = 0.5f;
+  obj_color.color.g = 0.5f;
+  obj_color.color.b = 0.5f;
+  obj_color.color.a = 1.0f;
+
+  // Build scene message
+  moveit_msgs::msg::PlanningScene scene_msg;
+  scene_msg.is_diff = true;
+  scene_msg.world.collision_objects.push_back(collision_obj);
+  scene_msg.object_colors.push_back(obj_color);
+
+  // Use ApplyPlanningScene service
+  auto request = std::make_shared<moveit_msgs::srv::ApplyPlanningScene::Request>();
+  request->scene = scene_msg;
+
+  if (!apply_scene_client_->wait_for_service(std::chrono::seconds(5))) {
+    RCLCPP_ERROR(this->get_logger(), "ApplyPlanningScene service not available");
+    return false;
+  }
+
+  auto future = apply_scene_client_->async_send_request(request);
+  if (rclcpp::spin_until_future_complete(this->get_node_base_interface(), future,
+                                          std::chrono::seconds(5)) == rclcpp::FutureReturnCode::SUCCESS) {
+    auto result = future.get();
+    if (!result->success) {
+      RCLCPP_WARN(this->get_logger(), "ApplyPlanningScene service returned false for %s", obj.id.c_str());
+      return false;
+    }
+  } else {
+    RCLCPP_WARN(this->get_logger(), "ApplyPlanningScene service call timed out for %s", obj.id.c_str());
+    return false;
+  }
+
+  RCLCPP_INFO(this->get_logger(), "Added Klemme collision object: %s at (%.3f, %.3f, %.3f) dims (%.3f x %.3f x %.3f)",
+              obj.id.c_str(), obj.spawn_position.x, obj.spawn_position.y, obj.spawn_position.z,
+              obj.width, obj.depth, obj.height);
+  return true;
+}
+
+bool RobotHLInterfaceSimple::parseKlemmenConfig(tinyxml2::XMLElement* root)
+{
+  // First, parse KlemmenGrippingOrientation from Robot-Config
+  tinyxml2::XMLElement* robot_hierarchy = findInstanceHierarchy(root, "Robot-Config");
+  if (robot_hierarchy) {
+    for (auto* elem = robot_hierarchy->FirstChildElement("InternalElement");
+         elem != nullptr;
+         elem = elem->NextSiblingElement("InternalElement"))
+    {
+      const char* name = elem->Attribute("Name");
+      if (name && std::string(name) == "IRB120") {
+        std::string orient_str = getAttributeValue(elem, "KlemmenGrippingOrientation");
+        if (!orient_str.empty()) {
+          klemmen_gripping_orientation_ = parseQuaternion(orient_str);
+          RCLCPP_INFO(this->get_logger(), "Loaded KlemmenGrippingOrientation: (%.4f, %.4f, %.4f, %.4f)",
+                      klemmen_gripping_orientation_.x, klemmen_gripping_orientation_.y,
+                      klemmen_gripping_orientation_.z, klemmen_gripping_orientation_.w);
+        }
+        break;
+      }
+    }
+  }
+
+  // Parse Klemmen hierarchy
+  tinyxml2::XMLElement* klemmen_hierarchy = findInstanceHierarchy(root, "Klemmen");
+  if (klemmen_hierarchy) {
+    klemmen_mode_ = true;
+    RCLCPP_INFO(this->get_logger(), "Parsing Klemmen configuration...");
+
+    for (auto* elem = klemmen_hierarchy->FirstChildElement("InternalElement");
+         elem != nullptr;
+         elem = elem->NextSiblingElement("InternalElement"))
+    {
+      const char* klemme_name = elem->Attribute("Name");
+      if (!klemme_name) continue;
+
+      KlemmenInfo info;
+      info.name = klemme_name;
+
+      // Parse Anzahl
+      std::string anzahl_str = getAttributeValue(elem, "Anzahl");
+      if (!anzahl_str.empty()) {
+        info.anzahl = std::stoi(anzahl_str);
+      }
+
+      // Parse GrippingPosition
+      std::string grip_pos_str = getAttributeValue(elem, "GrippingPosition");
+      if (!grip_pos_str.empty()) {
+        info.gripping_position = parsePosition(grip_pos_str);
+      }
+
+      // Parse GrippingXOffset
+      std::string grip_offset_str = getAttributeValue(elem, "GrippingXOffset");
+      if (!grip_offset_str.empty()) {
+        info.gripping_x_offset = std::stod(grip_offset_str);
+      }
+
+      // Parse CollisionHeight (optional - direct collision object height)
+      std::string collision_height_str = getAttributeValue(elem, "CollisionHeight");
+      if (!collision_height_str.empty()) {
+        info.collision_height = std::stod(collision_height_str);
+      }
+
+      // Skip Klemmen without Anzahl or GrippingPosition (old format entries)
+      if (info.anzahl == 0 || (info.gripping_position.x == 0 && info.gripping_position.y == 0)) {
+        RCLCPP_WARN(this->get_logger(), "Skipping Klemme %s (missing Anzahl or GrippingPosition)", klemme_name);
+        continue;
+      }
+
+      klemmen_[klemme_name] = info;
+
+      RCLCPP_INFO(this->get_logger(), "Loaded Klemme type: %s (Anzahl=%d, GrippingXOffset=%.3fm)",
+                  klemme_name, info.anzahl, info.gripping_x_offset);
+
+      // Create individual Klemme objects (Klemme1_1, Klemme1_2, etc.)
+      for (int i = 0; i < info.anzahl; i++) {
+        std::string obj_name = std::string(klemme_name) + "_" + std::to_string(i + 1);
+
+        // Calculate gripping position for this instance
+        double grip_x = info.gripping_position.x + i * info.gripping_x_offset;
+        double grip_y = info.gripping_position.y;
+        double grip_z = info.gripping_position.z;
+
+        // Dimensions:
+        // Length (X): GrippingXOffset - 5mm
+        // Width (Y): 10mm = 0.01m
+        // Height (Z): from CollisionHeight attribute (independent of grip position)
+        double length = info.gripping_x_offset - 0.005;  // X dimension
+        double width = 0.01;                              // Y dimension (10mm)
+        double height = info.collision_height;            // Z dimension from AML
+
+        // Calculate spawn position (collision object center)
+        // Bottom of object at 0.03m, center at 0.03 + height/2
+        double spawn_x = grip_x;
+        double spawn_y = grip_y;
+        double spawn_z = 0.03 + height / 2.0;
+
+        // Create ObjectInfo
+        ObjectInfo obj;
+        obj.name = obj_name;
+        obj.id = obj_name;
+        obj.location = obj_name;  // Location = object name for Klemmen
+        obj.width = length;       // X dimension
+        obj.depth = width;        // Y dimension
+        obj.height = height;      // Z dimension
+        obj.color = "Grau";
+        obj.spawn_position.x = spawn_x;
+        obj.spawn_position.y = spawn_y;
+        obj.spawn_position.z = spawn_z;
+
+        objects_[obj_name] = obj;
+
+        // Create grid_positions_ entry for Pick (gripping position directly from AML)
+        geometry_msgs::msg::Pose pose;
+        pose.position.x = grip_x;
+        pose.position.y = grip_y;
+        pose.position.z = grip_z;
+        pose.orientation = klemmen_gripping_orientation_;
+        grid_positions_[obj_name] = pose;
+
+        // Add collision object to planning scene
+        addKlemmeCollisionObject(obj);
+
+        RCLCPP_INFO(this->get_logger(), "  Created %s: grip(%.3f, %.3f, %.3f) spawn(%.3f, %.3f, %.3f) dims(%.3f x %.3f x %.3f)",
+                    obj_name.c_str(), grip_x, grip_y, grip_z, spawn_x, spawn_y, spawn_z, length, width, height);
+      }
+    }
+  }
+
+  // Parse Kartons hierarchy
+  tinyxml2::XMLElement* kartons_hierarchy = findInstanceHierarchy(root, "Kartons");
+  if (kartons_hierarchy) {
+    RCLCPP_INFO(this->get_logger(), "Parsing Karton positions...");
+
+    for (auto* elem = kartons_hierarchy->FirstChildElement("InternalElement");
+         elem != nullptr;
+         elem = elem->NextSiblingElement("InternalElement"))
+    {
+      const char* name = elem->Attribute("Name");
+      if (!name) continue;
+
+      // Parse PlacePosition (direct place position from AML)
+      std::string place_pos_str = getAttributeValue(elem, "PlacePosition");
+      if (!place_pos_str.empty()) {
+        geometry_msgs::msg::Point place_pos = parsePosition(place_pos_str);
+
+        // Create pose with KlemmenGrippingOrientation for place
+        geometry_msgs::msg::Pose karton_pose;
+        karton_pose.position = place_pos;
+        karton_pose.orientation = klemmen_gripping_orientation_;
+
+        karton_positions_[name] = karton_pose;
+        // Also add to grid_positions_ for isValidGridName and position lookup
+        grid_positions_[name] = karton_pose;
+
+        RCLCPP_INFO(this->get_logger(), "Loaded Karton: %s PlacePosition at (%.3f, %.3f, %.3f)",
+                    name, place_pos.x, place_pos.y, place_pos.z);
+      }
+    }
+  }
+
+  return klemmen_mode_;
 }
 
 bool RobotHLInterfaceSimple::isGripperClearanceOk(const std::string& grid_position) const
@@ -1122,34 +1478,85 @@ std::string RobotHLInterfaceSimple::findBlockingCube(const std::string& grid_pos
   return "";
 }
 
-std::string RobotHLInterfaceSimple::findFreeRow1Position() const
+RobotHLInterfaceSimple::GripDirection RobotHLInterfaceSimple::findGripDirection(const std::string& pos) const
 {
-  // Row 1 positions are always accessible (nothing in front)
-  const std::vector<std::string> row1_positions = {"A1", "B1", "C1", "D1", "E1"};
-
-  for (const auto& pos : row1_positions) {
-    // Check if position is pending (claimed by ongoing recursive auto-move)
-    if (pending_auto_move_destinations_.count(pos) > 0) {
-      continue;  // Skip positions already claimed in current auto-move chain
-    }
-
-    bool occupied = false;
-    for (const auto& [name, info] : objects_) {
-      std::string obj_base = info.location;
-      size_t colon = obj_base.find(':');
-      if (colon != std::string::npos) {
-        obj_base = obj_base.substr(0, colon);
-      }
-      if (obj_base == pos) {
-        occupied = true;
-        break;
-      }
-    }
-    if (!occupied) {
-      return pos;
-    }
+  if (pos.length() < 2) {
+    return GripDirection::FRONT;  // Invalid position, use default
   }
-  return "";  // No free row 1 position
+
+  char col = pos[0];  // A-E
+  int row = pos[1] - '0';  // 1-5
+
+  // Helper lambda to check if a position is occupied
+  auto isOccupied = [this](char c, int r) -> bool {
+    if (c < 'A' || c > 'E' || r < 1 || r > 5) return true;  // Outside grid = blocked
+    std::string p = std::string(1, c) + std::to_string(r);
+    for (const auto& [name, info] : objects_) {
+      std::string loc = info.location;
+      if (loc.find(':') != std::string::npos) {
+        loc = loc.substr(0, loc.find(':'));
+      }
+      if (loc == p) return true;
+    }
+    return false;
+  };
+
+  // 1. Normal (from front, Row-1) - always try this first
+  if (row == 1 || !isOccupied(col, row - 1)) {
+    return GripDirection::FRONT;
+  }
+
+  // 2. 90° CW (from left, Col-1)
+  if (col > 'A' && !isOccupied(col - 1, row)) {
+    return GripDirection::LEFT;
+  }
+
+  // 3. 90° CCW (from right, Col+1)
+  if (col < 'E' && !isOccupied(col + 1, row)) {
+    return GripDirection::RIGHT;
+  }
+
+  // 4. 180° (from back, Row+1)
+  if (row < 5 && !isOccupied(col, row + 1)) {
+    return GripDirection::BACK;
+  }
+
+  // Fallback: Normal (will likely fail, but we have to return something)
+  RCLCPP_WARN(this->get_logger(), "No free grip direction for %s! All 4 sides blocked.", pos.c_str());
+  return GripDirection::FRONT;
+}
+
+geometry_msgs::msg::Quaternion RobotHLInterfaceSimple::getRotatedOrientation(GripDirection dir) const
+{
+  geometry_msgs::msg::Quaternion result = config_.standard_orientation;
+
+  // Rotation angle around Z-axis
+  double angle = 0.0;
+  switch (dir) {
+    case GripDirection::FRONT: angle = 0.0; break;
+    case GripDirection::LEFT:  angle = M_PI / 2.0; break;   // +90° CW
+    case GripDirection::RIGHT: angle = -M_PI / 2.0; break;  // -90° CCW
+    case GripDirection::BACK:  angle = M_PI; break;         // 180°
+  }
+
+  if (angle != 0.0) {
+    // Apply Z-axis rotation to standard orientation using quaternion multiplication
+    // z_rotation quaternion: (0, 0, sin(θ/2), cos(θ/2))
+    double sz = std::sin(angle / 2.0);
+    double cz = std::cos(angle / 2.0);
+
+    // Quaternion multiplication: result = z_rot * standard
+    // z_rot = (0, 0, sz, cz)
+    // standard = (x, y, z, w)
+    double x = result.x, y = result.y, z = result.z, w = result.w;
+
+    result.x = cz * x - sz * y;
+    result.y = cz * y + sz * x;
+    result.z = cz * z + sz * w;
+    result.w = cz * w - sz * z;
+  }
+
+  return result;
 }
 
 bool RobotHLInterfaceSimple::parseObjects(tinyxml2::XMLElement* root)
@@ -1479,8 +1886,8 @@ bool RobotHLInterfaceSimple::moveCartesian(const geometry_msgs::msg::Pose& start
   geometry_msgs::msg::Pose target_pose;
   target_pose.position = end.position;
 
-  // Get current state and extract EEF orientation
-  auto current_state = move_group_->getCurrentState(5.0);
+  // Get current state and extract EEF orientation (1s timeout for clock desync)
+  auto current_state = move_group_->getCurrentState(1.0);
   if (current_state) {
     const Eigen::Isometry3d& eef_transform = current_state->getGlobalLinkTransform(eef_link_);
     Eigen::Quaterniond q(eef_transform.rotation());
@@ -1571,7 +1978,7 @@ bool RobotHLInterfaceSimple::planAndExecute(const std::string& description,
       RCLCPP_WARN(this->get_logger(), "Planning failed on attempt %d", attempt);
     }
 
-    std::this_thread::sleep_for(200ms);
+    std::this_thread::sleep_for(50ms);
   }
 
   RCLCPP_ERROR(this->get_logger(), "All planning attempts failed for: %s", description.c_str());
@@ -1596,11 +2003,8 @@ bool RobotHLInterfaceSimple::attachObject(const std::string& object_id)
   // This handles removing from world and adding as attached correctly
   move_group_->attachObject(object_id, eef_link_, gripper_touch_links_);
 
-  // Wait for attachment to propagate (increased for planning scene sync)
-  std::this_thread::sleep_for(500ms);
-
-  // Force planning scene state refresh to ensure consistency
-  move_group_->getCurrentState(5.0);
+  // Wait for attachment to propagate
+  std::this_thread::sleep_for(100ms);
 
   RCLCPP_INFO(this->get_logger(), "Successfully attached %s", object_id.c_str());
   return true;
@@ -1614,11 +2018,8 @@ bool RobotHLInterfaceSimple::detachObject(const std::string& object_id)
   // This returns the object to the world at its current position
   move_group_->detachObject(object_id);
 
-  // Wait for detachment to propagate (increased for planning scene sync)
-  std::this_thread::sleep_for(500ms);
-
-  // Force planning scene state refresh to ensure consistency
-  move_group_->getCurrentState(5.0);
+  // Wait for detachment to propagate
+  std::this_thread::sleep_for(100ms);
 
   RCLCPP_INFO(this->get_logger(), "Successfully detached %s", object_id.c_str());
   return true;
@@ -1664,7 +2065,7 @@ bool RobotHLInterfaceSimple::addCollisionObjects()
 
   if (!collision_objects.empty()) {
     planning_scene_->addCollisionObjects(collision_objects);
-    std::this_thread::sleep_for(500ms);  // Wait for planning scene to update
+    std::this_thread::sleep_for(100ms);  // Wait for planning scene to update
   }
 
   return true;
@@ -1731,7 +2132,7 @@ bool RobotHLInterfaceSimple::removeCollisionObject(const std::string& object_id,
   std::vector<moveit_msgs::msg::CollisionObject> remove_objs = {remove_obj};
   planning_scene_->applyCollisionObjects(remove_objs);
 
-  std::this_thread::sleep_for(std::chrono::milliseconds(150));  // Reduced from 300ms
+  std::this_thread::sleep_for(std::chrono::milliseconds(50));
 
   // Remove from AML file
   if (!removeObjectFromAML(object_name)) {
@@ -1855,7 +2256,7 @@ void RobotHLInterfaceSimple::allowGripperCubeCollision(const std::string& cube_i
     std::vector<std::string> object_ids = {cube_id};
     planning_scene_->removeCollisionObjects(object_ids);
 
-    std::this_thread::sleep_for(std::chrono::milliseconds(100));  // Reduced from 200ms
+    std::this_thread::sleep_for(std::chrono::milliseconds(50));
     RCLCPP_INFO(this->get_logger(), "Cube %s removed from planning scene for approach", cube_id.c_str());
   } else {
     // When allow=false, the cube should be re-added.
@@ -1922,7 +2323,7 @@ void RobotHLInterfaceSimple::allowGripperCubeCollision(const std::string& cube_i
     std::vector<moveit_msgs::msg::CollisionObject> collision_objects = {obj};
     planning_scene_->applyCollisionObjects(collision_objects);
 
-    std::this_thread::sleep_for(std::chrono::milliseconds(100));  // Reduced from 200ms
+    std::this_thread::sleep_for(std::chrono::milliseconds(50));
     RCLCPP_INFO(this->get_logger(), "Cube %s restored to planning scene at %s level %d",
                 cube_id.c_str(), base_position.c_str(), info.stack_level);
   }
@@ -2156,6 +2557,35 @@ bool RobotHLInterfaceSimple::sendMoveJ(const std::vector<double>& joints_rad)
   return false;
 }
 
+void RobotHLInterfaceSimple::waitForPendingRobotCommand()
+{
+  if (has_pending_command_ && pending_robot_future_.valid()) {
+    RCLCPP_INFO(this->get_logger(), "Waiting for pending robot command...");
+    bool result = pending_robot_future_.get();  // Blocks until complete
+    has_pending_command_ = false;
+    if (!result) {
+      RCLCPP_WARN(this->get_logger(), "Pending robot command failed");
+    }
+  }
+}
+
+void RobotHLInterfaceSimple::sendMoveJAsync(const std::vector<double>& joints_rad)
+{
+  if (!real_robot_mode_ || socket_fd_ < 0) {
+    return;  // Not in real robot mode, nothing to do
+  }
+
+  // Wait for any previous command to complete first
+  waitForPendingRobotCommand();
+
+  // Start the new command asynchronously
+  pending_robot_future_ = std::async(std::launch::async, [this, joints_rad]() {
+    return sendMoveJ(joints_rad);
+  });
+  has_pending_command_ = true;
+  RCLCPP_INFO(this->get_logger(), "MOVEJ sent async (planning can continue)");
+}
+
 bool RobotHLInterfaceSimple::sendMoveL(const geometry_msgs::msg::Pose& pose)
 {
   if (!real_robot_mode_ || socket_fd_ < 0) {
@@ -2330,6 +2760,54 @@ bool RobotHLInterfaceSimple::sendMoveZ(double delta_z_mm)
   }
 
   RCLCPP_ERROR(this->get_logger(), "MOVEZ failed: %s", response.c_str());
+  return false;
+}
+
+bool RobotHLInterfaceSimple::sendMoveX(double delta_x_mm)
+{
+  if (!real_robot_mode_ || socket_fd_ < 0) {
+    return true;  // Not in real robot mode, success by default
+  }
+
+  RCLCPP_INFO(this->get_logger(), "MoveX: delta=%.1f mm", delta_x_mm);
+
+  // Build MOVEX command - robot will get its current position and add delta to X
+  std::ostringstream cmd;
+  cmd << "MOVEX " << std::fixed << std::setprecision(2) << delta_x_mm;
+
+  std::string response;
+  bool success = sendSocketCommand(cmd.str(), response, 60.0);
+
+  if (success && response.find("OK") != std::string::npos) {
+    RCLCPP_INFO(this->get_logger(), "MoveX complete (delta=%.1f mm)", delta_x_mm);
+    return true;
+  }
+
+  RCLCPP_ERROR(this->get_logger(), "MOVEX failed: %s", response.c_str());
+  return false;
+}
+
+bool RobotHLInterfaceSimple::sendMoveY(double delta_y_mm)
+{
+  if (!real_robot_mode_ || socket_fd_ < 0) {
+    return true;  // Not in real robot mode, success by default
+  }
+
+  RCLCPP_INFO(this->get_logger(), "MoveY: delta=%.1f mm", delta_y_mm);
+
+  // Build MOVEY command - robot will get its current position and add delta to Y
+  std::ostringstream cmd;
+  cmd << "MOVEY " << std::fixed << std::setprecision(2) << delta_y_mm;
+
+  std::string response;
+  bool success = sendSocketCommand(cmd.str(), response, 60.0);
+
+  if (success && response.find("OK") != std::string::npos) {
+    RCLCPP_INFO(this->get_logger(), "MoveY complete (delta=%.1f mm)", delta_y_mm);
+    return true;
+  }
+
+  RCLCPP_ERROR(this->get_logger(), "MOVEY failed: %s", response.c_str());
   return false;
 }
 

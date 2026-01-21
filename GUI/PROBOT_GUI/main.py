@@ -30,11 +30,18 @@ except ImportError as e:
 # Lokale Imports
 try:
     from InterActLLM import interactLLM
-    from irb120_prompts import (
-        generate_level1_prompt,
-        generate_level2_prompt,
+    # Würfel-Modus imports
+    from wuerfel_prompts import (
+        generate_level1_prompt as generate_wuerfel_level1_prompt,
+        generate_level2_prompt as generate_wuerfel_level2_prompt,
     )
-    from irb120_aml_parser import get_irb120_parser
+    from wuerfel_aml_parser import get_wuerfel_parser
+    # Klemmen-Modus imports
+    from klemmen_prompts import (
+        generate_level1_prompt as generate_klemmen_level1_prompt,
+        generate_level2_prompt as generate_klemmen_level2_prompt,
+    )
+    from klemmen_aml_parser import get_klemmen_parser
 except ImportError as e:
     print(f"✗ Error importing local modules: {e}")
     print("Please ensure all required files are present")
@@ -103,10 +110,19 @@ class TipsDisplay(StyledDisplay):
 
     def __init__(self):
         super().__init__()
-        self.setTips()
+        self.current_mode = "wuerfel"
+        self.setTipsForMode("wuerfel")
 
-    def setTips(self):
-        """Set the tips text - can be configured later"""
+    def setTipsForMode(self, mode: str):
+        """Set tips text based on current mode"""
+        self.current_mode = mode
+        if mode == "wuerfel":
+            self._set_wuerfel_tips()
+        else:
+            self._set_klemmen_tips()
+
+    def _set_wuerfel_tips(self):
+        """Set tips for Würfel-Modus"""
         tips_text = """1. Optional: "Zelle verändern?" aktivieren
    um Würfel hinzuzufügen/entfernen
 
@@ -126,6 +142,100 @@ Beispiele Roboter-Aufgabe:
 - "Sortiere alle Würfel nach Farbe"
 """
         self.setPlainText(tips_text)
+
+    def _set_klemmen_tips(self):
+        """Set tips for Klemmen-Modus - shows package configurations"""
+        try:
+            parser = get_klemmen_parser()
+            parser.reload()  # Ensure latest data
+
+            lines = ["Paket-Konfigurationen:\n"]
+
+            # Get all packages and format them nicely
+            for paket_name, paket_data in sorted(parser.pakete.items()):
+                inhalt = paket_data.get('inhalt', {})
+                if inhalt:
+                    # Format: "PaketA: 2x Klemme2, 1x Klemme3, 2x Klemme5"
+                    items = [f"{count}x {name}" for name, count in sorted(inhalt.items())]
+                    lines.append(f"{paket_name}:")
+                    lines.append(f"  {', '.join(items)}\n")
+
+            # Add usage examples
+            lines.append("\nBeispiel-Eingaben:")
+            lines.append('• "PaketA in Karton1"')
+            lines.append('• "2x PaketB in Karton2"')
+            lines.append('• "3x Klemme3 in Karton1"')
+
+            tips_text = '\n'.join(lines)
+
+        except Exception as e:
+            tips_text = f"Fehler beim Laden der Pakete: {e}"
+
+        self.setPlainText(tips_text)
+
+
+class KlemmenListDisplay(QWidget):
+    """Widget zur Anzeige der verfügbaren Klemmen als Liste"""
+
+    def __init__(self):
+        super().__init__()
+        self.labels = {}  # Klemme name -> QLabel
+        self._setup_list()
+
+    def _setup_list(self):
+        """Create the list layout"""
+        layout = QVBoxLayout(self)
+        layout.setSpacing(4)
+        layout.setContentsMargins(5, 5, 5, 5)
+
+        # Header
+        header = QLabel("Verfügbare Klemmen:")
+        header.setStyleSheet("color: white; font-weight: bold; font-size: 12px;")
+        layout.addWidget(header)
+
+        # Will be populated by updateList()
+        self.list_layout = QVBoxLayout()
+        layout.addLayout(self.list_layout)
+        layout.addStretch()
+
+    def updateList(self):
+        """Update list with current clamp availability from AML"""
+        try:
+            parser = get_klemmen_parser()
+            status = parser.get_klemmen_status()
+
+            # Clear existing labels
+            while self.list_layout.count():
+                item = self.list_layout.takeAt(0)
+                if item.widget():
+                    item.widget().deleteLater()
+            self.labels.clear()
+
+            # Add labels for each clamp type
+            for s in status:
+                name = s['name']
+                remaining = s['remaining']
+                total = s['total']
+
+                label = QLabel(f"  {name}:    {remaining}")
+                label.setStyleSheet("""
+                    color: white;
+                    font-family: 'Courier New', monospace;
+                    font-size: 11px;
+                    padding: 2px;
+                """)
+
+                # Color based on availability
+                if remaining == 0:
+                    label.setStyleSheet(label.styleSheet() + "color: #ff6b6b;")  # Red
+                elif remaining < total // 2:
+                    label.setStyleSheet(label.styleSheet() + "color: #ffd93d;")  # Yellow
+
+                self.labels[name] = label
+                self.list_layout.addWidget(label)
+
+        except Exception as e:
+            print(f"Fehler beim Aktualisieren der Klemmen-Liste: {e}")
 
 
 class StackedCubeCell(QWidget):
@@ -271,7 +381,7 @@ class CellConfigDisplay(QWidget):
     def updateGrid(self):
         """Update grid with current cube positions from AML"""
         try:
-            parser = get_irb120_parser()
+            parser = get_wuerfel_parser()
             parser.reload()
 
             # Reset all cells to empty
@@ -343,6 +453,10 @@ class WorkerThread(QThread):
 class SetupRobotThread(WorkerThread):
     """Thread zum Starten der Roboter-Umgebung"""
 
+    def __init__(self, workspace_path: str, cell_mode: str = "wuerfel"):
+        super().__init__(workspace_path)
+        self.cell_mode = cell_mode
+
     def run(self):
         try:
             self.output.emit("Starte Roboter-Umgebung...")
@@ -353,7 +467,7 @@ class SetupRobotThread(WorkerThread):
                 self.finished.emit(False)
                 return
 
-            cmd = f"cd {self.workspace_path} && python3 launcher.py"
+            cmd = f"cd {self.workspace_path} && python3 launcher.py --cell-mode {self.cell_mode}"
             subprocess.Popen(
                 f"gnome-terminal --title='Robot Setup' -- bash -c '{cmd}'",
                 shell=True
@@ -369,16 +483,19 @@ class ExecuteCodeThread(WorkerThread):
     """Thread zum Kompilieren und Ausführen des generierten Codes"""
 
     def __init__(self, workspace_path: str, package_name: str = "ur10e_hl_interface",
-                 executable_name: str = "script", real_robot: bool = False):
+                 executable_name: str = "script", real_robot: bool = False,
+                 cell_mode: str = "wuerfel"):
         super().__init__(workspace_path)
         self.package_name = package_name
         self.executable_name = executable_name
         self.real_robot = real_robot
+        self.cell_mode = cell_mode
 
     def run(self):
         try:
-            # Build real_robot argument for launch file
+            # Build arguments for launch file
             real_robot_arg = "real_robot:=true" if self.real_robot else "real_robot:=false"
+            cell_mode_arg = f"cell_mode:={self.cell_mode}"
             mode_text = "REAL ROBOT" if self.real_robot else "SIMULATION"
 
             # Use ros2 launch to properly pass MoveIt parameters to the script
@@ -390,11 +507,11 @@ class ExecuteCodeThread(WorkerThread):
                 f'colcon build --packages-select {self.package_name} && '
                 f'source install/setup.bash && '
                 f'echo && echo "=== Build abgeschlossen ===" && echo && '
-                f'echo "Mode: {mode_text}" && echo && '
+                f'echo "Mode: {mode_text} | Cell: {self.cell_mode}" && echo && '
                 f'read -p "Build erfolgreich? Code ausfuehren? [j/n]: " response && '
                 f'if [ "$response" = "y" ] || [ "$response" = "j" ]; then '
-                f'  echo && echo "=== Starte Ausfuehrung ({mode_text}) ===" && '
-                f'  ros2 launch {self.package_name} execute_script.launch.py {real_robot_arg}; '
+                f'  echo && echo "=== Starte Ausfuehrung ({mode_text}, {self.cell_mode}) ===" && '
+                f'  ros2 launch {self.package_name} execute_script.launch.py {real_robot_arg} {cell_mode_arg}; '
                 f'else '
                 f'  echo "Ausfuehrung abgebrochen."; '
                 f'fi; '
@@ -495,7 +612,8 @@ class ProbotGUI(QMainWindow):
     def _init_state(self):
         """Initialisiert den Anwendungszustand"""
         self.current_level = 1
-        self.current_cell_setup = ""  # Zellkonfigurations-Beschreibung
+        self.current_mode = "wuerfel"  # "wuerfel" oder "klemmen"
+        self.current_cell_setup = ""  # Zellkonfigurations-Beschreibung (nur Würfel-Modus)
         self.current_robot_task = ""  # Roboter-Aufgaben-Beschreibung
         self.responses = {1: "", 2: ""}
         self.generated_code = ""
@@ -554,6 +672,34 @@ class ProbotGUI(QMainWindow):
         title_layout.addWidget(title)
         title_layout.addWidget(subtitle)
 
+        # Mode Toggle
+        mode_layout = QVBoxLayout()
+        mode_label = QLabel("Modus:")
+        mode_label.setStyleSheet("color: white; font-weight: bold;")
+        self.mode_combo = QComboBox()
+        self.mode_combo.addItems(["Würfel-Modus", "Klemmen-Modus"])
+        self.mode_combo.setCurrentIndex(0)
+        self.mode_combo.setStyleSheet("""
+            QComboBox {
+                background-color: white;
+                color: black;
+                padding: 8px 15px;
+                border-radius: 5px;
+                font-weight: bold;
+                min-width: 150px;
+            }
+            QComboBox::drop-down {
+                border: none;
+            }
+            QComboBox::down-arrow {
+                image: none;
+                border: none;
+            }
+        """)
+        self.mode_combo.currentTextChanged.connect(self._on_mode_changed)
+        mode_layout.addWidget(mode_label)
+        mode_layout.addWidget(self.mode_combo)
+
         # Logo
         logo = QLabel()
         if os.path.exists(self.config.LOGO_PATH):
@@ -565,6 +711,8 @@ class ProbotGUI(QMainWindow):
 
         header.addLayout(title_layout)
         header.addStretch()
+        header.addLayout(mode_layout)
+        header.addSpacing(20)
         header.addWidget(logo)
         layout.addLayout(header)
 
@@ -596,22 +744,29 @@ class ProbotGUI(QMainWindow):
         # Right: Info Displays
         info_layout = QVBoxLayout()
 
-        # Tips / Instructions
-        tips_group = self._create_group_box("Tipps")
+        # Tips / Instructions (title changes based on mode)
+        self.tips_group = self._create_group_box("Tipps")
         self.tips_display = TipsDisplay()
-        tips_group.layout().addWidget(self.tips_display)
+        self.tips_group.layout().addWidget(self.tips_display)
 
-        # Cell Configuration (5x5 Grid)
-        cell_group = self._create_group_box("Zellkonfiguration")
+        # Cell Configuration (5x5 Grid) - for Würfel-Modus
+        self.cell_group = self._create_group_box("Zellkonfiguration")
         self.cell_config_display = CellConfigDisplay()
-        cell_group.layout().addWidget(self.cell_config_display)
+        self.cell_group.layout().addWidget(self.cell_config_display)
 
-        info_layout.addWidget(tips_group, 1)
-        info_layout.addWidget(cell_group, 1)
+        # Klemmen List Display - for Klemmen-Modus
+        self.klemmen_group = self._create_group_box("Klemmen-Verfügbarkeit")
+        self.klemmen_list_display = KlemmenListDisplay()
+        self.klemmen_group.layout().addWidget(self.klemmen_list_display)
+        self.klemmen_group.setVisible(False)  # Hidden by default (Würfel-Modus)
+
+        info_layout.addWidget(self.tips_group, 1)
+        info_layout.addWidget(self.cell_group, 1)
+        info_layout.addWidget(self.klemmen_group, 1)
 
         main_layout.addWidget(self.output_text, 2)
         main_layout.addLayout(info_layout, 1)
-        layout.addLayout(main_layout)
+        layout.addLayout(main_layout, 1)  # Give main area stretch factor 1 to fill available space
 
     def _create_group_box(self, title: str) -> QGroupBox:
         """Erstellt eine gestylte GroupBox"""
@@ -689,10 +844,10 @@ class ProbotGUI(QMainWindow):
         self.cell_input_container.setVisible(False)
         input_container.addWidget(self.cell_input_container)
 
-        # Eingabefeld für Roboter-Aufgabe
-        task_label = QLabel("Roboter-Aufgabe beschreiben:")
-        task_label.setStyleSheet("color: #aaaaaa; font-size: 11px;")
-        input_container.addWidget(task_label)
+        # Eingabefeld für Roboter-Aufgabe / Klemmen-Aufgabe
+        self.task_label = QLabel("Roboter-Aufgabe beschreiben:")
+        self.task_label.setStyleSheet("color: #aaaaaa; font-size: 11px;")
+        input_container.addWidget(self.task_label)
 
         self.input_text = QTextEdit()
         self.input_text.setPlaceholderText(
@@ -778,7 +933,7 @@ class ProbotGUI(QMainWindow):
         self.btn_close = HoverButton("Beenden", "#DC3545", "#a71d2a")
 
         # Real Robot checkbox
-        self.real_robot_checkbox = QCheckBox("Real Robot")
+        self.real_robot_checkbox = QCheckBox("Realtest")
         self.real_robot_checkbox.setToolTip(
             "Wenn aktiviert, werden Befehle auch an den echten Roboter gesendet.\n"
             "Stellen Sie sicher, dass SocketMain auf dem FlexPendant läuft!"
@@ -873,11 +1028,60 @@ class ProbotGUI(QMainWindow):
         self._refresh_displays()
 
     def _refresh_displays(self):
-        """Aktualisiert die Zellkonfiguration mit aktuellem AML-Stand"""
+        """Aktualisiert die Anzeige basierend auf aktuellem Modus"""
         try:
-            self.cell_config_display.updateGrid()
+            if self.current_mode == "wuerfel":
+                self.cell_config_display.updateGrid()
+            else:
+                self.klemmen_list_display.updateList()
         except Exception as e:
             print(f"Fehler beim Aktualisieren der Anzeige: {e}")
+
+    def _on_mode_changed(self, mode_text: str):
+        """Handler für Modus-Wechsel"""
+        new_mode = "klemmen" if "Klemmen" in mode_text else "wuerfel"
+
+        if new_mode == self.current_mode:
+            return
+
+        self.current_mode = new_mode
+
+        # Update visibility of configuration displays and input labels
+        if new_mode == "wuerfel":
+            self.cell_group.setVisible(True)
+            self.klemmen_group.setVisible(False)
+            self.tips_group.setTitle("Tipps")
+            # Show cell setup checkbox
+            self.cell_change_checkbox.setVisible(True)
+            # Update task label and placeholder for Würfel mode
+            self.task_label.setText("Roboter-Aufgabe beschreiben:")
+            self.input_text.setPlaceholderText(
+                "z.B. \"Bringe den roten Würfel zur Rampe\" oder \"Verschiebe Würfel von A1 nach B2\""
+            )
+        else:
+            self.cell_group.setVisible(False)
+            self.klemmen_group.setVisible(True)
+            self.tips_group.setTitle("Pakete")
+            # Hide cell setup checkbox (not used in Klemmen-Modus)
+            self.cell_change_checkbox.setVisible(False)
+            self.cell_change_checkbox.setChecked(False)
+            self.cell_input_container.setVisible(False)
+            # Update task label and placeholder for Klemmen mode
+            self.task_label.setText("Klemmen-Aufgabe beschreiben:")
+            self.input_text.setPlaceholderText(
+                "z.B. \"2x Klemme1, 3x Klemme3 in Karton1\" oder \"PaketA in Karton2\""
+            )
+
+        # Update tips display
+        self.tips_display.setTipsForMode(new_mode)
+
+        # Reset state
+        self.reset_to_level1()
+
+        # Refresh the appropriate display
+        self._refresh_displays()
+
+        self.show_output(f"Modus gewechselt zu: {mode_text}", "system")
 
     # ========== Hilfsmethoden ==========
     def _get_status_text(self) -> str:
@@ -991,7 +1195,7 @@ class ProbotGUI(QMainWindow):
             return
 
         # Thread als Instanzvariable speichern, damit er nicht vorzeitig zerstört wird
-        self.setup_thread = SetupRobotThread(self.config.WORKSPACE_PATH)
+        self.setup_thread = SetupRobotThread(self.config.WORKSPACE_PATH, cell_mode=self.current_mode)
         self.setup_thread.finished.connect(lambda success: self._on_setup_finished(success))
         self.setup_thread.start()
 
@@ -1021,7 +1225,8 @@ class ProbotGUI(QMainWindow):
             self.config.WORKSPACE_PATH,
             self.config.PACKAGE_NAME,
             self.config.EXECUTABLE_NAME,
-            real_robot=real_robot
+            real_robot=real_robot,
+            cell_mode=self.current_mode
         )
         self.execute_thread.output.connect(lambda msg: self.show_output(msg, "system"))
         self.execute_thread.error.connect(lambda msg: self.show_output(msg, "error"))
@@ -1029,31 +1234,51 @@ class ProbotGUI(QMainWindow):
         self.execute_thread.start()
 
     def handle_reset(self):
-        """Setzt die Zelle auf Standardkonfiguration zurück"""
-        reply = QMessageBox.question(
-            self, 'Zelle zurücksetzen',
-            'Zelle auf Standardkonfiguration zurücksetzen?\n\n'
-            'Dies erstellt 4 Würfel:\n'
-            '- Schwarz auf A1\n'
-            '- Grün auf B1\n'
-            '- Rot auf C1\n'
-            '- Gelb auf D1',
-            QMessageBox.StandardButton.Yes | QMessageBox.StandardButton.No,
-            QMessageBox.StandardButton.No
-        )
+        """Setzt die Zelle/Klemmen auf Standardkonfiguration zurück"""
+        if self.current_mode == "wuerfel":
+            reply = QMessageBox.question(
+                self, 'Zelle zurücksetzen',
+                'Zelle auf Standardkonfiguration zurücksetzen?\n\n'
+                'Dies erstellt 4 Würfel:\n'
+                '- Schwarz auf A1\n'
+                '- Grün auf B1\n'
+                '- Rot auf C1\n'
+                '- Gelb auf D1',
+                QMessageBox.StandardButton.Yes | QMessageBox.StandardButton.No,
+                QMessageBox.StandardButton.No
+            )
 
-        if reply == QMessageBox.StandardButton.Yes:
-            try:
-                self._reset_cell_to_default()
-                self._refresh_displays()
-                self.show_output("Zelle auf Standardkonfiguration zurückgesetzt!", "system")
-            except Exception as e:
-                self.show_output(f"Fehler beim Zurücksetzen: {str(e)}", "error")
+            if reply == QMessageBox.StandardButton.Yes:
+                try:
+                    self._reset_cell_to_default()
+                    self._refresh_displays()
+                    self.show_output("Zelle auf Standardkonfiguration zurückgesetzt!", "system")
+                except Exception as e:
+                    self.show_output(f"Fehler beim Zurücksetzen: {str(e)}", "error")
+        else:
+            # Klemmen-Modus: Reset picked counts
+            reply = QMessageBox.question(
+                self, 'Klemmen zurücksetzen',
+                'Klemmen-Lager zurücksetzen?\n\n'
+                'Dies setzt alle Klemmen-Zähler auf den\n'
+                'Ausgangszustand zurück (alle Klemmen verfügbar).',
+                QMessageBox.StandardButton.Yes | QMessageBox.StandardButton.No,
+                QMessageBox.StandardButton.No
+            )
+
+            if reply == QMessageBox.StandardButton.Yes:
+                try:
+                    parser = get_klemmen_parser()
+                    parser.reset_picked_counts()
+                    self._refresh_displays()
+                    self.show_output("Klemmen-Lager zurückgesetzt!", "system")
+                except Exception as e:
+                    self.show_output(f"Fehler beim Zurücksetzen: {str(e)}", "error")
 
     def _reset_cell_to_default(self):
         """Schreibt die Standard-Zellkonfiguration in die AML-Datei"""
         aml_content = '''<?xml version="1.0" encoding="utf-8"?>
-<CAEXFile xmlns="http://www.dke.de/CAEX" FileName="irb120_simple_config.aml" SchemaVersion="3.0">
+<CAEXFile xmlns="http://www.dke.de/CAEX" FileName="wuerfel_config.aml" SchemaVersion="3.0">
   <InstanceHierarchy Name="Robot-Config">
     <InternalElement Name="IRB120">
       <Attribute Name="ApproachHeight">
@@ -1118,13 +1343,13 @@ class ProbotGUI(QMainWindow):
         # Schreibe AML-Datei
         aml_path = os.path.join(
             self.config.WORKSPACE_PATH,
-            "src/ur10e_hl_interface/config/irb120_simple_config.aml"
+            "src/ur10e_hl_interface/config/wuerfel_config.aml"
         )
         with open(aml_path, 'w', encoding='utf-8') as f:
             f.write(aml_content)
 
         # Aktualisiere Parser-Cache
-        parser = get_irb120_parser()
+        parser = get_wuerfel_parser()
         parser.reload()
 
     def generate_response(self, level: int):
@@ -1134,8 +1359,8 @@ class ProbotGUI(QMainWindow):
             robot_task = self.input_text.toPlainText().strip()
             cell_setup = ""
 
-            # Zellkonfiguration nur wenn Checkbox aktiviert
-            if self.cell_change_checkbox.isChecked():
+            # Zellkonfiguration nur im Würfel-Modus und wenn Checkbox aktiviert
+            if self.current_mode == "wuerfel" and self.cell_change_checkbox.isChecked():
                 cell_setup = self.cell_input_text.toPlainText().strip()
 
             # Mindestens eine Eingabe erforderlich
@@ -1149,14 +1374,26 @@ class ProbotGUI(QMainWindow):
         self.show_output(f"Generiere Level {level} Antwort...", "user")
         self._show_computing(True)
 
-        # Hole aktuelle System-Prompts mit den beiden Eingaben
-        if level == 1:
-            system_prompt = generate_level1_prompt(
-                cell_setup_text=self.current_cell_setup,
-                robot_task_text=self.current_robot_task
-            )
+        # Hole aktuelle System-Prompts basierend auf Modus
+        if self.current_mode == "wuerfel":
+            # Würfel-Modus Prompts
+            if level == 1:
+                system_prompt = generate_wuerfel_level1_prompt(
+                    cell_setup_text=self.current_cell_setup,
+                    robot_task_text=self.current_robot_task
+                )
+            else:
+                # Pass cell_setup_mode to tell Level 2 whether AML state is relevant
+                cell_setup_used = bool(self.current_cell_setup and self.current_cell_setup.strip())
+                system_prompt = generate_wuerfel_level2_prompt(cell_setup_mode=cell_setup_used)
         else:
-            system_prompt = generate_level2_prompt()
+            # Klemmen-Modus Prompts
+            if level == 1:
+                system_prompt = generate_klemmen_level1_prompt(
+                    robot_task_text=self.current_robot_task
+                )
+            else:
+                system_prompt = generate_klemmen_level2_prompt()
 
         # Erstelle vollständigen Prompt
         full_prompt = system_prompt
@@ -1199,7 +1436,6 @@ class ProbotGUI(QMainWindow):
         elif level == 2:
             self.generated_code = response
             self._save_generated_code()
-            self.btn_execute.setEnabled(True)
             self.btn_proceed.setText("Neu starten")
 
         self._show_computing(False)
@@ -1210,20 +1446,20 @@ class ProbotGUI(QMainWindow):
         self.show_output(error_msg, "error")
 
     def reset_to_level1(self):
-        """Setzt die Anwendung auf Level 1 zurück"""
+        """Setzt die Anwendung auf Level 1 zurück (behält Prompts bei)"""
         self.current_level = 1
         self.current_cell_setup = ""
         self.current_robot_task = ""
         self.responses = {1: "", 2: ""}
         self.generated_code = ""
         self.output_text.clear()
-        self.input_text.clear()
-        self.cell_input_text.clear()
+        # Prompts werden NICHT gelöscht - bleiben erhalten für Neustart
+        # self.input_text.clear()
+        # self.cell_input_text.clear()
         self.cell_change_checkbox.setChecked(False)
         self.status_label.setText(self._get_status_text())
         self._update_status_style()
         self.options_group.setVisible(False)
-        self.btn_execute.setEnabled(False)
         self.btn_proceed.setText("Weiter")
         self._refresh_displays()
 

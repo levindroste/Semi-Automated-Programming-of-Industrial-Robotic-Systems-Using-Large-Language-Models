@@ -5,9 +5,11 @@ import os
 
 
 class ROS2Launcher:
-    def __init__(self, workspace_path=None):
+    def __init__(self, workspace_path=None, cell_mode='wuerfel'):
         self.ws = os.path.expanduser(workspace_path or os.getcwd())
         self.tab_opened = False
+        self.cell_mode = cell_mode
+        self.aml_file = 'klemmen_config.aml' if cell_mode == 'klemmen' else 'wuerfel_config.aml'
 
     def kill_existing_processes(self):
         """Kill all existing ROS/Gazebo processes before starting new ones"""
@@ -62,7 +64,8 @@ class ROS2Launcher:
         # IRB 120 specific launch configuration
         cfg = "description_package:=ur_with_gripper description_file:=ur_with_gripper.urdf.xacro " \
               "runtime_config_package:=ur_with_gripper " \
-              "controllers_file:=irb120_controllers.yaml initial_joint_controller:=irb120_arm_controller"
+              "controllers_file:=irb120_controllers.yaml initial_joint_controller:=irb120_arm_controller " \
+              f"cell_mode:={self.cell_mode} aml_file:={self.aml_file}"
 
         # Start simulation with retry loop
         while True:
@@ -85,6 +88,7 @@ if __name__ == "__main__":
 
     parser = argparse.ArgumentParser()
     parser.add_argument("--workspace", default=None)
+    parser.add_argument("--cell-mode", default="wuerfel", choices=["wuerfel", "klemmen"])
     args = parser.parse_args()
 
-    ROS2Launcher(workspace_path=args.workspace).run()
+    ROS2Launcher(workspace_path=args.workspace, cell_mode=args.cell_mode).run()

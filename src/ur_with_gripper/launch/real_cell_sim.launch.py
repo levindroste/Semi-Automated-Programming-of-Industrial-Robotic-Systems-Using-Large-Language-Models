@@ -51,6 +51,7 @@ def launch_setup(context, *args, **kwargs):
     gazebo_gui = LaunchConfiguration("gazebo_gui")
     world_file = LaunchConfiguration("world_file")
     aml_file = LaunchConfiguration("aml_file")
+    cell_mode = LaunchConfiguration("cell_mode")
 
     initial_joint_controllers = PathJoinSubstitution(
         [FindPackageShare(runtime_config_package), "config", controllers_file]
@@ -206,6 +207,9 @@ def launch_setup(context, *args, **kwargs):
     if not os.path.isabs(aml_file_resolved):
         aml_file_resolved = os.path.join(ur10e_hl_interface_dir, 'config', aml_file_resolved)
 
+    # Resolve cell_mode
+    cell_mode_resolved = cell_mode.perform(context)
+
     # Add collision objects from AML file (delayed to ensure MoveIt is ready)
     # Using Python script for better debugging and reliability
     add_objects_node = Node(
@@ -216,6 +220,7 @@ def launch_setup(context, *args, **kwargs):
         parameters=[{
             'mesh_directory': mesh_dir,
             'aml_file': aml_file_resolved,
+            'cell_mode': cell_mode_resolved,
             'use_sim_time': True,
         }]
     )
@@ -314,8 +319,15 @@ def generate_launch_description():
     declared_arguments.append(
         DeclareLaunchArgument(
             "aml_file",
-            default_value="irb120_simple_config.aml",
+            default_value="wuerfel_config.aml",
             description="AML file defining collision objects for the robot cell.",
+        )
+    )
+    declared_arguments.append(
+        DeclareLaunchArgument(
+            "cell_mode",
+            default_value="wuerfel",
+            description="Cell mode: 'wuerfel' for cube grid, 'klemmen' for terminal blocks.",
         )
     )
 

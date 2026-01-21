@@ -1,0 +1,187 @@
+<?xml version="1.0" encoding="utf-8"?>
+<CAEXFile xmlns="http://www.dke.de/CAEX" FileName="klemmen_config.aml" SchemaVersion="3.0">
+
+    <!-- Robot Configuration -->
+    <InstanceHierarchy Name="Robot-Config">
+        <InternalElement Name="IRB120">
+            <Attribute Name="ApproachHeight">
+                <Value>0.13</Value>
+            </Attribute>
+            <Attribute Name="VelocityScaling">
+                <Value>0.3</Value>
+            </Attribute>
+            <Attribute Name="AccelerationScaling">
+                <Value>0.3</Value>
+            </Attribute>
+            <Attribute Name="PlannerID">
+                <Value>RRTConnect</Value>
+            </Attribute>
+            <Attribute Name="GripperOrientation">
+                <Value>1.0,0.0,0.0,0.0</Value>
+            </Attribute>
+            <!-- Zentrale Gripping-Orientierung für alle Klemmen (Quaternion: x,y,z,w) -->
+            <!-- Würfel-Orientierung (180° X) + 90° Z-Rotation -->
+            <Attribute Name="KlemmenGrippingOrientation">
+                <Value>0.7071,0.7071,0.0,0.0</Value>
+            </Attribute>
+        </InternalElement>
+    </InstanceHierarchy>
+
+    <!-- Klemmen-Definitionen (alle grau) -->
+    <!-- Für jede Klemme wird Anzahl * Instanzen erstellt: Klemme1_1, Klemme1_2, etc. -->
+    <InstanceHierarchy Name="Klemmen">
+        <InternalElement Name="Klemme1">
+            <Attribute Name="Anzahl">
+                <Value>3</Value>
+            </Attribute>
+            <Attribute Name="GrippingPosition" Unit="m">
+                <Value>0.136886,-0.428628,0.227211</Value>
+            </Attribute>
+            <Attribute Name="GrippingXOffset" Unit="m">
+                <Value>0.114</Value>
+            </Attribute>
+            <Attribute Name="CollisionHeight" Unit="m">
+                <Value>0.054</Value>
+            </Attribute>
+        </InternalElement>
+
+        <InternalElement Name="Klemme2">
+            <Attribute Name="Anzahl">
+                <Value>6</Value>
+            </Attribute>
+            <Attribute Name="GrippingPosition" Unit="m">
+                <Value>0.121895,-0.278363,0.163930</Value>
+            </Attribute>
+            <Attribute Name="GrippingXOffset" Unit="m">
+                <Value>0.070</Value>
+            </Attribute>
+            <Attribute Name="CollisionHeight" Unit="m">
+                <Value>0.020</Value>
+            </Attribute>
+        </InternalElement>
+
+        <InternalElement Name="Klemme3">
+            <Attribute Name="Anzahl">
+                <Value>4</Value>
+            </Attribute>
+            <Attribute Name="GrippingPosition" Unit="m">
+                <Value>0.332343,-0.179690,0.163930</Value>
+            </Attribute>
+            <Attribute Name="GrippingXOffset" Unit="m">
+                <Value>0.055</Value>
+            </Attribute>
+            <Attribute Name="CollisionHeight" Unit="m">
+                <Value>0.020</Value>
+            </Attribute>
+        </InternalElement>
+
+        <InternalElement Name="Klemme4">
+            <Attribute Name="Anzahl">
+                <Value>4</Value>
+            </Attribute>
+            <Attribute Name="GrippingPosition" Unit="m">
+                <Value>0.318216,-0.132996,0.163930</Value>
+            </Attribute>
+            <Attribute Name="GrippingXOffset" Unit="m">
+                <Value>0.049</Value>
+            </Attribute>
+            <Attribute Name="CollisionHeight" Unit="m">
+                <Value>0.020</Value>
+            </Attribute>
+        </InternalElement>
+
+        <InternalElement Name="Klemme5">
+            <Attribute Name="Anzahl">
+                <Value>3</Value>
+            </Attribute>
+            <Attribute Name="GrippingPosition" Unit="m">
+                <Value>0.264566,-0.083457,0.198637</Value>
+            </Attribute>
+            <Attribute Name="GrippingXOffset" Unit="m">
+                <Value>0.110</Value>
+            </Attribute>
+            <Attribute Name="CollisionHeight" Unit="m">
+                <Value>0.026</Value>
+            </Attribute>
+        </InternalElement>
+    </InstanceHierarchy>
+
+    <!-- Karton-Definitionen -->
+    <InstanceHierarchy Name="Kartons">
+        <InternalElement Name="Karton1">
+            <Attribute Name="PlacePosition" Unit="m">
+                <Value>0.1996,0.0152,0.3003</Value>
+            </Attribute>
+            <Attribute Name="SpawnPosition" Unit="m">
+                <Value>0.1996,0.0352,0.04</Value>
+            </Attribute>
+            <Attribute Name="Dimensions" Unit="m">
+                <Value>0.2,0.1,0.08</Value>
+            </Attribute>
+        </InternalElement>
+
+        <InternalElement Name="Karton2">
+            <Attribute Name="PlacePosition" Unit="m">
+                <Value>0.1996,0.1152,0.3003</Value>
+            </Attribute>
+            <Attribute Name="SpawnPosition" Unit="m">
+                <Value>0.1996,0.1352,0.04</Value>
+            </Attribute>
+            <Attribute Name="Dimensions" Unit="m">
+                <Value>0.2,0.1,0.08</Value>
+            </Attribute>
+        </InternalElement>
+
+        <InternalElement Name="Karton3">
+            <Attribute Name="PlacePosition" Unit="m">
+                <Value>0.1996,0.2152,0.3003</Value>
+            </Attribute>
+            <Attribute Name="SpawnPosition" Unit="m">
+                <Value>0.1996,0.2352,0.04</Value>
+            </Attribute>
+            <Attribute Name="Dimensions" Unit="m">
+                <Value>0.2,0.1,0.08</Value>
+            </Attribute>
+        </InternalElement>
+
+        <InternalElement Name="Karton4">
+            <Attribute Name="PlacePosition" Unit="m">
+                <Value>0.1996,0.3152,0.3003</Value>
+            </Attribute>
+            <Attribute Name="SpawnPosition" Unit="m">
+                <Value>0.1996,0.3352,0.04</Value>
+            </Attribute>
+            <Attribute Name="Dimensions" Unit="m">
+                <Value>0.2,0.1,0.08</Value>
+            </Attribute>
+        </InternalElement>
+
+        <InternalElement Name="Karton5">
+            <Attribute Name="PlacePosition" Unit="m">
+                <Value>0.1996,0.4152,0.3003</Value>
+            </Attribute>
+            <Attribute Name="SpawnPosition" Unit="m">
+                <Value>0.1996,0.4352,0.04</Value>
+            </Attribute>
+            <Attribute Name="Dimensions" Unit="m">
+                <Value>0.2,0.1,0.08</Value>
+            </Attribute>
+        </InternalElement>
+    </InstanceHierarchy>
+
+    <!-- Paket-Definitionen -->
+    <InstanceHierarchy Name="Pakete">
+        <InternalElement Name="PaketA">
+            <Attribute Name="Inhalt">
+                <Value>Klemme2:2,Klemme3:1,Klemme5:2</Value>
+            </Attribute>
+        </InternalElement>
+
+        <InternalElement Name="PaketB">
+            <Attribute Name="Inhalt">
+                <Value>Klemme5:1,Klemme3:2</Value>
+            </Attribute>
+        </InternalElement>
+    </InstanceHierarchy>
+
+</CAEXFile>

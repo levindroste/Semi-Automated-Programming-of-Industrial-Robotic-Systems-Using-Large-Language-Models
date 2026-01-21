@@ -4,6 +4,7 @@
 build/
 install/
 log/
+Log
 
 # =========================
 # Python
@@ -66,10 +67,17 @@ Thumbs.db
 claude.md
 
 # =========================
-# Local documentation / manuals (not source code)
+# Manuals / Documentation (copyright)
 # =========================
-*.txt
-!README.txt
+ABB Handbuch.txt
+Rapid Manual.txt
+Paper.txt
+
+# =========================
+# Paper drafts (work in progress)
+# =========================
+paper_framework.md
+paper_plan_framework.txt
 
 # =========================
 # Local setup / internal docs
@@ -83,6 +91,14 @@ ROS_MCP_SETUP.md
 # =========================
 robot_client.py
 robot_test_move.py
+GUI/PROBOT_GUI/test_klemmen_gripping.py
+
+# =========================
+# RAPID project files (RobotStudio)
+# =========================
+*.pgf
+RAPID/SavePosition.mod
+RAPID/SocketServerIV.mod
 
 # =========================
 # Old / unused files

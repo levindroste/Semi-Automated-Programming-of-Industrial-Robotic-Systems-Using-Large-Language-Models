@@ -113,6 +113,14 @@ MODULE SocketServerIII
                 ! Parse MOVEZ command (linear move, change Z only relative to current)
                 ParseAndMoveZ cmd_part;
 
+            ELSEIF StrLen(cmd_part) >= 5 AND StrPart(cmd_part, 1, 5) = "MOVEX" THEN
+                ! Parse MOVEX command (linear move, change X only relative to current)
+                ParseAndMoveX cmd_part;
+
+            ELSEIF StrLen(cmd_part) >= 5 AND StrPart(cmd_part, 1, 5) = "MOVEY" THEN
+                ! Parse MOVEY command (linear move, change Y only relative to current)
+                ParseAndMoveY cmd_part;
+
             ELSEIF StrLen(cmd_part) >= 5 AND StrPart(cmd_part, 1, 5) = "SPEED" THEN
                 ! Parse SPEED command
                 ParseSpeed cmd_part;
@@ -385,6 +393,78 @@ MODULE SocketServerIII
 
     ERROR
         response_msg := "ERROR:MoveZ failed - " + ValToStr(ERRNO);
+        TRYNEXT;
+    ENDPROC
+
+    PROC ParseAndMoveX(string cmd)
+        VAR num delta_x;
+        VAR string val_str;
+        VAR bool ok;
+        VAR robtarget current_cart;
+        VAR robtarget target_cart;
+
+        ! cmd format: "MOVEX delta_x" (delta in mm)
+        val_str := StrPart(cmd, 7, StrLen(cmd) - 6);
+        ok := StrToVal(val_str, delta_x);
+
+        IF NOT ok THEN
+            response_msg := "ERROR:Parse delta_x failed";
+            RETURN;
+        ENDIF
+
+        ! Get current position (keeps Y, Z, orientation)
+        current_cart := CRobT(\Tool:=tool0);
+
+        ! Build target: same as current, but X + delta
+        target_cart := current_cart;
+        target_cart.trans.x := current_cart.trans.x + delta_x;
+
+        ! Disable configuration checking for flexibility
+        ConfL \Off;
+
+        ! Execute linear move (use fine for precise positioning)
+        TPWrite "MoveX: delta=" + ValToStr(delta_x) + " -> X=" + ValToStr(target_cart.trans.x);
+        MoveL target_cart, sock_speed, fine, tool0;
+        response_msg := "OK:MoveX complete";
+
+    ERROR
+        response_msg := "ERROR:MoveX failed - " + ValToStr(ERRNO);
+        TRYNEXT;
+    ENDPROC
+
+    PROC ParseAndMoveY(string cmd)
+        VAR num delta_y;
+        VAR string val_str;
+        VAR bool ok;
+        VAR robtarget current_cart;
+        VAR robtarget target_cart;
+
+        ! cmd format: "MOVEY delta_y" (delta in mm)
+        val_str := StrPart(cmd, 7, StrLen(cmd) - 6);
+        ok := StrToVal(val_str, delta_y);
+
+        IF NOT ok THEN
+            response_msg := "ERROR:Parse delta_y failed";
+            RETURN;
+        ENDIF
+
+        ! Get current position (keeps X, Z, orientation)
+        current_cart := CRobT(\Tool:=tool0);
+
+        ! Build target: same as current, but Y + delta
+        target_cart := current_cart;
+        target_cart.trans.y := current_cart.trans.y + delta_y;
+
+        ! Disable configuration checking for flexibility
+        ConfL \Off;
+
+        ! Execute linear move (use fine for precise positioning)
+        TPWrite "MoveY: delta=" + ValToStr(delta_y) + " -> Y=" + ValToStr(target_cart.trans.y);
+        MoveL target_cart, sock_speed, fine, tool0;
+        response_msg := "OK:MoveY complete";
+
+    ERROR
+        response_msg := "ERROR:MoveY failed - " + ValToStr(ERRNO);
         TRYNEXT;
     ENDPROC
 

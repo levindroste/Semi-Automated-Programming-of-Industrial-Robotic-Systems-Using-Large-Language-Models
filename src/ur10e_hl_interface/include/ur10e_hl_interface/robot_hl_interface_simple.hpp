@@ -6,6 +6,7 @@
 #include <map>
 #include <vector>
 #include <set>
+#include <future>
 
 #include <rclcpp/rclcpp.hpp>
 #include <moveit/move_group_interface/move_group_interface.h>
@@ -37,6 +38,18 @@ public:
     double depth;               ///< Object depth (Y dimension)
     std::string color;          ///< Object color for visualization
     int stack_level = 0;        ///< Stack level (0 = floor, 1 = on first cube, etc.)
+    geometry_msgs::msg::Point spawn_position; ///< Spawn position for collision object
+  };
+
+  /**
+   * @brief Klemme (terminal block) information for Klemmen-Modus
+   */
+  struct KlemmenInfo {
+    std::string name;                        ///< Klemme type name (e.g., "Klemme1")
+    int anzahl = 0;                          ///< Number of instances
+    geometry_msgs::msg::Point gripping_position; ///< Gripping position for first instance
+    double gripping_x_offset = 0.0;          ///< X offset between instances
+    double collision_height = 0.02;          ///< Collision object height (independent of grip position)
   };
 
   /**
@@ -50,6 +63,11 @@ public:
     std::string planner_id = "RRTConnect"; ///< MoveIt planner ID
     geometry_msgs::msg::Quaternion standard_orientation; ///< Default gripper orientation
   };
+
+  /**
+   * @brief Direction for gripper approach (for rotation-based obstacle avoidance)
+   */
+  enum class GripDirection { FRONT, LEFT, RIGHT, BACK };
 
   /**
    * @brief Constructor - creates the node
@@ -216,10 +234,18 @@ private:
   std::string findBlockingCube(const std::string& grid_position) const;
 
   /**
-   * @brief Find a free position in row 1 (always accessible for temp storage)
-   * @return Free row 1 position (A1-E1), or empty string if all occupied
+   * @brief Find the best grip direction for a position based on free neighboring cells
+   * @param position Grid position to grip from (e.g., "C3")
+   * @return Best direction to approach from (FRONT, LEFT, RIGHT, or BACK)
    */
-  std::string findFreeRow1Position() const;
+  GripDirection findGripDirection(const std::string& position) const;
+
+  /**
+   * @brief Get rotated gripper orientation for a specific approach direction
+   * @param dir The approach direction
+   * @return Quaternion for the rotated orientation
+   */
+  geometry_msgs::msg::Quaternion getRotatedOrientation(GripDirection dir) const;
 
   /**
    * @brief Parse objects from AML
@@ -486,12 +512,43 @@ private:
   /// Counter for generating unique cube names
   int next_cube_id_ = 0;
 
-  /// Track positions claimed during recursive auto-move operations
-  /// This prevents multiple blocking cubes from being moved to the same position
-  std::set<std::string> pending_auto_move_destinations_;
-
   /// Directory containing mesh files (Wuerfel.stl, etc.)
   std::string mesh_directory_;
+
+  // === KLEMMEN-MODUS SUPPORT ===
+
+  /// Flag indicating if Klemmen-Modus is active
+  bool klemmen_mode_ = false;
+
+  /// Klemmen types loaded from klemmen_config.aml
+  std::map<std::string, KlemmenInfo> klemmen_;
+
+  /// Central gripping orientation for all Klemmen
+  geometry_msgs::msg::Quaternion klemmen_gripping_orientation_;
+
+  /// Karton positions (added to grid_positions_ when in Klemmen mode)
+  std::map<std::string, geometry_msgs::msg::Pose> karton_positions_;
+
+  /**
+   * @brief Parse Klemmen configuration from AML file
+   * @param root Root XML element of klemmen_config.aml
+   * @return true on success
+   */
+  bool parseKlemmenConfig(tinyxml2::XMLElement* root);
+
+  /**
+   * @brief Check if a name is a Karton (for special drop logic)
+   * @param name Name to check
+   * @return true if it's a registered Karton
+   */
+  bool isKarton(const std::string& name) const;
+
+  /**
+   * @brief Add a Klemme collision object to the planning scene
+   * @param obj ObjectInfo with spawn position and dimensions
+   * @return true on success
+   */
+  bool addKlemmeCollisionObject(const ObjectInfo& obj);
 
   // === REAL ROBOT COMMUNICATION ===
 
@@ -509,6 +566,25 @@ private:
 
   /// Last J6 angle sent to robot (for normalization to avoid large rotations)
   double last_j6_deg_ = 0.0;
+
+  /// Pending robot command future (for pipelining)
+  std::future<bool> pending_robot_future_;
+
+  /// Flag indicating if a robot command is pending
+  bool has_pending_command_ = false;
+
+  /**
+   * @brief Wait for any pending robot command to complete
+   * Call this before sending a new command to ensure sequential execution
+   */
+  void waitForPendingRobotCommand();
+
+  /**
+   * @brief Send MOVEJ command asynchronously (non-blocking)
+   * Waits for any previous command first, then starts the new one in background
+   * @param joints_rad Joint positions in radians
+   */
+  void sendMoveJAsync(const std::vector<double>& joints_rad);
 
   /**
    * @brief Connect to the real robot via socket
@@ -575,6 +651,20 @@ private:
    * @return true on success
    */
   bool sendMoveZ(double delta_z_mm);
+
+  /**
+   * @brief Move linearly by delta X only (robot gets current pos, changes X)
+   * @param delta_x_mm Delta X in mm (positive=+X, negative=-X)
+   * @return true on success
+   */
+  bool sendMoveX(double delta_x_mm);
+
+  /**
+   * @brief Move linearly by delta Y only (robot gets current pos, changes Y)
+   * @param delta_y_mm Delta Y in mm (positive=+Y, negative=-Y)
+   * @return true on success
+   */
+  bool sendMoveY(double delta_y_mm);
 
   /**
    * @brief Send grip (close gripper) command to real robot

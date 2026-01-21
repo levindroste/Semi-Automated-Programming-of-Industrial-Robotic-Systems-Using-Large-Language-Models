@@ -1,5 +1,5 @@
-# irb120_aml_parser.py
-# Parser for IRB 120 configuration from irb120_simple_config.aml
+# wuerfel_aml_parser.py
+# Parser for IRB 120 Würfel-Modus (Cube Mode) configuration
 # Reads grid positions and object states for dynamic prompt generation
 
 import xml.etree.ElementTree as ET
@@ -7,8 +7,8 @@ import os
 from typing import Dict, List, Tuple, Optional, Any
 
 
-class IRB120AMLParser:
-    """Singleton Parser for IRB 120 AML configuration"""
+class WuerfelAMLParser:
+    """Singleton Parser for Würfel-Modus AML configuration"""
 
     _instance = None
     _initialized = False
@@ -29,7 +29,7 @@ class IRB120AMLParser:
             "~/Semi-Automated-Programming-of-Industrial-Robotic-Systems-Using-Large-Language-Models"
             "/src/ur10e_hl_interface/config"
         )
-        self.config_path = f"{base}/irb120_simple_config.aml"
+        self.config_path = f"{base}/wuerfel_config.aml"
 
         # Data storage
         self.grid_positions = {}  # Grid name -> [x, y, z] (spawn positions)
@@ -368,26 +368,26 @@ class IRB120AMLParser:
 _parser = None
 
 
-def get_irb120_parser() -> IRB120AMLParser:
-    """Get the global parser instance"""
+def get_wuerfel_parser() -> WuerfelAMLParser:
+    """Get the global parser instance for Würfel-Modus"""
     global _parser
     if _parser is None:
-        _parser = IRB120AMLParser()
+        _parser = WuerfelAMLParser()
     return _parser
 
 
-def reload_irb120_config():
-    """Reload IRB 120 configuration"""
-    parser = get_irb120_parser()
+def reload_wuerfel_config():
+    """Reload Würfel-Modus configuration"""
+    parser = get_wuerfel_parser()
     parser.reload()
-    print("IRB 120 configuration reloaded")
+    print("Würfel configuration reloaded")
 
 
 # ========== TEST FUNCTION ==========
 
 if __name__ == "__main__":
-    parser = get_irb120_parser()
-    print("\n=== IRB 120 AML Parser Test ===\n")
+    parser = get_wuerfel_parser()
+    print("\n=== Würfel AML Parser Test ===\n")
 
     print(f"Config file: {parser.config_path}")
     print(f"Grid positions loaded: {len(parser.grid_positions)}")
