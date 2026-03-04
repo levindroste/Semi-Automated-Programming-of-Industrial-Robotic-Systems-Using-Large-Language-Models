@@ -1,88 +1,62 @@
 <?xml version="1.0" encoding="utf-8"?>
 <CAEXFile xmlns="http://www.dke.de/CAEX" FileName="wuerfel_config.aml" SchemaVersion="3.0">
-    <InstanceHierarchy Name="Robot-Config">
-        <InternalElement Name="IRB120">
-            <Attribute Name="ApproachHeight">
-                <Value>0.10</Value>
-            </Attribute>
-            <Attribute Name="VelocityScaling">
-                <Value>0.3</Value>
-            </Attribute>
-            <Attribute Name="AccelerationScaling">
-                <Value>0.3</Value>
-            </Attribute>
-            <Attribute Name="PlannerID">
-                <Value>RRTConnect</Value>
-            </Attribute>
-            <Attribute Name="GripperOrientation">
-                <Value>1.0,0.0,0.0,0.0</Value>
-            </Attribute>
-        </InternalElement>
-    </InstanceHierarchy>
-    <InstanceHierarchy Name="Grid-Config">
-        <InternalElement Name="GridParameters">
-            <Attribute Name="A1SpawnPosition">
-                <Value>0.5021,-0.0812,0.0</Value>
-            </Attribute>
-            <Attribute Name="GridSpacing">
-                <Value>0.0474</Value>
-            </Attribute>
-            <Attribute Name="GripOffset">
-                <Value>0.016,0.015,0.0777</Value>
-            </Attribute>
-        </InternalElement>
-        <InternalElement Name="SpecialPositions">
-            <InternalElement Name="X">
-                <Attribute Name="Position">
-                    <Value>0.0312,0.3020,0.1019</Value>
-                </Attribute>
-            </InternalElement>
-        </InternalElement>
-    </InstanceHierarchy>
-    <InstanceHierarchy Name="Objects">
-        <InternalElement Name="cube_0" ID="cube_0">
-            <Attribute Name="Location" AttributeDataType="xs:string">
-                <Value>A2</Value>
-            </Attribute>
-            <Attribute Name="Dimensions" AttributeDataType="xs:string" Unit="m">
-                <Value>0.030,0.030,0.030</Value>
-            </Attribute>
-            <Attribute Name="Color" AttributeDataType="xs:string">
-                <Value>Gruen</Value>
-            </Attribute>
-        </InternalElement>
-        <InternalElement Name="cube_1" ID="cube_1">
-            <Attribute Name="Location" AttributeDataType="xs:string">
-                <Value>A3</Value>
-            </Attribute>
-            <Attribute Name="Dimensions" AttributeDataType="xs:string" Unit="m">
-                <Value>0.030,0.030,0.030</Value>
-            </Attribute>
-            <Attribute Name="Color" AttributeDataType="xs:string">
-                <Value>Gelb</Value>
-            </Attribute>
-        </InternalElement>
-        <InternalElement Name="cube_2" ID="cube_2">
-            <Attribute Name="Location" AttributeDataType="xs:string">
-                <Value>A4</Value>
-            </Attribute>
-            <Attribute Name="Dimensions" AttributeDataType="xs:string" Unit="m">
-                <Value>0.030,0.030,0.030</Value>
-            </Attribute>
-            <Attribute Name="Color" AttributeDataType="xs:string">
-                <Value>Rot</Value>
-            </Attribute>
-        </InternalElement>
-        <InternalElement Name="cube_3" ID="cube_3">
-            <Attribute Name="Location" AttributeDataType="xs:string">
-                <Value>A5</Value>
-            </Attribute>
-            <Attribute Name="Dimensions" AttributeDataType="xs:string" Unit="m">
-                <Value>0.030,0.030,0.030</Value>
-            </Attribute>
-            <Attribute Name="Color" AttributeDataType="xs:string">
-                <Value>Schwarz</Value>
-            </Attribute>
-        </InternalElement>
-    </InstanceHierarchy>
+  <InstanceHierarchy Name="Robot-Config">
+    <InternalElement Name="IRB120">
+      <Attribute Name="ApproachHeight">
+        <Value>0.05</Value>
+      </Attribute>
+      <Attribute Name="VelocityScaling">
+        <Value>0.3</Value>
+      </Attribute>
+      <Attribute Name="AccelerationScaling">
+        <Value>0.3</Value>
+      </Attribute>
+      <Attribute Name="PlannerID">
+        <Value>RRTConnect</Value>
+      </Attribute>
+      <Attribute Name="GripperOrientation">
+        <Value>0.0,0.7071068,0.7071068,0.0</Value>
+      </Attribute>
+    </InternalElement>
+  </InstanceHierarchy>
+  <InstanceHierarchy Name="Grid-Config">
+    <InternalElement Name="GridParameters">
+      <Attribute Name="A1SpawnPosition">
+        <Value>0.495,-0.090,0.0</Value>
+      </Attribute>
+      <Attribute Name="GridSpacing">
+        <Value>0.0475</Value>
+      </Attribute>
+      <Attribute Name="GripOffset">
+        <Value>0.015,0.015,0.1</Value>
+      </Attribute>
+    </InternalElement>
+    <InternalElement Name="SpecialPositions">
+      <InternalElement Name="X">
+        <Attribute Name="Position"><Value>0.550,0.000,0.35</Value></Attribute>
+      </InternalElement>
+    </InternalElement>
+  </InstanceHierarchy>
+  <InstanceHierarchy Name="Objects">
+    <InternalElement Name="wuerfel_schwarz">
+      <Attribute Name="Location"><Value>A1</Value></Attribute>
+      <Attribute Name="Color"><Value>Schwarz</Value></Attribute>
+      <Attribute Name="Dimensions"><Value>0.03,0.03,0.03</Value></Attribute>
+    </InternalElement>
+    <InternalElement Name="wuerfel_gruen">
+      <Attribute Name="Location"><Value>B1</Value></Attribute>
+      <Attribute Name="Color"><Value>Gruen</Value></Attribute>
+      <Attribute Name="Dimensions"><Value>0.03,0.03,0.03</Value></Attribute>
+    </InternalElement>
+    <InternalElement Name="wuerfel_rot">
+      <Attribute Name="Location"><Value>C1</Value></Attribute>
+      <Attribute Name="Color"><Value>Rot</Value></Attribute>
+      <Attribute Name="Dimensions"><Value>0.03,0.03,0.03</Value></Attribute>
+    </InternalElement>
+    <InternalElement Name="wuerfel_gelb">
+      <Attribute Name="Location"><Value>D1</Value></Attribute>
+      <Attribute Name="Color"><Value>Gelb</Value></Attribute>
+      <Attribute Name="Dimensions"><Value>0.03,0.03,0.03</Value></Attribute>
+    </InternalElement>
+  </InstanceHierarchy>
 </CAEXFile>
