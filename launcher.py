@@ -27,8 +27,26 @@ class ROS2Launcher:
         if wait > 0:
             time.sleep(wait)
 
+    def kill_existing_processes(self):
+        """Beendet alle laufenden ROS/Gazebo-Prozesse"""
+        print("Beende alte Prozesse...")
+        subprocess.run(
+            "killall -9 gzserver gzclient gz ruby move_group rviz2 ros2 2>/dev/null",
+            shell=True
+        )
+        subprocess.run(
+            "pkill -9 -f 'gz sim'; pkill -9 -f 'rviz'; pkill -9 -f 'move_group'; "
+            "pkill -9 -f 'parameter_bridge'; pkill -9 -f 'robot_state_publisher'; "
+            "pkill -9 -f 'spawner'; pkill -9 -f 'add_objects'; "
+            "pkill -9 -f 'clipfix_bewegung'",
+            shell=True
+        )
+        time.sleep(3)
+        print("Alte Prozesse beendet.")
+
     def run(self):
         print("ROS2 UR10e Setup")
+        self.kill_existing_processes()
 
         # Launch config
         cfg = "description_package:=ur_with_gripper description_file:=ur_with_gripper.urdf.xacro " \
@@ -41,7 +59,8 @@ class ROS2Launcher:
             if input("\nRoboter in Gazebo/Rviz aufrecht? [j/n]: ").lower() == 'j':
                 break
             print("Neustart...")
-            time.sleep(2)
+            self.kill_existing_processes()
+            self.tab_opened = False
 
         # Launch sequence
         cmds = [
@@ -76,8 +95,3 @@ if __name__ == "__main__":
     ).run()
 
 
-#killall -9 gzserver gzclient gz ruby move_group rviz2 ros2
-# Oder noch grÃ¼ndlicher:
-#pkill -f ros2
-#pkill -f gazebo
-#pkill -f rviz

@@ -16,109 +16,58 @@
                     <Value>1</Value>
                 </Attribute>
                 <Attribute Name="Füllstand" AttributeDataType="xs:double">
-                    <Value>0.107000</Value>
+                    <Value>0.112200</Value>
                 </Attribute>
                 <InternalElement Name="Komponenten" ID="rail-1-components">
                     <InternalElement Name="Position-1" ID="rail-1-pos-1">
                         <Attribute Name="Komponenten-Typ" AttributeDataType="xs:string">
-                            <Value>CLIPFIX_35</Value>
+                            <Value>VAL_MS_230</Value>
                         </Attribute>
                         <Attribute Name="Original-ID" AttributeDataType="xs:string">
-                            <Value>clipfix_35_1</Value>
+                            <Value>val_ms_230_1</Value>
                         </Attribute>
                         <Attribute Name="Instance-Number" AttributeDataType="xs:int">
                             <Value>0</Value>
                         </Attribute>
                         <Attribute Name="Position-auf-Schiene" AttributeDataType="xs:double">
-                            <Value>0.004750</Value>
+                            <Value>0.035450</Value>
                         </Attribute>
                         <Attribute Name="Breite" AttributeDataType="xs:double">
-                            <Value>0.009500</Value>
+                            <Value>0.070900</Value>
                         </Attribute>
                     </InternalElement>
                     <InternalElement Name="Position-2" ID="rail-1-pos-2">
                         <Attribute Name="Komponenten-Typ" AttributeDataType="xs:string">
-                            <Value>CLIPFIX_35</Value>
+                            <Value>STU_35_4X10_YE</Value>
                         </Attribute>
                         <Attribute Name="Original-ID" AttributeDataType="xs:string">
-                            <Value>clipfix_35_2</Value>
+                            <Value>stu_35_4x10_ye_1</Value>
                         </Attribute>
                         <Attribute Name="Instance-Number" AttributeDataType="xs:int">
-                            <Value>1</Value>
+                            <Value>0</Value>
                         </Attribute>
                         <Attribute Name="Position-auf-Schiene" AttributeDataType="xs:double">
-                            <Value>0.024250</Value>
+                            <Value>0.089050</Value>
                         </Attribute>
                         <Attribute Name="Breite" AttributeDataType="xs:double">
-                            <Value>0.009500</Value>
+                            <Value>0.016300</Value>
                         </Attribute>
                     </InternalElement>
                     <InternalElement Name="Position-3" ID="rail-1-pos-3">
                         <Attribute Name="Komponenten-Typ" AttributeDataType="xs:string">
-                            <Value>CLIPFIX_35</Value>
+                            <Value>UT_1_5_OG</Value>
                         </Attribute>
                         <Attribute Name="Original-ID" AttributeDataType="xs:string">
-                            <Value>clipfix_35_3</Value>
+                            <Value>ut_1_5_og_1</Value>
                         </Attribute>
                         <Attribute Name="Instance-Number" AttributeDataType="xs:int">
-                            <Value>2</Value>
+                            <Value>0</Value>
                         </Attribute>
                         <Attribute Name="Position-auf-Schiene" AttributeDataType="xs:double">
-                            <Value>0.043750</Value>
+                            <Value>0.109700</Value>
                         </Attribute>
                         <Attribute Name="Breite" AttributeDataType="xs:double">
-                            <Value>0.009500</Value>
-                        </Attribute>
-                    </InternalElement>
-                    <InternalElement Name="Position-4" ID="rail-1-pos-4">
-                        <Attribute Name="Komponenten-Typ" AttributeDataType="xs:string">
-                            <Value>CLIPFIX_35</Value>
-                        </Attribute>
-                        <Attribute Name="Original-ID" AttributeDataType="xs:string">
-                            <Value>clipfix_35_4</Value>
-                        </Attribute>
-                        <Attribute Name="Instance-Number" AttributeDataType="xs:int">
-                            <Value>3</Value>
-                        </Attribute>
-                        <Attribute Name="Position-auf-Schiene" AttributeDataType="xs:double">
-                            <Value>0.063250</Value>
-                        </Attribute>
-                        <Attribute Name="Breite" AttributeDataType="xs:double">
-                            <Value>0.009500</Value>
-                        </Attribute>
-                    </InternalElement>
-                    <InternalElement Name="Position-5" ID="rail-1-pos-5">
-                        <Attribute Name="Komponenten-Typ" AttributeDataType="xs:string">
-                            <Value>CLIPFIX_35</Value>
-                        </Attribute>
-                        <Attribute Name="Original-ID" AttributeDataType="xs:string">
-                            <Value>clipfix_35_5</Value>
-                        </Attribute>
-                        <Attribute Name="Instance-Number" AttributeDataType="xs:int">
-                            <Value>4</Value>
-                        </Attribute>
-                        <Attribute Name="Position-auf-Schiene" AttributeDataType="xs:double">
-                            <Value>0.082750</Value>
-                        </Attribute>
-                        <Attribute Name="Breite" AttributeDataType="xs:double">
-                            <Value>0.009500</Value>
-                        </Attribute>
-                    </InternalElement>
-                    <InternalElement Name="Position-6" ID="rail-1-pos-6">
-                        <Attribute Name="Komponenten-Typ" AttributeDataType="xs:string">
-                            <Value>CLIPFIX_35</Value>
-                        </Attribute>
-                        <Attribute Name="Original-ID" AttributeDataType="xs:string">
-                            <Value>clipfix_35_6</Value>
-                        </Attribute>
-                        <Attribute Name="Instance-Number" AttributeDataType="xs:int">
-                            <Value>5</Value>
-                        </Attribute>
-                        <Attribute Name="Position-auf-Schiene" AttributeDataType="xs:double">
-                            <Value>0.102250</Value>
-                        </Attribute>
-                        <Attribute Name="Breite" AttributeDataType="xs:double">
-                            <Value>0.009500</Value>
+                            <Value>0.005000</Value>
                         </Attribute>
                     </InternalElement>
                 </InternalElement>

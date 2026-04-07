@@ -17,14 +17,11 @@ int main(int argc, char** argv)
     }
 
     // Rail 1 - already at workspace
-    robot->pick("CLIPFIX_35");
-    robot->pick("CLIPFIX_35");
-    robot->pick("CLIPFIX_35");
-    robot->pick("CLIPFIX_35");
-    robot->pick("CLIPFIX_35");
-    robot->pick("CLIPFIX_35");
+    robot->pick("VAL_MS_230");      // Rote Klemme
+    robot->pick("STU_35_4X10_YE");  // Gelbe Klemme  
+    robot->pick("UT_1_5_OG");       // Orange Klemme
 
-    robot->place_rail(-1);  // Store rail in next available cabinet position
+    robot->place_rail(-1);  // Store rail 1 in cabinet
 
     robot->saveStateToAML(state_file);
     robot->move_to_home();

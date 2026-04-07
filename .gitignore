@@ -1,0 +1,10 @@
+# Environment files with secrets
+.env
+
+# Build artifacts
+build/
+install/
+log/
+
+# IDE
+.idea/
